@@ -15,6 +15,8 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './material.module';
 import { CommonModule } from '@angular/common';
+import { RegisterComponent } from './core/auth/register/register.component';
+import { CustomValidatorsComponent } from './core/auth/register/custom-validators/custom-validators.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { CommonModule } from '@angular/common';
     FooterComponent,
     LoginComponent,
     PageNotFoundComponent,
+    RegisterComponent,
+    CustomValidatorsComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,18 +3,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
-
-  constructor() { }
-
-
-
+export class LoginComponent {
   onSubmit(form: any) {
-    console.log(form)
+    console.log(form);
   }
-  ngOnInit(): void {
-  }
-
 }
