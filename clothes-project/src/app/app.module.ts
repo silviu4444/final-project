@@ -1,18 +1,17 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { CommonModule } from '@angular/common'
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './core/header/header.component';
-import { FooterComponent } from './core/footer/footer.component';
-
-import { HomeModule } from './modules/home/home.module';
-import { LoginComponent } from './core/auth/login/login.component';
-import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularMaterialModule } from './material.module';
-import { CommonModule } from '@angular/common';
+import { AppComponent } from './app.component'
+import { AppRoutingModule } from './app-routing.module'
+import { HomeModule } from './modules/home/home.module'
+import { AngularMaterialModule } from './material.module'
+import { LoginComponent } from './core/auth/login/login.component'
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component'
+import { HeaderComponent } from './shared/components/header/header.component'
+import { FooterComponent } from './shared/components/footer/footer.component'
 
 @NgModule({
   declarations: [
@@ -20,7 +19,7 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    PageNotFoundComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +32,6 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

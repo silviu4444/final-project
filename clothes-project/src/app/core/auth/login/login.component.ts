@@ -1,20 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core'
+import { Form } from '@angular/forms'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-
-  constructor() { }
-
-
-
-  onSubmit(form: any) {
+export class LoginComponent {
+  onSubmit(form: Form) {
     console.log(form)
   }
-  ngOnInit(): void {
-  }
-
 }
