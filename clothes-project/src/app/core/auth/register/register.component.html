@@ -1,4 +1,4 @@
-<div class="register-component">
+<div class="register-container">
   <h1>Register</h1>
   <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
@@ -11,20 +11,6 @@
         [errorStateMatcher]="matcher"
         formControlName="email"
       />
-      <mat-icon
-        *ngIf="
-          signupForm.get('email').untouched && !signupForm.get('email').valid
-        "
-        matSuffix
-        >sentiment_very_satisfied</mat-icon
-      >
-      <mat-icon
-        *ngIf="
-          !signupForm.get('email').valid && signupForm.get('email').touched
-        "
-        matSuffix
-        >sentiment_dissatisfied</mat-icon
-      >
       <mat-icon *ngIf="signupForm.get('email').valid" matSuffix
         ><span class="valid-input"> done </span></mat-icon
       >
@@ -55,35 +41,16 @@
           *ngIf="
             signupForm.get('passwords.password').errors?.minlength?.actualLength
           "
-          ><p>
-            Actual Length:{{
-              signupForm.get('passwords.password').errors.minlength
-                ?.actualLength
-            }}
-            -
-            {{
-              signupForm.get('passwords.password').errors.minlength
-                ?.requiredLength
-            }}
-          </p></mat-hint
         >
-
-        <mat-icon
-          *ngIf="
-            signupForm.get('passwords.password').untouched &&
-            !signupForm.get('passwords.password').valid
-          "
-          matSuffix
-          >sentiment_very_satisfied</mat-icon
-        >
-        <mat-icon
-          *ngIf="
-            !signupForm.get('passwords.password').valid &&
-            signupForm.get('passwords.password').touched
-          "
-          matSuffix
-          >sentiment_dissatisfied</mat-icon
-        >
+          Actual Length: {{
+            signupForm.get('passwords.password').errors.minlength.actualLength
+          }}
+          /
+          {{
+            signupForm.get('passwords.password').errors.minlength
+              .requiredLength
+          }}
+        </mat-hint>
         <mat-icon *ngIf="signupForm.get('passwords.password').valid" matSuffix
           ><span class="valid-input"> done </span></mat-icon
         >
@@ -94,100 +61,6 @@
           Password is <strong>required</strong>!
         </mat-error>
       </mat-form-field>
-      <div
-        *ngIf="
-          !signupForm.get('passwords.password').valid &&
-          !signupForm.get('passwords.password').hasError('required')
-        "
-        [ngClass]="
-          signupForm.get('passwords.password').hasError('required') ||
-          signupForm.get('passwords.password').valid
-            ? ''
-            : 'invalid-input'
-        "
-      >
-        <p>Password must have at least:</p>
-        <mat-error
-          [ngClass]="
-            !signupForm.get('passwords.password').hasError('hasNumber')
-              ? 'text-success'
-              : 'text-danger'
-          "
-        >
-          <mat-icon
-            *ngIf="!signupForm.get('passwords.password').hasError('hasNumber')"
-            ><span class="material-icons-check"> check_circle </span></mat-icon
-          >
-          <mat-icon
-            *ngIf="signupForm.get('passwords.password').hasError('hasNumber')"
-          >
-            <span class="material-icons-outlined"> cancel </span>
-          </mat-icon>
-          1 number
-        </mat-error>
-        <mat-error
-          [ngClass]="
-            !signupForm.get('passwords.password').hasError('hasCapitalCase')
-              ? 'text-success'
-              : 'text-danger'
-          "
-        >
-          <mat-icon
-            *ngIf="
-              !signupForm.get('passwords.password').hasError('hasCapitalCase')
-            "
-            ><span class="material-icons-check"> check_circle </span></mat-icon
-          >
-          <mat-icon
-            *ngIf="
-              signupForm.get('passwords.password').hasError('hasCapitalCase')
-            "
-          >
-            <span class="material-icons-outlined"> cancel </span>
-          </mat-icon>
-          1 capital letter
-        </mat-error>
-        <mat-error
-          [ngClass]="
-            !signupForm.get('passwords.password').hasError('hasSmallCase')
-              ? 'text-success'
-              : 'text-danger'
-          "
-        >
-          <mat-icon
-            *ngIf="
-              !signupForm.get('passwords.password').hasError('hasSmallCase')
-            "
-            ><span class="material-icons-check"> check_circle </span></mat-icon
-          >
-          <mat-icon
-            *ngIf="
-              signupForm.get('passwords.password').hasError('hasSmallCase')
-            "
-          >
-            <span class="material-icons-outlined"> cancel </span>
-          </mat-icon>
-          1 letter in small case
-        </mat-error>
-        <mat-error
-          [ngClass]="
-            !signupForm.get('passwords.password').hasError('minlength')
-              ? 'text-success'
-              : 'text-danger'
-          "
-        >
-          <mat-icon
-            *ngIf="!signupForm.get('passwords.password').hasError('minlength')"
-            ><span class="material-icons-check"> check_circle </span></mat-icon
-          >
-          <mat-icon
-            *ngIf="signupForm.get('passwords.password').hasError('minlength')"
-          >
-            <span class="material-icons-outlined"> cancel </span>
-          </mat-icon>
-          8 characters
-        </mat-error>
-      </div>
 
       <mat-form-field appearance="outline">
         <mat-label>Confirm Password</mat-label>
@@ -199,22 +72,6 @@
           [errorStateMatcher]="matcher"
           formControlName="confirmPassword"
         />
-        <mat-icon
-          *ngIf="
-            signupForm.get('passwords.confirmPassword').untouched &&
-            !signupForm.get('passwords').valid
-          "
-          matSuffix
-          >sentiment_very_satisfied</mat-icon
-        >
-        <mat-icon
-          *ngIf="
-            !signupForm.get('passwords').valid &&
-            signupForm.get('passwords.confirmPassword').touched
-          "
-          matSuffix
-          >sentiment_dissatisfied</mat-icon
-        >
         <mat-icon *ngIf="signupForm.get('passwords').valid" matSuffix
           ><span class="valid-input"> done </span></mat-icon
         >

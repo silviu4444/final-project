@@ -1,7 +1,7 @@
 @import '../../../shared/styles/global-colors.scss';
 @import '../../../shared/styles/reusable-styles.scss';
 
-.register-component {
+.register-container {
   width: 100%;
   height: 90vh;
   display: flex;
@@ -11,6 +11,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+
   h1 {
     margin: 100px 0;
   }
@@ -23,34 +24,42 @@
     width: 250px;
     flex-direction: column;
     background-color: white;
+
     .password-group {
       display: flex;
       flex-direction: column;
     }
+
     .invalid-input {
       @include warning-invalid-input-message;
       width: 250px;
       text-align: start;
     }
+
     .valid-input {
       color: $valid-color;
     }
+
     .text-danger {
       color: #a02935;
       font-size: 15px;
+
       span {
         position: relative;
         top: 6px;
       }
     }
+
     .text-success {
       color: #23923d;
       font-size: 15px;
+
       span {
         position: relative;
         top: 6px;
       }
     }
+
     button:disabled {
       cursor: not-allowed;
     }

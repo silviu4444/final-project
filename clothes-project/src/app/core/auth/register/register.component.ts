@@ -9,7 +9,7 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { CustomValidatorsComponent } from './custom-validators/custom-validators.component';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
+export class errorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
     form: FormGroupDirective | NgForm | null
@@ -31,6 +31,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class RegisterComponent implements OnInit {
   signupForm: FormGroup = new FormGroup({});
+  matcher = new errorStateMatcher();
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -39,15 +40,6 @@ export class RegisterComponent implements OnInit {
         {
           password: new FormControl(null, [
             Validators.required,
-            CustomValidatorsComponent.patternValidator(/\d/, {
-              hasNumber: true,
-            }),
-            CustomValidatorsComponent.patternValidator(/[A-Z]/, {
-              hasCapitalCase: true,
-            }),
-            CustomValidatorsComponent.patternValidator(/[a-z]/, {
-              hasSmallCase: true,
-            }),
             Validators.minLength(8),
           ]),
           confirmPassword: new FormControl(null, [Validators.required]),
@@ -57,7 +49,9 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  matcher = new MyErrorStateMatcher();
+  showSatisfiedIcon(string: string): boolean {
+    return this.signupForm.get(string).untouched && !this.signupForm.get(string).valid;
+  }
 
   onSubmit() {
     console.log(this.signupForm);
