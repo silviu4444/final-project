@@ -51,6 +51,23 @@
           [errorStateMatcher]="matcher"
           formControlName="password"
         />
+        <mat-hint
+          *ngIf="
+            signupForm.get('passwords.password').errors?.minlength?.actualLength
+          "
+          ><p>
+            Actual Length:{{
+              signupForm.get('passwords.password').errors.minlength
+                ?.actualLength
+            }}
+            -
+            {{
+              signupForm.get('passwords.password').errors.minlength
+                ?.requiredLength
+            }}
+          </p></mat-hint
+        >
+
         <mat-icon
           *ngIf="
             signupForm.get('passwords.password').untouched &&
@@ -185,22 +202,20 @@
         <mat-icon
           *ngIf="
             signupForm.get('passwords.confirmPassword').untouched &&
-            !signupForm.get('passwords.confirmPassword').valid
+            !signupForm.get('passwords').valid
           "
           matSuffix
           >sentiment_very_satisfied</mat-icon
         >
         <mat-icon
           *ngIf="
-            !signupForm.get('passwords.confirmPassword').valid &&
+            !signupForm.get('passwords').valid &&
             signupForm.get('passwords.confirmPassword').touched
           "
           matSuffix
           >sentiment_dissatisfied</mat-icon
         >
-        <mat-icon
-          *ngIf="signupForm.get('passwords.confirmPassword').valid"
-          matSuffix
+        <mat-icon *ngIf="signupForm.get('passwords').valid" matSuffix
           ><span class="valid-input"> done </span></mat-icon
         >
         <mat-error
@@ -210,11 +225,11 @@
         >
           Password is <strong>required</strong>!
         </mat-error>
+
         <mat-error
           *ngIf="
-            signupForm
-              .get('passwords.confirmPassword')
-              .hasError('noPassswordMatch')
+            signupForm.get('passwords.confirmPassword').hasError('notSame') &&
+            !signupForm.get('passwords.confirmPassword').hasError('required')
           "
         >
           Password does not match
@@ -222,7 +237,7 @@
       </mat-form-field>
     </div>
     <button
-
+      [disabled]="!signupForm.valid"
       mat-raised-button
       type="submit"
       color="primary"

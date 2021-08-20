@@ -27,12 +27,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  animations: [
-
-  ]
+  animations: [],
 })
 export class RegisterComponent implements OnInit {
-  signupForm: FormGroup;
+  signupForm: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -54,7 +52,7 @@ export class RegisterComponent implements OnInit {
           ]),
           confirmPassword: new FormControl(null, [Validators.required]),
         },
-        { validators: CustomValidatorsComponent.passwordMatchValidator }
+        { validators: CustomValidatorsComponent.passwordMatch }
       ),
     });
   }

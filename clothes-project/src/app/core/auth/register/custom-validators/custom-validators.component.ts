@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import {
+  AbstractControl,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-custom-validators',
@@ -16,27 +20,23 @@ export class CustomValidatorsComponent implements OnInit {
       if (!control.value) {
         return null;
       }
-
       const valid = regex.test(control.value);
-
       return valid ? null : error;
     };
   }
 
-  static passwordMatchValidator(control: AbstractControl): {
-    [key: string]: boolean;
-  } {
-    const passwordsNotMatch =
-    control.get('password').value !== control.get('confirmPassword').value;
-    if (!passwordsNotMatch) {
-      const previousErrors = control.get('confirmPassword').errors;
-      control.get('confirmPassword').setErrors({...previousErrors, noPassswordMatch: false});
-    }
-    if (passwordsNotMatch) {
-      const previousErrors = control.get('confirmPassword').errors;
-      control.get('confirmPassword').setErrors({...previousErrors, noPassswordMatch: true });
-      return { noPassswordMatch: true };
-    }
-    return null;
-  }
+  static passwordMatch: ValidatorFn = (
+    control: AbstractControl
+  ): ValidationErrors | null => {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+    const isMach =
+      password.value === confirmPassword.value &&
+      !confirmPassword.hasError('required')
+        ? null
+        : { ...confirmPassword.errors, notSame: true };
+
+    confirmPassword.setErrors(isMach);
+    return password.value === confirmPassword.value ? null : { notSame: true };
+  };
 }
