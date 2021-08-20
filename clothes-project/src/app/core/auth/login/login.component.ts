@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
-import { Form } from '@angular/forms'
+import { Component } from '@angular/core';
+import { Form } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +8,6 @@ import { Form } from '@angular/forms'
 })
 export class LoginComponent {
   onSubmit(form: Form) {
-    console.log(form)
+    console.log(form);
   }
 }
