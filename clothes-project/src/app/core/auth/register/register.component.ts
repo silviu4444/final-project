@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { CustomValidatorsComponent } from './custom-validators/custom-validators.component';
+import { CustomValidators } from './custom-validators/custom-validators';
 
 export class errorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -44,13 +44,9 @@ export class RegisterComponent implements OnInit {
           ]),
           confirmPassword: new FormControl(null, [Validators.required]),
         },
-        { validators: CustomValidatorsComponent.passwordMatch }
+        { validators: CustomValidators.passwordMatch }
       ),
     });
-  }
-
-  showSatisfiedIcon(string: string): boolean {
-    return this.signupForm.get(string).untouched && !this.signupForm.get(string).valid;
   }
 
   onSubmit() {

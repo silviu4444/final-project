@@ -7,8 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
 
-
-
 import { HomeModule } from './modules/home/home.module';
 import { LoginComponent } from './core/auth/login/login.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
@@ -16,7 +14,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './material.module';
 import { CommonModule } from '@angular/common';
 import { RegisterComponent } from './core/auth/register/register.component';
-import { CustomValidatorsComponent } from './core/auth/register/custom-validators/custom-validators.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +23,6 @@ import { CustomValidatorsComponent } from './core/auth/register/custom-validator
     LoginComponent,
     PageNotFoundComponent,
     RegisterComponent,
-    CustomValidatorsComponent,
   ],
   imports: [
     BrowserModule,
