@@ -1,0 +1,45 @@
+@import '../../styles/global-colors.scss';
+
+.main-header {
+  .header-spacer {
+    flex: 1 1 auto;
+  }
+
+  .mat-toolbar {
+    background-color: black;
+  }
+
+  &__navbar-brand {
+    color: white;
+    font-size: 25px;
+    font-weight: 100;
+    transition: .2s;
+    user-select: none;
+    b {
+      color: $primary-color;
+    }
+  }
+
+  &__navbar-brand:hover {
+    cursor: pointer;
+    box-shadow: -1px 5px 0px -2px $primary-color;
+  }
+
+  &__account-button {
+    color: red;
+    background: transparent;
+    color: white;
+    border: none;
+    .account-icon {
+      font-size: 30px;
+    }
+  }
+  &__account-button:hover {
+    cursor: pointer;
+  }
+
+  &__login-button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

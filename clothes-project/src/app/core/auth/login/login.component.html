@@ -1,0 +1,63 @@
+<div class="login-container">
+  <h1>Sign in to continue</h1>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <mat-icon><span class="person-icon"> person </span></mat-icon>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        #email="ngModel"
+        email
+        ngModel
+        required
+        matInput
+        name="email"
+        placeholder="Enter email address"
+      />
+      <mat-icon *ngIf="email.untouched && !email.valid" matSuffix
+        >sentiment_very_satisfied</mat-icon
+      >
+      <mat-icon *ngIf="!email.valid && email.touched" matSuffix
+        >sentiment_dissatisfied</mat-icon
+      >
+      <mat-icon *ngIf="email.valid" matSuffix
+        ><span class="valid-input"> done </span></mat-icon
+      >
+      <mat-error *ngIf="!email.valid && email.touched">
+        Please enter a valid email!
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input
+        type="password"
+        #password="ngModel"
+        ngModel
+        required
+        name="password"
+        matInput
+        placeholder="Enter password"
+      />
+      <mat-icon *ngIf="password.untouched && !password.valid" matSuffix
+        >sentiment_very_satisfied</mat-icon
+      >
+      <mat-icon *ngIf="!password.valid && password.touched" matSuffix
+        >sentiment_dissatisfied</mat-icon
+      >
+      <mat-icon *ngIf="password.valid" matSuffix
+        ><span class="valid-input"> done </span></mat-icon
+      >
+      <mat-error *ngIf="!password.valid && password.touched">
+        Please enter a valid password!
+      </mat-error>
+    </mat-form-field>
+    <button
+      [disabled]="!f.valid"
+      mat-raised-button
+      type="submit"
+      color="primary"
+    >
+      Login
+    </button>
+  </form>
+</div>
