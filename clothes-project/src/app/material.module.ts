@@ -4,7 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 
 const material: any[] = [
   MatToolbarModule,
@@ -16,6 +16,6 @@ const material: any[] = [
 
 @NgModule({
   imports: [...material],
-  exports: [...material],
+  exports: [...material]
 })
 export class AngularMaterialModule {}

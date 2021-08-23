@@ -1,7 +1,7 @@
 @import '../../../shared/styles/global-colors.scss';
 @import '../../../shared/styles/reusable-styles.scss';
 
-.login-component {
+.login-container {
   height: 90vh;
   width: 100%;
   display: flex;
@@ -11,11 +11,13 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+
   h1 {
     margin: 100px 0;
     font-weight: 500;
     color: black;
   }
+
   form {
     display: flex;
     flex-direction: column;
@@ -24,25 +26,25 @@
     height: fit-content;
     width: fit-content;
     border: 1px solid $primary-color;
-    padding: 25px 25px 5px 25px;
+    padding: 25px 25px 5px;
     border-radius: 3px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.4) 5px 4px 20px;
-    .material-icons-outlined {
+
+    .person-icon {
       color: $primary-color;
       font-size: 30px;
       margin-bottom: 30px;
       line-height: 0;
     }
+
     .valid-input {
       color: $valid-color;
-    }
-    span.invalid-input {
-      @include warning-invalid-input-message;
     }
     p {
       margin-top: 10px;
     }
+
     button:disabled {
       cursor: not-allowed;
     }
