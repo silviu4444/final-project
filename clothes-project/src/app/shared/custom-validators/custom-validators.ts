@@ -11,16 +11,9 @@ export class CustomValidators {
       !confirmPassword!.hasError('required')
         ? null
         : { ...confirmPassword!.errors, notSame: true };
-
     confirmPassword!.setErrors(isMach);
     return password!.value === confirmPassword!.value
       ? null
       : { notSame: true };
   };
-
-  static test() {
-
-  }
 }
-
-console.log(new CustomValidators())

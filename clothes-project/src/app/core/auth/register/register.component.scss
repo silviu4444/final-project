@@ -1,5 +1,4 @@
 @import '../../../shared/styles/global-colors.scss';
-@import '../../../shared/styles/reusable-styles.scss';
 
 .register-container {
   width: 100%;
@@ -31,7 +30,6 @@
     }
 
     .invalid-input {
-      @include warning-invalid-input-message;
       width: 250px;
       text-align: start;
     }

@@ -2,32 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  FormGroupDirective,
-  NgForm,
   Validators,
 } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { CustomValidators } from './custom-validators/custom-validators';
 
-export class errorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
+import { CustomValidators } from 'src/app/shared/custom-validators/custom-validators';
+import { errorStateMatcher } from 'src/app/shared/custom-validators/errorStateMatcher';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  animations: [],
 })
 export class RegisterComponent implements OnInit {
   signupForm: FormGroup = new FormGroup({});

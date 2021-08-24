@@ -15,7 +15,7 @@
         ><span class="valid-input"> done </span></mat-icon
       >
       <mat-error *ngIf="signupForm.get('email').hasError('required')"
-        >Email is <strong>required</strong>!</mat-error
+        >Email is <strong> required </strong>!</mat-error
       >
       <mat-error
         *ngIf="
@@ -42,13 +42,13 @@
             signupForm.get('passwords.password').errors?.minlength?.actualLength
           "
         >
-          Actual Length: {{
+          Actual Length:
+          {{
             signupForm.get('passwords.password').errors.minlength.actualLength
           }}
           /
           {{
-            signupForm.get('passwords.password').errors.minlength
-              .requiredLength
+            signupForm.get('passwords.password').errors.minlength.requiredLength
           }}
         </mat-hint>
         <mat-icon *ngIf="signupForm.get('passwords.password').valid" matSuffix
