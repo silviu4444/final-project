@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Form, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,7 +11,8 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [FormsModule, BrowserAnimationsModule]
+      imports: [FormsModule, BrowserAnimationsModule],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
 
@@ -24,7 +26,7 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('onSubmit should return nothing', () => {
+  it('onSubmit should console a form', () => {
     const form = {} as Form;
     const spyOnSubmit = spyOn(window['console'], 'log');
     component.onSubmit(form);

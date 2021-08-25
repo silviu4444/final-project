@@ -12,6 +12,7 @@ import { LoginComponent } from './core/auth/login/login.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { RegisterComponent } from './core/auth/register/register.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
     HeaderComponent,
     FooterComponent,
     LoginComponent,
+    RegisterComponent,
     PageNotFoundComponent
   ],
   imports: [

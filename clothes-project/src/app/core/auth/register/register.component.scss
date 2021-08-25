@@ -1,8 +1,8 @@
 @import '../../../shared/styles/global-colors.scss';
 
-.login-container {
-  height: 90vh;
+.register-container {
   width: 100%;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,35 +13,49 @@
 
   h1 {
     margin: 100px 0;
-    font-weight: 500;
-    color: black;
   }
 
   form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: fit-content;
-    width: fit-content;
     border: 1px solid $primary-color;
-    padding: 25px 25px 5px;
+    padding: 20px;
     border-radius: 3px;
+    display: flex;
+    width: 250px;
+    flex-direction: column;
     background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.4) 5px 4px 20px;
 
-    .person-icon {
-      color: $primary-color;
-      font-size: 30px;
-      margin-bottom: 30px;
-      line-height: 0;
+    .password-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .invalid-input {
+      width: 250px;
+      text-align: start;
     }
 
     .valid-input {
       color: $valid-color;
     }
-    p {
-      margin-top: 10px;
+
+    .text-danger {
+      color: #a02935;
+      font-size: 15px;
+
+      span {
+        position: relative;
+        top: 6px;
+      }
+    }
+
+    .text-success {
+      color: #23923d;
+      font-size: 15px;
+
+      span {
+        position: relative;
+        top: 6px;
+      }
     }
 
     button:disabled {
