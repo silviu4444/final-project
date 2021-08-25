@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Form, FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login.component';
 
@@ -27,7 +27,7 @@ describe('LoginComponent', () => {
   });
 
   it('onSubmit should console a form', () => {
-    const form = {} as Form;
+    const form = {} as NgForm;
     const spyOnSubmit = spyOn(window['console'], 'log');
     component.onSubmit(form);
     expect(spyOnSubmit).toHaveBeenCalled();

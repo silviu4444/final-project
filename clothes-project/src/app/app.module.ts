@@ -13,6 +13,8 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { RegisterComponent } from './core/auth/register/register.component';
+import { HttpClientModule } from '@angular/common/http';
+import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { RegisterComponent } from './core/auth/register/register.component';
     FooterComponent,
     LoginComponent,
     RegisterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ import { RegisterComponent } from './core/auth/register/register.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HomeModule,
+    HttpClientModule,
     AngularMaterialModule,
     CommonModule
   ],
