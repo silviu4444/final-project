@@ -12,7 +12,7 @@ const material: any[] = [
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
-  MatSnackBarModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

@@ -1,35 +1,51 @@
 @import '../../../shared/styles/global-colors.scss';
-@import '../../../shared/styles/shared-styles.scss';
 
 .register-container {
-  @include auth-components-container(100%, 90vh);
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('../../../../assets/images/login-background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 
   h1 {
     margin: 100px 0;
   }
 
   form {
-    @include custom-form(250px, 300px, 25px 25px 15px);
-
-    .person-icon {
-      color: $primary-color;
-      font-size: 30px;
-      line-height: 0;
-    }
+    border: 1px solid $primary-color;
+    padding: 20px;
+    border-radius: 3px;
+    display: flex;
+    width: 250px;
+    flex-direction: column;
+    background-color: white;
 
     .password-group {
       display: flex;
       flex-direction: column;
     }
 
+    .invalid-input {
+      width: 250px;
+      text-align: start;
+    }
+
     .valid-input {
       color: $valid-color;
     }
 
-    .person-icon {
-      color: $primary-color;
-      font-size: 40px;
-      line-height: 0;
+    .text-danger {
+      color: #a02935;
+      font-size: 15px;
+
+      span {
+        position: relative;
+        top: 6px;
+      }
     }
 
     .text-success {
