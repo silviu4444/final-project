@@ -28,9 +28,7 @@ export class RegisterComponent implements OnInit {
 
   signupForm: FormGroup = new FormGroup({});
   matcher = new errorStateMatcher();
-
   isLoading = false;
-  error: string = null;
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -61,7 +59,6 @@ export class RegisterComponent implements OnInit {
     const email = this.signupForm.value.email;
     const password = this.signupForm.value.passwords.password;
     this.isLoading = true;
-
     let auth$: Observable<AuthResponseData> = this.authService.signup(email, password);
     auth$.subscribe(
       (responseData) => {

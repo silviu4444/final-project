@@ -1,3 +1,4 @@
+import { HttpResponseBase } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -31,18 +32,18 @@ export class LoginComponent {
     if (!form.valid) return;
     const email = form.controls.email.value;
     const password = form.controls.password.value;
-    let authObs: Observable<AuthResponseData> = this.authService.login(
+    let auth$: Observable<AuthResponseData> = this.authService.login(
       email,
       password
     );
     this.isLoading = true;
-    authObs.subscribe(
-      (responseData) => {
+    auth$.subscribe(
+      (responseData: AuthResponseData) => {
         this.isLoading = false;
         this.openSnackBar('Logged in succesfully!');
         this.router.navigate(['/']);
       },
-      (errorResponse) => {
+      (errorResponse: string) => {
         this.isLoading = false;
         this.handleLoginErrors(errorResponse, form);
       }

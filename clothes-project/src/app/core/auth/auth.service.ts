@@ -90,6 +90,7 @@ export class AuthService {
     return throwError(errorMessage);
   }
 
+
   private handleAuthentication(
     email: string,
     userId: string,
