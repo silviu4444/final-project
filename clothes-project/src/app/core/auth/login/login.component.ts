@@ -1,10 +1,11 @@
-import { HttpResponseBase } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthResponseData, AuthService } from '../auth.service';
+import { AuthService } from '../auth.service';
+import { AuthResponseData } from '../interfaces/interfaces';
+import * as errorResponses from '../authResponseErrors';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,7 @@ export class LoginComponent {
     if (!form.valid) return;
     const email = form.controls.email.value;
     const password = form.controls.password.value;
-    let auth$: Observable<AuthResponseData> = this.authService.login(
+    let auth$: Observable<AuthResponseData> = this.authService.login$(
       email,
       password
     );
@@ -51,20 +52,19 @@ export class LoginComponent {
   }
 
   handleLoginErrors(error: string, form: FormGroup) {
-    const EMAIL_ERROR = 'This email does not exist';
-    const PASSWORD_ERROR = 'This password is not correct';
-    const DEFAULT_ERROR = 'An unknown error ocurred';
     const errorCases = {
-      [EMAIL_ERROR]: function () {
+      [errorResponses.EMAIL_ERROR]: function () {
         form.get('email').setErrors({ emailNotExist: true });
       },
-      [PASSWORD_ERROR]: function () {
+      [errorResponses.PASSWORD_ERROR]: function () {
         form.get('password').setErrors({ pwIncorrect: true });
       },
-      [DEFAULT_ERROR]: () => {
+      [errorResponses.DEFAULT_ERROR]: () => {
         this.openSnackBar('An unknown error ocurred. Try again later');
       }
     };
-    errorCases[error] ? errorCases[error]() : errorCases[DEFAULT_ERROR]();
+    errorCases[error]
+      ? errorCases[error]()
+      : errorCases[errorResponses.DEFAULT_ERROR]();
   }
 }

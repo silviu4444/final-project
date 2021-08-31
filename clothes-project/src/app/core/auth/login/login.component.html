@@ -1,6 +1,6 @@
 <div class="login-container">
   <h1>Sign in to continue</h1>
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
     <div>
       <mat-icon><span class="person-icon"> person </span></mat-icon>
     </div>
@@ -63,7 +63,7 @@
       </mat-error>
     </mat-form-field>
     <button
-      [disabled]="!f.valid"
+      [disabled]="!loginForm.valid"
       mat-raised-button
       type="submit"
       color="primary"

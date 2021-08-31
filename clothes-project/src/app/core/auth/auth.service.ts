@@ -5,67 +5,57 @@ import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
+import { AuthResponseData } from './interfaces/interfaces';
 import { User } from './user.model';
-
-export interface AuthResponseData {
-  kind: string;
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered?: boolean;
-}
+import * as errorResponses from './authResponseErrors';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user$ = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient, private router: Router) {}
-  login(email: string, password: string) {
+  login$(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
-          environment.firebaseAPIKey,
+        environment.loginUrl + environment.firebaseAPIKey,
         {
-          email: email,
-          password: password,
+          email,
+          password,
           returnSecureToken: true
         }
       )
       .pipe(
-        catchError(this.handleError),
-        tap((responseData) => {
+        tap((responseData: AuthResponseData) => {
           this.handleAuthentication(
             responseData.email,
             responseData.localId,
             responseData.idToken,
             +responseData.expiresIn
           );
-        })
+        }),
+        catchError(this.handleError)
       );
   }
 
   private handleError(errorResponse: HttpErrorResponse) {
-    let errorMessage = 'An unknown error ocurred!';
+    let errorMessage = 'An unknown error ocurred';
     const notAnErrorFromBE = !errorResponse.error || !errorResponse.error.error;
     if (notAnErrorFromBE) {
       return throwError(errorMessage);
     }
     switch (errorResponse.error.error.message) {
       case 'EMAIL_EXISTS':
-        errorMessage = 'This email exist already';
+        errorMessage = errorResponses.EMAIL_EXISTS;
         break;
       case 'EMAIL_NOT_FOUND':
-        errorMessage = 'This email does not exist';
+        errorMessage = errorResponses.EMAIL_ERROR;
         break;
       case 'INVALID_PASSWORD':
-        errorMessage = 'This password is not correct';
+        errorMessage = errorResponses.PASSWORD_ERROR;
     }
 
     return throwError(errorMessage);
   }
-
 
   private handleAuthentication(
     email: string,

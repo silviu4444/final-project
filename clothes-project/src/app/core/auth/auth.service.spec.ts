@@ -5,11 +5,14 @@ import {
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthResponseData, AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
+import { AuthService } from './auth.service';
+import { AuthResponseData } from './interfaces/interfaces';
+import * as errorResponses from './authResponseErrors';
 
 const email = 'test@test.com';
 const password = 'test1234';
-const loginUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCFzrG03M-I4Wo-atIfLtdVMdM2XwjsUNw`;
+const loginUrl = environment.loginUrl + environment.firebaseAPIKey;
 const response: AuthResponseData = {
   kind: 'test',
   localId: 'test',
@@ -27,7 +30,7 @@ const fakeBEResponse = (errorText: string) => {
         message: errorText,
         errors: [
           {
-            message: errorText,
+            message: errorText
           }
         ]
       }
@@ -47,13 +50,11 @@ describe('AuthService', () => {
     controller = TestBed.inject(HttpTestingController);
   });
 
-  it('should be created', () => {
-    expect(authService).toBeTruthy();
-  });
+  it('should be created', () => expect(authService).toBeTruthy());
 
   it('should get data from server after logging in', () => {
     let expectedResponse: AuthResponseData | null;
-    authService.login(email, password).subscribe((response) => {
+    authService.login$(email, password).subscribe((response) => {
       expectedResponse = response;
     });
 
@@ -67,7 +68,7 @@ describe('AuthService', () => {
 
     let expectedError: HttpErrorResponse | null;
 
-    authService.login(email, password).subscribe(
+    authService.login$(email, password).subscribe(
       () => {
         fail('next handler must not be called');
       },
@@ -93,7 +94,7 @@ describe('AuthService', () => {
     authService['handleError'](fakeResponse).subscribe(
       () => {},
       (errorResponse) => {
-        expect(errorResponse).toEqual('An unknown error ocurred!');
+        expect(errorResponse).toEqual(errorResponses.DEFAULT_ERROR);
       }
     );
   });
@@ -104,7 +105,7 @@ describe('AuthService', () => {
     ).subscribe(
       () => {},
       (error) => {
-        expect(error).toEqual('This password is not correct');
+        expect(error).toEqual(errorResponses.PASSWORD_ERROR);
       }
     );
   });
@@ -115,7 +116,7 @@ describe('AuthService', () => {
     ).subscribe(
       () => {},
       (error) => {
-        expect(error).toEqual('This email exist already');
+        expect(error).toEqual(errorResponses.EMAIL_EXISTS);
       }
     );
   });
@@ -126,7 +127,7 @@ describe('AuthService', () => {
     ).subscribe(
       () => {},
       (error) => {
-        expect(error).toEqual('This email does not exist');
+        expect(error).toEqual(errorResponses.EMAIL_ERROR);
       }
     );
   });
