@@ -50,6 +50,25 @@ describe('AuthService', () => {
     });
     authService = TestBed.inject(AuthService);
     controller = TestBed.inject(HttpTestingController);
+    let store = {};
+    const mockLocalStorage = {
+      getItem: (key: string): string => {
+        return key in store ? store[key] : null;
+      },
+      setItem: (key: string, value: string) => {
+        store[key] = `${value}`;
+      },
+      removeItem: (key: string) => {
+        delete store[key];
+      },
+      clear: () => {
+        store = {};
+      }
+    };
+    spyOn(localStorage, 'getItem').and.callFake(mockLocalStorage.getItem);
+    spyOn(localStorage, 'setItem').and.callFake(mockLocalStorage.setItem);
+    spyOn(localStorage, 'removeItem').and.callFake(mockLocalStorage.removeItem);
+    spyOn(localStorage, 'clear').and.callFake(mockLocalStorage.clear);
   });
 
   it('should be created', () => expect(authService).toBeTruthy());
@@ -146,4 +165,8 @@ describe('AuthService', () => {
       }
     );
   });
+
+  it('autoLogin should not login if an user is not defined in local storage', () => {
+    expect(authService.autoLogin()).toBeFalsy();
+  })
 });

@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) {}
 
   @Input() matDrawerRef: MatDrawer;
