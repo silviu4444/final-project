@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
 
@@ -7,9 +8,10 @@ import { AuthService } from 'src/app/core/auth/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
+  @Input() matDrawerRef: MatDrawer;
   isAuthenticated = false;
   private userSub: Subscription;
 
@@ -17,6 +19,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSub = this.authService.user$.subscribe((user) => {
       this.isAuthenticated = !!user;
     });
+  }
+
+  onToggleSidebar() {
+    this.matDrawerRef.toggle();
   }
 
   ngOnDestroy() {

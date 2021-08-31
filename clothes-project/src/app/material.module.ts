@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const material: any[] = [
   MatToolbarModule,
@@ -13,6 +14,7 @@ const material: any[] = [
   MatInputModule,
   MatButtonModule,
   MatSnackBarModule,
+  MatSidenavModule
 ];
 
 @NgModule({
