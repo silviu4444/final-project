@@ -30,4 +30,8 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should execute toggle function from mat drawer', () => {
+    component.onToggleSidebar()
+  })
 });
