@@ -11,8 +11,9 @@ import {
 
 import { CustomValidators } from 'src/app/shared/custom-validators/custom-validators';
 import { errorStateMatcher } from 'src/app/shared/custom-validators/errorStateMatcher';
-import { AuthResponseData, AuthService } from '../auth.service';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { AuthResponseData } from '../interfaces/interfaces';
 
 @Component({
   selector: 'app-register',
@@ -59,7 +60,7 @@ export class RegisterComponent implements OnInit {
     const email = this.signupForm.value.email;
     const password = this.signupForm.value.passwords.password;
     this.isLoading = true;
-    let auth$: Observable<AuthResponseData> = this.authService.signup(email, password);
+    let auth$: Observable<AuthResponseData> = this.authService.signup$(email, password);
     auth$.subscribe(
       (responseData) => {
         this.isLoading = false;

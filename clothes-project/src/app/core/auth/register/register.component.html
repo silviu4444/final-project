@@ -1,6 +1,9 @@
 <div class="register-container">
   <h1>Register</h1>
   <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-icon><span class="person-icon"> how_to_reg </span></mat-icon>
+    </div>
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input
@@ -25,6 +28,9 @@
       >
         Enter a valid email!
       </mat-error>
+      <mat-error *ngIf="signupForm.get('email').hasError('emailExist')"
+        >This email already exist!</mat-error
+      >
     </mat-form-field>
     <div formGroupName="passwords" class="password-group">
       <mat-form-field appearance="outline">
@@ -100,6 +106,7 @@
       color="primary"
     >
       Register
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
     </button>
   </form>
 </div>
