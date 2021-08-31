@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) {}
 
-  signupForm: FormGroup = new FormGroup({});
+  signupForm = new FormGroup({});
   matcher = new errorStateMatcher();
   isLoading = false;
 

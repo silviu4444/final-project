@@ -20,13 +20,13 @@ export class AuthService {
       .post<AuthResponseData>(
         environment.registerUrl + environment.firebaseAPIKey,
         {
-          email: email,
-          password: password,
+          email,
+          password,
           returnSecureToken: true
         }
       )
       .pipe(
-        tap((responseData) => {
+        tap((responseData: AuthResponseData) => {
           this.handleAuthentication(
             responseData.email,
             responseData.localId,

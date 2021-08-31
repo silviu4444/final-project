@@ -1,5 +1,7 @@
 export const environment = {
-  production: true,
+  production: false,
   firebaseAPIKey: 'AIzaSyCFzrG03M-I4Wo-atIfLtdVMdM2XwjsUNw',
-  test: 'mama'
+  loginUrl:
+    'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=',
+  registerUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='
 };
