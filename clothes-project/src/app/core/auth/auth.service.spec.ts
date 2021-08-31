@@ -13,6 +13,7 @@ import * as errorResponses from './authResponseErrors';
 const email = 'test@test.com';
 const password = 'test1234';
 const loginUrl = environment.loginUrl + environment.firebaseAPIKey;
+const registerUrl = environment.registerUrl + environment.firebaseAPIKey;
 const response: AuthResponseData = {
   kind: 'test',
   localId: 'test',
@@ -60,6 +61,19 @@ describe('AuthService', () => {
 
     const request = controller.expectOne(loginUrl);
     request.flush(response);
+    expect(expectedResponse).toEqual(response);
+  });
+
+  it('should get data from server after registering', () => {
+    let expectedResponse: AuthResponseData | null;
+    authService.signup$(email, password).subscribe((response) => {
+      expectedResponse = response;
+    });
+
+    const request = controller.expectOne(registerUrl);
+    request.flush(response);
+    controller.verify();
+
     expect(expectedResponse).toEqual(response);
   });
 

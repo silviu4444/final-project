@@ -14,6 +14,30 @@ export class AuthService {
   user$ = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient, private router: Router) {}
+
+  signup$(email: string, password: string) {
+    return this.http
+      .post<AuthResponseData>(
+        environment.registerUrl + environment.firebaseAPIKey,
+        {
+          email,
+          password,
+          returnSecureToken: true
+        }
+      )
+      .pipe(
+        tap((responseData: AuthResponseData) => {
+          this.handleAuthentication(
+            responseData.email,
+            responseData.localId,
+            responseData.idToken,
+            +responseData.expiresIn
+          );
+        }),
+        catchError(this.handleError)
+      );
+  }
+
   login$(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
