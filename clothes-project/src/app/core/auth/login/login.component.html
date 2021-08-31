@@ -1,7 +1,9 @@
 <div class="login-container">
   <h1>Sign in to continue</h1>
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <mat-icon><span class="person-icon"> person </span></mat-icon>
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+    <div>
+      <mat-icon><span class="person-icon"> person </span></mat-icon>
+    </div>
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input
@@ -23,8 +25,14 @@
       <mat-icon *ngIf="email.valid" matSuffix
         ><span class="valid-input"> done </span></mat-icon
       >
-      <mat-error *ngIf="!email.valid && email.touched">
+      <mat-error *ngIf="email.hasError('required')"
+        >Email is <strong>required</strong></mat-error
+      >
+      <mat-error *ngIf="email.hasError('email') && !email.hasError['required']">
         Please enter a valid email!
+      </mat-error>
+      <mat-error *ngIf="email.hasError('emailNotExist')">
+        This email does not exist!
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
@@ -47,17 +55,21 @@
       <mat-icon *ngIf="password.valid" matSuffix
         ><span class="valid-input"> done </span></mat-icon
       >
-      <mat-error *ngIf="!password.valid && password.touched">
-        Please enter a valid password!
+      <mat-error *ngIf="password.hasError('required')">
+        Password is <strong>required</strong>!
+      </mat-error>
+      <mat-error *ngIf="password.hasError('pwIncorrect')">
+        Incorrect password!
       </mat-error>
     </mat-form-field>
     <button
-      [disabled]="!f.valid"
+      [disabled]="!loginForm.valid"
       mat-raised-button
       type="submit"
       color="primary"
     >
       Login
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
     </button>
     <p>Not registered yet? <a routerLink="/auth/register">Register</a></p>
   </form>

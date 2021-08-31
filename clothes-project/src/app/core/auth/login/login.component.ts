@@ -1,13 +1,70 @@
 import { Component } from '@angular/core';
-import { Form } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from '../auth.service';
+import { AuthResponseData } from '../interfaces/interfaces';
+import * as errorResponses from '../authResponseErrors';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  onSubmit(form: Form) {
-    console.log(form);
+  constructor(
+    private authService: AuthService,
+    private _snackBar: MatSnackBar,
+    private router: Router
+  ) {}
+
+  isLoading = false;
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'Close', {
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      duration: 3000
+    });
+  }
+
+  onSubmit({ form }: NgForm) {
+    if (!form.valid) return;
+    const email = form.controls.email.value;
+    const password = form.controls.password.value;
+    let auth$: Observable<AuthResponseData> = this.authService.login$(
+      email,
+      password
+    );
+    this.isLoading = true;
+    auth$.subscribe(
+      (responseData: AuthResponseData) => {
+        this.isLoading = false;
+        this.openSnackBar('Logged in succesfully!');
+        this.router.navigate(['/']);
+      },
+      (errorResponse: string) => {
+        this.isLoading = false;
+        this.handleLoginErrors(errorResponse, form);
+      }
+    );
+  }
+
+  handleLoginErrors(error: string, form: FormGroup) {
+    const errorCases = {
+      [errorResponses.EMAIL_ERROR]: function () {
+        form.get('email').setErrors({ emailNotExist: true });
+      },
+      [errorResponses.PASSWORD_ERROR]: function () {
+        form.get('password').setErrors({ pwIncorrect: true });
+      },
+      [errorResponses.DEFAULT_ERROR]: () => {
+        this.openSnackBar('An unknown error ocurred. Try again later');
+      }
+    };
+    errorCases[error]
+      ? errorCases[error]()
+      : errorCases[errorResponses.DEFAULT_ERROR]();
   }
 }
