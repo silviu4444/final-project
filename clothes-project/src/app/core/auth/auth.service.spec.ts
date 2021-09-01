@@ -3,13 +3,14 @@ import {
   HttpClientTestingModule,
   HttpTestingController
 } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
 import { AuthResponseData } from './interfaces/interfaces';
 import * as errorResponses from './authResponseErrors';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const email = 'test@test.com';
 const password = 'test1234';
@@ -23,6 +24,13 @@ const response: AuthResponseData = {
   registered: true,
   refreshToken: 'test',
   expiresIn: '3600'
+};
+
+const fakeUser = {
+  email: 'test@test.com',
+  id: 'test id',
+  _token: 'test token',
+  _tokenExpirationDate: '2100-09-01T10:07:03.259Z'
 };
 
 const fakeBEResponse = (errorText: string) => {
@@ -46,7 +54,12 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule, MatSnackBarModule]
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        MatSnackBarModule,
+        BrowserAnimationsModule
+      ]
     });
     authService = TestBed.inject(AuthService);
     controller = TestBed.inject(HttpTestingController);
@@ -167,6 +180,54 @@ describe('AuthService', () => {
   });
 
   it('autoLogin should not login if an user is not defined in local storage', () => {
-    expect(authService.autoLogin()).toBeFalsy();
-  })
+    authService.autoLogin();
+    expect(localStorage.getItem('userData')).toBeFalsy();
+  });
+
+  it('autoLogin should login if an user is defined in local storage and the next user should have a mocked token property', () => {
+    localStorage.setItem('userData', JSON.stringify(fakeUser));
+    authService.autoLogin();
+    authService.user$.subscribe((user) => {
+      expect(user.token).toEqual('test token');
+    });
+  });
+
+  it('should not create an user if the User interface returns no token', () => {
+    const modifiedUser = {
+      ...fakeUser,
+      _tokenExpirationDate: '2000-09-01T10:07:03.259Z'
+    };
+    localStorage.setItem('userData', JSON.stringify(modifiedUser));
+    authService.autoLogin();
+    authService.user$.subscribe((user) => {
+      expect(user).toEqual(null);
+    });
+  });
+
+  it('logout should call mat snackBar', () => {
+    const spyOnSnackBar = spyOn(authService['_snackBar'], 'open');
+    authService.logout();
+    expect(spyOnSnackBar).toHaveBeenCalledWith(
+      'You have been logged out.',
+      'Close',
+      {
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom'
+      }
+    );
+  });
+
+  it('logout function should call clearTimeout', () => {
+    const spyOnClearTiemout = spyOn(window, 'clearTimeout');
+    authService['tokenExpirationTimer'] = 2;
+    authService.logout();
+    expect(spyOnClearTiemout).toHaveBeenCalled();
+  });
+
+  it('autoLogout should call setTimeout', fakeAsync(() => {
+    const spyOnSetTimeout = spyOn(window, 'setTimeout').and.callThrough();
+    authService.autoLogout(200);
+    flush();
+    expect(spyOnSetTimeout).toHaveBeenCalled();
+  }));
 });
