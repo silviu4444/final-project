@@ -21,7 +21,6 @@ export class LoginComponent {
 
   isLoading = false;
 
-
   onSubmit({ form }: NgForm) {
     if (!form.valid) return;
     const email = form.controls.email.value;
@@ -53,7 +52,11 @@ export class LoginComponent {
         form.get('password').setErrors({ pwIncorrect: true });
       },
       [errorResponses.DEFAULT_ERROR]: () => {
-        this.customSnackBar.open('An unknown error ocurred. Try again later')
+        this.customSnackBar.open(
+          'An unknown error ocurred. Try again later',
+          null,
+          3000
+        );
       }
     };
     errorCases[error]
