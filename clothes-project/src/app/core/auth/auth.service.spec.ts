@@ -205,15 +205,11 @@ describe('AuthService', () => {
   });
 
   it('logout should call mat snackBar', () => {
-    const spyOnSnackBar = spyOn(authService['_snackBar'], 'open');
+    const spyOnSnackBar = spyOn(authService['customSnackBarService'], 'open');
     authService.logout();
     expect(spyOnSnackBar).toHaveBeenCalledWith(
       'You have been logged out.',
-      'Close',
-      {
-        horizontalPosition: 'right',
-        verticalPosition: 'bottom'
-      }
+      'Close'
     );
   });
 
