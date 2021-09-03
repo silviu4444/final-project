@@ -1,3 +1,4 @@
+import { Laptop } from '../models/laptop.model';
 import { MobilePhone } from '../models/phone.model';
 import * as HomeActions from './home.actions';
 
@@ -7,11 +8,13 @@ export interface HomeState {
 
 export interface HomeProducts {
   mobilePhones: MobilePhone[];
+  laptops: Laptop[];
 }
 
 const initialState: HomeState = {
   homeProducts: {
-    mobilePhones: []
+    mobilePhones: [],
+    laptops: []
   }
 };
 
@@ -24,7 +27,8 @@ export function homeReducer(
       return {
         ...state,
         homeProducts: {
-          mobilePhones: action.payload
+          mobilePhones: action.payload.mobilePhones,
+          laptops: action.payload.laptops
         }
       };
     default:
