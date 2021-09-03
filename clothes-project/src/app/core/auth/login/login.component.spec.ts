@@ -110,7 +110,7 @@ describe('LoginComponent', () => {
     const spyOnOpenSnackBar = spyOn(component['customSnackBar'], 'open');
     component.handleLoginErrors('dumb error', form);
     expect(spyOnOpenSnackBar).toHaveBeenCalledWith(
-      'An unknown error ocurred. Try again later'
+      'An unknown error ocurred. Try again later', null, 3000
     );
   });
 });
