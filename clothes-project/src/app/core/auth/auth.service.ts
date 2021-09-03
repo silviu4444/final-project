@@ -1,6 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -9,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { AuthResponseData } from './interfaces/interfaces';
 import { User } from './user.model';
 import * as errorResponses from './authResponseErrors';
+import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -18,7 +18,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private _snackBar: MatSnackBar
+    private customSnackBarService: CustomSnackbarService
   ) {}
   signup$(email: string, password: string) {
     return this.http
@@ -95,10 +95,7 @@ export class AuthService {
   logout() {
     this.user$.next(null);
     localStorage.removeItem('userData');
-    this._snackBar.open('You have been logged out.', 'Close', {
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom'
-    });
+    this.customSnackBarService.open('You have been logged out.', 'Close');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { AuthResponseData } from '../interfaces/interfaces';
 import * as errorResponses from '../authResponseErrors';
+import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -15,19 +15,12 @@ import * as errorResponses from '../authResponseErrors';
 export class LoginComponent {
   constructor(
     private authService: AuthService,
-    private _snackBar: MatSnackBar,
+    private customSnackBar: CustomSnackbarService,
     private router: Router
   ) {}
 
   isLoading = false;
 
-  openSnackBar(message: string) {
-    this._snackBar.open(message, 'Close', {
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-      duration: 3000
-    });
-  }
 
   onSubmit({ form }: NgForm) {
     if (!form.valid) return;
@@ -41,7 +34,7 @@ export class LoginComponent {
     auth$.subscribe(
       (responseData: AuthResponseData) => {
         this.isLoading = false;
-        this.openSnackBar('Logged in succesfully!');
+        this.customSnackBar.open('Logged in succesfully!', 'Close', 3000);
         this.router.navigate(['/']);
       },
       (errorResponse: string) => {
@@ -60,7 +53,7 @@ export class LoginComponent {
         form.get('password').setErrors({ pwIncorrect: true });
       },
       [errorResponses.DEFAULT_ERROR]: () => {
-        this.openSnackBar('An unknown error ocurred. Try again later');
+        this.customSnackBar.open('An unknown error ocurred. Try again later')
       }
     };
     errorCases[error]

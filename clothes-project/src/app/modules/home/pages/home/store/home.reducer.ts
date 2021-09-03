@@ -1,18 +1,33 @@
+import { MobilePhone } from '../models/phone.model';
 import * as HomeActions from './home.actions';
 
-const initialState = {
-  mobilePhones: []
+export interface HomeState {
+  homeProducts: HomeProducts;
+}
+
+export interface HomeProducts {
+  mobilePhones: MobilePhone[];
+}
+
+const initialState: HomeState = {
+  homeProducts: {
+    mobilePhones: []
+  }
 };
 
 export function homeReducer(
-  state = initialState,
-  action: HomeActions.GetHomeData
+  state: HomeState = initialState,
+  action: HomeActions.HomeActions
 ) {
   switch (action.type) {
-    case HomeActions.GET_HOME_DATA:
+    case HomeActions.SET_HOME_DATA:
       return {
         ...state,
-        mobilePhones: [action.payload]
+        homeProducts: {
+          mobilePhones: action.payload
+        }
       };
+    default:
+      return state;
   }
 }

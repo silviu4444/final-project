@@ -16,7 +16,9 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { RegisterComponent } from './core/auth/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
-import { homeReducer } from './modules/home/pages/home/store/home.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { HomeEffects } from './modules/home/pages/home/store/home.effects';
+import { appReducer } from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { homeReducer } from './modules/home/pages/home/store/home.reducer';
     HttpClientModule,
     AngularMaterialModule,
     CommonModule,
-    StoreModule.forRoot({homePage: homeReducer})
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([HomeEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
