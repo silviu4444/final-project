@@ -50,7 +50,7 @@ describe('HomeListComponent', () => {
 
   it('store subscription should add items on mobilePones array', () => {
     component['store$'].select('homeStore').subscribe(() => {
-      expect(component.mobilePhones.length).toBeGreaterThan(0);
+      expect(component.homeList.mobilePhones.length).toBeGreaterThan(0);
     });
   })
 });

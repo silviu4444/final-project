@@ -2,20 +2,20 @@
   <mat-card class="home-item__phone-product">
     <img
       class="home-item__phone-image"
-      [src]="phone.imgURL"
-      alt="{{ phone.model }}"
+      [src]="item.imgURL"
+      alt="{{ item.model }}"
     />
     <mat-card-header>
       <mat-card-title
         ><p class="home-item__phone-title">
-          {{ getPhoneTitle() }}
+          {{ getTitle() }}
         </p></mat-card-title
       >
     </mat-card-header>
     <mat-card-content>
       <div class="home-item__price-container">
         <p class="phone-price">
-          {{ phone.price }}
+          {{ item.price }}
         </p>
         <span> 99</span> $
       </div>

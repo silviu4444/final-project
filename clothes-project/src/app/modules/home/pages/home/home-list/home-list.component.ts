@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.reducer';
-import { Laptop } from '../models/laptop.model';
-import { MobilePhone } from '../models/phone.model';
+import { HomeProducts } from '../store/home.reducer';
 
 @Component({
   selector: 'app-home-list',
@@ -13,18 +12,17 @@ import { MobilePhone } from '../models/phone.model';
 export class HomeListComponent implements OnInit, OnDestroy {
   constructor(private store$: Store<AppState>) {}
 
-  mobilePhones: MobilePhone[] = [];
-  laptops: Laptop[] = [];
+  homeList: HomeProducts = ({
+    mobilePhones: [],
+    laptops: []
+  } = { mobilePhones: [], laptops: [] });
   subscription: Subscription;
 
   ngOnInit() {
     this.subscription = this.store$
       .select('homeStore')
       .subscribe((homeState) => {
-        const phones = homeState.homeProducts.mobilePhones;
-        const laptops = homeState.homeProducts.laptops;
-        this.mobilePhones = phones;
-        this.laptops = laptops;
+        this.homeList = homeState.homeProducts;
       });
   }
 

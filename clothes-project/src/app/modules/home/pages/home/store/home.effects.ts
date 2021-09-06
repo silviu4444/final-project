@@ -18,7 +18,6 @@ export class HomeEffects {
       );
     }),
     map((homeState) => {
-      console.log(homeState)
       return new HomeActions.SetHomeData(homeState);
     })
   );

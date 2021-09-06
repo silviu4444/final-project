@@ -4,6 +4,7 @@ export interface MobilePhone {
   manufacturer: string;
   model: string;
   price: number;
+  oldPrice: number;
   reviews: number;
   specs: {
     sim: string;
@@ -12,4 +13,5 @@ export interface MobilePhone {
     memoryRam: string[];
   };
   stars: number;
+  type: string;
 }

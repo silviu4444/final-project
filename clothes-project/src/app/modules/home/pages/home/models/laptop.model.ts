@@ -4,7 +4,7 @@ export interface Laptop {
   manufacturer: string;
   model: string;
   price: number;
-  oldPrice: string;
+  oldPrice: number;
   reviews: number;
   specs: {
     inch: number;
@@ -13,4 +13,5 @@ export interface Laptop {
     display: string;
   };
   stars: number;
+  type: string;
 }
