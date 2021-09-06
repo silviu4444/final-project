@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { HomeService } from '../../home.service';
 import { Laptop } from '../../models/laptop.model';
 import { MobilePhone } from '../../models/phone.model';
 
@@ -8,7 +9,7 @@ import { MobilePhone } from '../../models/phone.model';
   styleUrls: ['./home-list-item.component.scss']
 })
 export class HomeItemComponent {
-  constructor() {}
+  constructor(private homeService: HomeService) {}
 
   @Input() item: MobilePhone | Laptop;
   @Input() index: number;
@@ -16,9 +17,9 @@ export class HomeItemComponent {
   getTitle() {
     const isMobilePhone = this.item && this.item.type === 'PHONE';
     if (isMobilePhone) {
-      return this.createPhoneTitle(this.item as MobilePhone);
+      return this.homeService.createPhoneTitle(this.item as MobilePhone);
     } else {
-      return this.createLaptopTitle(this.item as Laptop);
+      return this.homeService.createLaptopTitle(this.item as Laptop);
     }
   }
 
