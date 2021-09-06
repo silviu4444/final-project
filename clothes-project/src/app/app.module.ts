@@ -19,6 +19,7 @@ import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loa
 import { EffectsModule } from '@ngrx/effects';
 import { HomeEffects } from './modules/home/pages/home/store/home.effects';
 import { appReducer } from './store/app.reducer';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -27,8 +28,7 @@ import { appReducer } from './store/app.reducer';
     FooterComponent,
     LoginComponent,
     RegisterComponent,
-    PageNotFoundComponent,
-    LoadingSpinnerComponent
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +37,7 @@ import { appReducer } from './store/app.reducer';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HomeModule,
+    SharedModule,
     HttpClientModule,
     AngularMaterialModule,
     CommonModule,

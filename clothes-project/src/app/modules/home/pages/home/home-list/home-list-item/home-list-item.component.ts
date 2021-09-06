@@ -13,7 +13,7 @@ export class HomeItemComponent {
   @Input() item: MobilePhone | Laptop;
   @Input() index: number;
 
-  getTitle() {
+  getTitle(): string {
     const isMobilePhone = this.item && this.item.type === 'PHONE';
     if (isMobilePhone) {
       return this.createPhoneTitle(this.item as MobilePhone);
@@ -22,7 +22,7 @@ export class HomeItemComponent {
     }
   }
 
-  createPhoneTitle(phone: MobilePhone) {
+  createPhoneTitle(phone: MobilePhone): string {
     const manufacturer = phone.manufacturer;
     const model = phone.model;
     const sim = phone.specs.sim ? ', ' + phone.specs.sim : '';
@@ -31,7 +31,7 @@ export class HomeItemComponent {
     return `${manufacturer} ${model}${sim}, ${memoryRAM}GB RAM, ${network}`;
   }
 
-  createLaptopTitle(laptop: Laptop) {
+  createLaptopTitle(laptop: Laptop): string {
     const manufacturer = laptop.manufacturer;
     const model = laptop.model;
     const processor = laptop.specs.processor;
