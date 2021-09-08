@@ -7,9 +7,10 @@ import { MatCardModule } from '@angular/material/card';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeListItemDetailsComponent } from './pages/home/home-list/home-list-item/home-list-item-details/home-list-item-details.component';
 import { HomeRoutingModule } from './pages/home/home-routing.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  imports: [CommonModule, MatCardModule, SharedModule, HomeRoutingModule],
+  imports: [CommonModule, MatCardModule, SharedModule, HomeRoutingModule, MatProgressSpinnerModule],
   declarations: [HomeComponent, HomeItemComponent, HomeListComponent, HomeListItemDetailsComponent],
   exports: [HomeComponent, HomeItemComponent, HomeListComponent]
 })

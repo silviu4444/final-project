@@ -31,9 +31,8 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     this.subscription$ = this.store$
       .select(selectItemDetails)
       .pipe(takeWhile(() => this.isAlive))
-      .subscribe((data: MobilePhone | Laptop) => {
-        data && (this.item = data);
-        console.log(this.item)
+      .subscribe((item: MobilePhone | Laptop) => {
+        item && (this.item = item);
       });
   }
 

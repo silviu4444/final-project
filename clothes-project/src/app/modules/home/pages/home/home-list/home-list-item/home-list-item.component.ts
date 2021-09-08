@@ -29,7 +29,7 @@ export class HomeItemComponent {
   }
 
   showDetails() {
-    this.router.navigate(['item/', this.item.id], {
+    this.router.navigate(['item/'], {
       relativeTo: this.route,
       queryParams: { id: this.item.id }
     });
