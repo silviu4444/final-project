@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/store/app.reducer';
+import { selectHomeProducts } from '../home.selectors';
 import { HomeProducts } from '../store/home.reducer';
 
 @Component({
@@ -20,9 +21,9 @@ export class HomeListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.store$
-      .select('homeStore')
-      .subscribe((homeState) => {
-        this.homeList = homeState.homeProducts;
+      .select(selectHomeProducts)
+      .subscribe((products) => {
+        this.homeList = products;
       });
   }
 

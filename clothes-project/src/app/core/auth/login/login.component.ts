@@ -34,7 +34,7 @@ export class LoginComponent {
       (responseData: AuthResponseData) => {
         this.isLoading = false;
         this.customSnackBar.open('Logged in succesfully!', 'Close', 3000);
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       (errorResponse: string) => {
         this.isLoading = false;

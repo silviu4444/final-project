@@ -19,6 +19,6 @@ export class HomeService {
     const processor = laptop.specs.processor;
     const inch = laptop.specs.inch;
     const memory = laptop.specs.memory;
-    return `${manufacturer} ${model}, ${processor}, ${inch}, ${memory}`;
+    return `${manufacturer} ${model}, ${processor}, ${inch}", ${memory}`;
   }
 }
