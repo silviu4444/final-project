@@ -29,6 +29,7 @@ export class HomeItemComponent {
   }
 
   showDetails() {
+    console.error('clicked')
     this.router.navigate(['item/'], {
       relativeTo: this.route,
       queryParams: { id: this.item.id }
