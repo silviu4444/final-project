@@ -1,10 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Laptop } from '../../models/laptop.model';
 import { MobilePhone } from '../../models/phone.model';
-
 import { HomeItemComponent } from './home-list-item.component';
 
 const phoneExample: MobilePhone = {
@@ -44,14 +42,16 @@ const laptopExample: Laptop = {
   type: 'laptops'
 };
 
-fdescribe('HomeItemComponent', () => {
+const routes = [{ path: 'item', component: HomeItemComponent }];
+
+describe('HomeItemComponent', () => {
   let component: HomeItemComponent;
   let fixture: ComponentFixture<HomeItemComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HomeItemComponent],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule.withRoutes(routes)],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
@@ -68,7 +68,6 @@ fdescribe('HomeItemComponent', () => {
 
   it('should call createPhoneTitle if component.item is a MobilePhone (getTitle fn)', () => {
     component.item = phoneExample as MobilePhone;
-    fixture.detectChanges();
     const spyOnCreatePhTitle = spyOn(
       component['homeService'],
       'createPhoneTitle'
@@ -91,27 +90,22 @@ fdescribe('HomeItemComponent', () => {
   it('should have sim in item title', () => {
     component.item = phoneExample;
     component.item.specs.sim = 'Dual SIM';
-    fixture.detectChanges();
     expect(component.getTitle()).toContain('Dual SIM');
   });
 
   it('should replace sim in title with an empty string if a sim property is undefined(getTitle fn)', () => {
     component.item = phoneExample;
     delete component.item.specs.sim;
-    fixture.detectChanges();
     expect(component.getTitle()).not.toContain('Dual SIM');
   });
 
   it('should navigate when an items was clicked', () => {
-    const spyOnShowDetails = spyOn(component, 'showDetails');
-    const spyOnRouter = spyOn(component['router'], 'navigate');
+    const spyOnRouterNavigate = spyOn(component['router'], 'navigate');
     const item = fixture.debugElement.nativeElement.querySelector('a');
-    console.log(item)
-    item.click()
-
-    fixture.whenStable().then(() => {
-      expect(spyOnShowDetails).toHaveBeenCalled();
-      expect(spyOnRouter).toHaveBeenCalled()
-    })
+    item.dispatchEvent(new Event('click'))
+    expect(spyOnRouterNavigate).toHaveBeenCalledWith(['item/'], {
+      relativeTo: component['route'],
+      queryParams: { id: component.item.id }
+    });
   });
 });
