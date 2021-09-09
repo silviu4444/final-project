@@ -11,8 +11,8 @@ import { PhoneDetails } from '../models/phone.model';
 import { of } from 'rxjs';
 
 const handleErrors = (errorRes: HttpErrorResponse) => {
-  let errorMessage = 'An unknown error ocurred!';
-  return of(new HomeActions.FetchFail(errorMessage));
+  let errorMessage = 'Something went wrong with the server';
+  return of(new HomeActions.FetchFail({ errorMessage }));
 };
 
 @Injectable()
@@ -27,6 +27,9 @@ export class HomeEffects {
     }),
     map((homeData) => {
       return new HomeActions.SetHomeData(homeData);
+    }),
+    catchError((errorResponse) => {
+      return handleErrors(errorResponse);
     })
   );
 

@@ -56,5 +56,5 @@ export interface MobilePhone {
   specs: Specs;
   stars: number;
   type: string;
-  inDepthDetails: PhoneDetails;
+  inDepthDetails?: PhoneDetails;
 }

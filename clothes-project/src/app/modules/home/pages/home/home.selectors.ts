@@ -5,8 +5,8 @@ const selectedItem = (state: AppState) => state.homeStore.selectedItem;
 
 const homeProducts = (state: AppState) => {
   const result = [];
-  Object.keys(state.homeStore.homeProducts).forEach((item) =>
-    result.push(...state.homeStore.homeProducts[item])
+  Object.keys(state.homeStore.homeProducts).forEach((key) =>
+    result.push(...state.homeStore.homeProducts[key])
   );
   return result;
 };
@@ -25,6 +25,8 @@ export const selectItemDetails = createSelector(
       : null;
   }
 );
+
+export const selectHomeError = (state: AppState) => state.homeStore.homeError;
 
 export const selectHomeProducts = (state: AppState) =>
   state.homeStore.homeProducts;

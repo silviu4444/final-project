@@ -41,6 +41,11 @@ export function homeReducer(
         ...state,
         selectedItem: itemDetails
       };
+    case HomeActions.FETCH_FAIL:
+      return {
+        ...state,
+        homeError: action.payload.errorMessage
+      }
     case HomeActions.DELETE_ITEM_DETAILS:
       return {
         ...state,

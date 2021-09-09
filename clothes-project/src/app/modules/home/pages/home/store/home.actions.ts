@@ -28,9 +28,7 @@ export class GetItemDetails implements Action {
 
 export class SetItemDetails implements Action {
   readonly type = SET_ITEM_DETAILS;
-  constructor(
-    public payload: {itemDetails: LaptopDetails | PhoneDetails }
-  ) {}
+  constructor(public payload: { itemDetails: LaptopDetails | PhoneDetails }) {}
 }
 
 export class DeleteItemDetails implements Action {
@@ -39,7 +37,7 @@ export class DeleteItemDetails implements Action {
 
 export class FetchFail implements Action {
   readonly type = FETCH_FAIL;
-  constructor(public payload: string) {}
+  constructor(public payload: { errorMessage: string }) {}
 }
 
 export class ClearError implements Action {
@@ -49,6 +47,7 @@ export class ClearError implements Action {
 export type HomeActions =
   | FetchHomeData
   | SetHomeData
+  | FetchFail
   | GetItemDetails
   | SetItemDetails
   | DeleteItemDetails;

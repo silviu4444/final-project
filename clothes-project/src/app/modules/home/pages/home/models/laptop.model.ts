@@ -52,5 +52,5 @@ export interface Laptop {
   specs: LaptopSpecs;
   stars: number;
   type: string;
-  inDepthDetails: LaptopDetails;
+  inDepthDetails?: LaptopDetails;
 }

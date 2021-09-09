@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { filter, takeWhile } from 'rxjs/operators';
+import { takeWhile } from 'rxjs/operators';
+import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AppState } from 'src/app/store/app.reducer';
-import { selectItemDetails } from '../../../home.selectors';
+import { selectHomeError, selectItemDetails } from '../../../home.selectors';
 import { Laptop } from '../../../models/laptop.model';
 import { MobilePhone } from '../../../models/phone.model';
 import * as HomeActions from '../../../store/home.actions';
@@ -15,9 +16,11 @@ import * as HomeActions from '../../../store/home.actions';
   styleUrls: ['./home-list-item-details.component.scss']
 })
 export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private store$: Store<AppState>) {}
-
-  subscription$: Subscription;
+  constructor(
+    private route: ActivatedRoute,
+    private store$: Store<AppState>,
+    private customSnackBar: CustomSnackbarService
+  ) {}
 
   isAlive = true;
   item: Laptop | MobilePhone;
@@ -28,12 +31,17 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
       this.store$.dispatch(new HomeActions.GetItemDetails({ id }));
     });
 
-    this.subscription$ = this.store$
+    this.store$
       .select(selectItemDetails)
       .pipe(takeWhile(() => this.isAlive))
-      .subscribe((item: MobilePhone | Laptop) => {
-        item && (this.item = item);
-      });
+      .subscribe((item: MobilePhone | Laptop) => item && (this.item = item));
+
+    this.store$
+      .select(selectHomeError)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(
+        (error: string) => error && this.customSnackBar.open(error, 'Close')
+      );
   }
 
   ngOnDestroy() {
