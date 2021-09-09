@@ -1,5 +1,4 @@
 import { ActionReducerMap } from '@ngrx/store';
-
 import * as fromHome from '../modules/home/pages/home/store/home.reducer';
 
 export interface AppState {
