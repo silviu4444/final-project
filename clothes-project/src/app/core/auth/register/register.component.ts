@@ -1,19 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import {
-  MatSnackBar,
-} from '@angular/material/snack-bar';
 
 import { CustomValidators } from 'src/app/shared/custom-validators/custom-validators';
 import { errorStateMatcher } from 'src/app/shared/custom-validators/errorStateMatcher';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { AuthResponseData } from '../interfaces/interfaces';
+import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 
 @Component({
   selector: 'app-register',
@@ -23,8 +17,8 @@ import { AuthResponseData } from '../interfaces/interfaces';
 export class RegisterComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private _snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private customSnackBarService: CustomSnackbarService
   ) {}
 
   signupForm = new FormGroup({});
@@ -47,29 +41,28 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  openSnackBar(message: string) {
-    this._snackBar.open(message, 'Close', {
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-      duration: 3000
-    });
-  }
-
   onSubmit() {
     if (!this.signupForm.valid) return;
     const email = this.signupForm.value.email;
     const password = this.signupForm.value.passwords.password;
     this.isLoading = true;
-    let auth$: Observable<AuthResponseData> = this.authService.signup$(email, password);
+    let auth$: Observable<AuthResponseData> = this.authService.signup$(
+      email,
+      password
+    );
     auth$.subscribe(
       (responseData) => {
         this.isLoading = false;
-        this.openSnackBar('Your account has been created!');
+        this.customSnackBarService.open(
+          'Your account has been created!',
+          'Close',
+          3000
+        );
         this.router.navigate(['/']);
       },
       (errorMessage) => {
         this.isLoading = false;
-        this.signupForm.get('email').setErrors({ emailExist: true});
+        this.signupForm.get('email').setErrors({ emailExist: true });
       }
     );
   }

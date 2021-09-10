@@ -1,0 +1,7 @@
+<div class="home-list-container">
+  <app-home-phone-item
+    *ngFor="let phone of mobilePhones; let i = index"
+    [phone]="phone"
+    [index]="i"
+  ></app-home-phone-item>
+</div>

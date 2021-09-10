@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,9 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { RegisterComponent } from './core/auth/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
+import { EffectsModule } from '@ngrx/effects';
+import { HomeEffects } from './modules/home/pages/home/store/home.effects';
+import { appReducer } from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,9 @@ import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loa
     HomeModule,
     HttpClientModule,
     AngularMaterialModule,
-    CommonModule
+    CommonModule,
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([HomeEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
