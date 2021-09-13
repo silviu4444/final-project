@@ -14,9 +14,14 @@ import { AngularMaterialModule } from 'src/app/material.module';
 import { AuthService } from '../auth.service';
 import { LoginComponent } from './login.component';
 import * as errorResponses from '../authResponseErrors';
+import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 
 const authServiceMock = {
   login$: () => of(true)
+};
+
+const customSnackBarMock = {
+  open: () => of(true)
 };
 
 describe('LoginComponent', () => {
@@ -34,7 +39,10 @@ describe('LoginComponent', () => {
         AngularMaterialModule,
         RouterTestingModule
       ],
-      providers: [{ provide: AuthService, useValue: authServiceMock }],
+      providers: [
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: CustomSnackbarService, useValue: customSnackBarMock }
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
@@ -53,15 +61,6 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('it should call open method when openSnackBar is called', () => {
-    const spyOnSnackBarOpen = spyOn(component['_snackBar'], 'open');
-    component.openSnackBar('test');
-    expect(spyOnSnackBarOpen).toHaveBeenCalledWith('test', 'Close', {
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-      duration: 3000
-    });
-  });
 
   it('onSubmit should not continue the execution if the form is not valid', () => {
     const form = new FormGroup({
@@ -74,12 +73,12 @@ describe('LoginComponent', () => {
   });
 
   it('onSubmit should continue the execution if the form is valid(for success BE response)', () => {
-    const spyOnOpenSnackBar = spyOn(component, 'openSnackBar');
+    const spyOnOpenSnackBar = spyOn<any>(component['customSnackBar'], 'open');
     const spyOnRouter = spyOn(component['router'], 'navigate');
     component.onSubmit({ form } as NgForm);
     component['authService'].login$('test', 'test1234').subscribe(() => {
       expect(component.isLoading).toBeFalsy();
-      expect(spyOnOpenSnackBar).toHaveBeenCalledWith('Logged in succesfully!');
+      expect(spyOnOpenSnackBar).toHaveBeenCalledWith('Logged in succesfully!', 'Close', 3000);
       expect(spyOnRouter).toHaveBeenCalledWith(['/']);
     });
   });
@@ -108,10 +107,10 @@ describe('LoginComponent', () => {
   });
 
   it('should call openSnackBar if handleLoginErrors is called with a dumb error', () => {
-    const spyOnOpenSnackBar = spyOn(component, 'openSnackBar');
+    const spyOnOpenSnackBar = spyOn(component['customSnackBar'], 'open');
     component.handleLoginErrors('dumb error', form);
     expect(spyOnOpenSnackBar).toHaveBeenCalledWith(
-      'An unknown error ocurred. Try again later'
+      'An unknown error ocurred. Try again later', null, 3000
     );
   });
 });

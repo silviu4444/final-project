@@ -7,12 +7,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { AngularMaterialModule } from 'src/app/material.module';
+import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AuthService } from '../auth.service';
 
 import { RegisterComponent } from './register.component';
 
 const authServiceMock = {
   signup$: () => of(true)
+};
+
+const customSnackBarMock = {
+  open: () => of(true)
 };
 
 describe('RegisterComponent', () => {
@@ -23,7 +28,10 @@ describe('RegisterComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [RegisterComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [{ provide: AuthService, useValue: authServiceMock }],
+      providers: [
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: CustomSnackbarService, useValue: customSnackBarMock }
+      ],
       imports: [
         HttpClientTestingModule,
         BrowserModule,
@@ -66,7 +74,7 @@ describe('RegisterComponent', () => {
   });
 
   it('should continue onSubmit execution if the form is valid(for success BE response)', () => {
-    const spyOnOpenSnackBar = spyOn(component['_snackBar'], 'open');
+    const spyOnOpenSnackBar = spyOn(component['customSnackBarService'], 'open');
     const spyOnRouter = spyOn(component['router'], 'navigate');
     component.onSubmit();
     component['authService'].signup$('test', 'test1234').subscribe(() => {
@@ -74,18 +82,16 @@ describe('RegisterComponent', () => {
       expect(spyOnOpenSnackBar).toHaveBeenCalledWith(
         'Your account has been created!',
         'Close',
-        {
-          horizontalPosition: 'right',
-          verticalPosition: 'bottom',
-          duration: 3000
-        }
+        3000
       );
       expect(spyOnRouter).toHaveBeenCalledWith(['/']);
     });
   });
 
   it('onSubmit should continue the execution if the form is valid(for fail BE response)', () => {
-    spyOn(component['authService'], 'signup$').and.returnValue(throwError(null));
+    spyOn(component['authService'], 'signup$').and.returnValue(
+      throwError(null)
+    );
     component.onSubmit();
     component['authService'].signup$('test', 'test1234').subscribe(
       () => {},
