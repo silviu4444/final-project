@@ -1,43 +1,22 @@
-import { animate, AnimationBuilder, AnimationMetadata, AnimationPlayer, style } from '@angular/animations';
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appSetBorderOnHover]'
+  selector: '[appSetBorderOnClick]'
 })
-export class SetBorderOnHoverDirective {
-  player: AnimationPlayer;
+export class SetBorderOnClickDirective {
+  constructor(private element: ElementRef, private renderer: Renderer2) {}
+
   previousIndex: number;
 
-  constructor(private builder: AnimationBuilder, private element: ElementRef) {}
-
-  @Input('appSetBorderOnHover') set border(index: number) {
-    console.log(index)
-    if (this.player) {
-      this.player.destroy();
+  @Input('appSetBorderOnClick') set border(index: number) {
+    const nativeEl = this.element.nativeElement;
+    const actualItem = nativeEl.children[index];
+    nativeEl.children.length > 0 &&
+      this.renderer.addClass(actualItem, 'custom-border');
+    if (this.previousIndex || this.previousIndex === 0) {
+      const previousItemSelected = nativeEl.children[this.previousIndex];
+      this.renderer.removeClass(previousItemSelected, 'custom-border');
     }
-    const metadata =
-      index > this.previousIndex ? this.slideRight() : this.slideLeft();
-    const factory = this.builder.build(metadata);
-    this.player = factory.create(this.element.nativeElement);
-    this.previousIndex && this.player.play();
     this.previousIndex = index;
-  }
-
-  private slideRight(): AnimationMetadata[] {
-    return [
-      style({ opacity: 0 }),
-      animate('150ms', style({ transform: 'translateX(-20%)' })),
-      style({ opacity: 1 }),
-      animate('150ms', style({ transform: 'translateX(0%)' }))
-    ];
-  }
-
-  private slideLeft(): AnimationMetadata[] {
-    return [
-      style({ opacity: 0 }),
-      animate('150ms', style({ transform: 'translateX(+20%)' })),
-      style({ opacity: 1 }),
-      animate('150ms', style({ transform: 'translateX(0%)' }))
-    ];
   }
 }

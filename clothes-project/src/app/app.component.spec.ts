@@ -41,7 +41,7 @@ describe('AppComponent', () => {
   });
 
   it('should call authSerive.autoLogin on ngOnInit', () => {
-    const spyOnAutoLogin = spyOn<any>(component['authService'], 'autoLogin');
+    const spyOnAutoLogin = spyOn(component['authService'], 'autoLogin');
     component.ngOnInit();
     expect(spyOnAutoLogin).toHaveBeenCalled();
   });

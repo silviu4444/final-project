@@ -17,7 +17,6 @@ export class HomeItemComponent {
   ) {}
 
   @Input() item: MobilePhone | Laptop;
-  @Input() index: number;
 
   getTitle(): string {
     const isMobilePhone = this.item && this.item.type === 'mobilePhones';

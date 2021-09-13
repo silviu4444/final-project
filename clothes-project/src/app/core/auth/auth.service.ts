@@ -96,9 +96,7 @@ export class AuthService {
     this.user$.next(null);
     localStorage.removeItem('userData');
     this.customSnackBarService.open('You have been logged out.', 'Close');
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
+    if (this.tokenExpirationTimer) clearTimeout(this.tokenExpirationTimer);
     this.tokenExpirationTimer = null;
   }
 

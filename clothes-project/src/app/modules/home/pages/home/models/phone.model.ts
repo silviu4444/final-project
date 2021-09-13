@@ -37,6 +37,7 @@ interface Specs {
   mobileNetwork: string;
   memory: string[];
   memoryRam: string[];
+  color: string;
 }
 
 export interface PhoneDetails {
