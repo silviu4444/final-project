@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { Laptop } from '../models/laptop.model';
 import { MobilePhone } from '../models/phone.model';
 
 export const FETCH_HOME_DATA = '[Home] FETCH_HOME_DATA';
@@ -10,7 +11,9 @@ export class FetchHomeData implements Action {
 
 export class SetHomeData implements Action {
   readonly type = SET_HOME_DATA;
-  constructor(public payload: MobilePhone[]) {}
+  constructor(
+    public payload: { mobilePhones: MobilePhone[]; laptops: Laptop[] }
+  ) {}
 }
 
 export type HomeActions = FetchHomeData | SetHomeData;

@@ -1,4 +1,4 @@
-export interface MobilePhone {
+export interface Laptop {
   id: number;
   imgURL: string;
   manufacturer: string;
@@ -7,10 +7,10 @@ export interface MobilePhone {
   oldPrice: number;
   reviews: number;
   specs: {
-    sim: string;
-    mobileNetwork: string;
-    memory: string[];
-    memoryRam: string[];
+    inch: number;
+    memory: string;
+    processor: string;
+    display: string;
   };
   stars: number;
   type: string;

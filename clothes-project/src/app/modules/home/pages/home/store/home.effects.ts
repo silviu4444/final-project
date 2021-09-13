@@ -18,7 +18,7 @@ export class HomeEffects {
       );
     }),
     map((homeState) => {
-      return new HomeActions.SetHomeData(homeState.mobilePhones);
+      return new HomeActions.SetHomeData(homeState);
     })
   );
 }

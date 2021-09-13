@@ -1,7 +1,19 @@
 <div class="home-list-container">
-  <app-home-phone-item
-    *ngFor="let phone of mobilePhones; let i = index"
-    [phone]="phone"
-    [index]="i"
-  ></app-home-phone-item>
+  <h1 class="align-item-start">Mobile Phones</h1>
+  <div class="phone-articles">
+    <app-home-list-item
+      *ngFor="let phone of homeList.mobilePhones; let i = index"
+      [item]="phone"
+      [index]="i"
+    ></app-home-list-item>
+  </div>
+  <h1 class="align-item-start">Laptops</h1>
+  <div class="phone-articles">
+    <app-home-list-item
+      *ngFor="let laptop of homeList.laptops; let i = index"
+      [item]="laptop"
+      [index]="i"
+    >
+    </app-home-list-item>
+  </div>
 </div>
