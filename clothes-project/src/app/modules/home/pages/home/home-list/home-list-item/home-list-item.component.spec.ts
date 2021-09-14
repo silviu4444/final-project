@@ -14,6 +14,7 @@ const phoneExample: MobilePhone = {
   oldPrice: 900,
   reviews: 825,
   specs: {
+    color: 'red',
     sim: 'Dual SIM',
     memory: ['64', '256'],
     memoryRam: ['3'],
@@ -33,13 +34,14 @@ const laptopExample: Laptop = {
   price: 999,
   reviews: 113,
   specs: {
+    color: 'Space Grey',
     display: 'True Tone',
     inch: 13,
     memory: 'SSD 256GB',
     processor: 'Apple M1'
   },
   stars: 4.9,
-  type: 'laptops'
+  type: 'laptops',
 };
 
 const routes = [{ path: 'item', component: HomeItemComponent }];
@@ -62,9 +64,16 @@ describe('HomeItemComponent', () => {
     component.item = phoneExample as MobilePhone;
     fixture.detectChanges();
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call getTitle', () => {
+    const spyOnGetTitle = spyOn(component, 'getTitle');
+    fixture.detectChanges();
+    expect(spyOnGetTitle).toHaveBeenCalled()
+  })
 
   it('should call createPhoneTitle if component.item is a MobilePhone (getTitle fn)', () => {
     component.item = phoneExample as MobilePhone;

@@ -40,9 +40,13 @@ interface Specs {
   color: string;
 }
 
+interface Images {
+  [key: string]: string[]
+ }
+
 export interface PhoneDetails {
   id: number;
-  images: object;
+  images: Images;
   specs: SpecsDetails;
 }
 

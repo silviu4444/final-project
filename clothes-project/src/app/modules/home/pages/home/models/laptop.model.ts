@@ -35,9 +35,13 @@ interface LaptopSpecs {
   color: string;
 }
 
+interface Images {
+  [key: string]: string[];
+}
+
 export interface LaptopDetails {
   id: number;
-  images: object;
+  images: Images;
   specs: SpecsDetails;
 }
 

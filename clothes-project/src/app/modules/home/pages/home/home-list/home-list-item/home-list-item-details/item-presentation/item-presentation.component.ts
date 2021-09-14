@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./item-presentation.component.scss'],
 })
 export class ItemPresentationComponent implements OnInit {
-  @Input() images;
+  @Input() images: {[key: string]: string[]};
   @Input() color: string;
   colorSelected: { colorName: string; imgURL: string, index: number } = {
     colorName: null,
