@@ -1,4 +1,4 @@
-<a class="home-item" (click)=showDetails()>
+<a class="home-item" (click)="showDetails()">
   <mat-card class="home-item__phone-product">
     <img
       class="home-item__phone-image"
@@ -13,6 +13,10 @@
       >
     </mat-card-header>
     <mat-card-content>
+      <div class="home-item__stars">
+        <app-stars-raiting [raiting]="item.stars"></app-stars-raiting>
+        {{ item.stars }}({{ item.reviews }})
+      </div>
       <div class="home-item__price-container">
         <p class="phone-price">
           {{ item.price }}

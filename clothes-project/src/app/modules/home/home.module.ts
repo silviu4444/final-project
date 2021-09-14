@@ -12,15 +12,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ItemPresentationComponent } from './pages/home/home-list/home-list-item/home-list-item-details/item-presentation/item-presentation.component';
 import { ImageSrcAnimationDirective } from './pages/home/directives/image-src-animation.directive';
 import { SetBorderOnClickDirective } from './pages/home/directives/set-border-on-click.directive';
+import { StarsRaitingComponent } from 'src/app/shared/components/stars-raiting/stars-raiting.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MatCardModule,
-    SharedModule,
     HomeRoutingModule,
     MatProgressSpinnerModule,
-    MatDividerModule,
+    MatDividerModule
   ],
   declarations: [
     HomeComponent,
@@ -29,8 +29,8 @@ import { SetBorderOnClickDirective } from './pages/home/directives/set-border-on
     HomeListItemDetailsComponent,
     ItemPresentationComponent,
     ImageSrcAnimationDirective,
-    SetBorderOnClickDirective
-  ],
-  exports: [HomeComponent, HomeItemComponent, HomeListComponent]
+    SetBorderOnClickDirective,
+    StarsRaitingComponent
+  ]
 })
 export class HomeModule {}

@@ -11,6 +11,10 @@
     font-size: 15px;
     text-align: center;
   }
+  &__stars {
+    margin: 10px auto;
+    width: fit-content;
+  }
   &__price-container {
     text-align: center;
     color: red;
