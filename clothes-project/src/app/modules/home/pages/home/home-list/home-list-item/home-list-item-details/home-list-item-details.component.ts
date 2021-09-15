@@ -25,6 +25,9 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
 
   isAlive = true;
   item: Laptop | MobilePhone;
+  itemColor: string;
+  colorsAvailableIndex: number;
+  title: string;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams) => {
@@ -36,7 +39,12 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
       .select(selectItemDetails)
       .pipe(takeWhile(() => this.isAlive))
       .subscribe((item: MobilePhone | Laptop) => {
-        item && (this.item = item);
+        if (item) {
+          this.item = item;
+          const colorsKeys = Object.keys(item.specs.colors);
+          this.itemColor = colorsKeys[0];
+          this.title = this.getTitle();
+        }
       });
 
     this.store$
@@ -47,14 +55,20 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
       );
   }
 
-  getTitle(): string {
+  getTitle(index: number = 0): string {
     const isMobilePhone = this.item && this.item.type === 'mobilePhones';
     if (isMobilePhone) {
-      return this.homeService.createPhoneTitle(this.item as MobilePhone);
+      return this.homeService.createPhoneTitle(this.item as MobilePhone, index);
     } else {
       return this.homeService.createLaptopTitle(this.item as Laptop);
     }
   }
+
+  onChangeColor = (color: string, index: number) => {
+    this.colorsAvailableIndex = index;
+    this.itemColor = color;
+    this.title = this.getTitle(index);
+  };
 
   ngOnDestroy() {
     this.isAlive = false;

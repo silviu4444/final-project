@@ -14,7 +14,9 @@ const phoneExample: MobilePhone = {
   oldPrice: 900,
   reviews: 825,
   specs: {
-    color: 'red',
+    colors: {
+      Red: ['test2']
+    },
     sim: 'Dual SIM',
     memory: ['64', '256'],
     memoryRam: ['3'],
@@ -34,14 +36,14 @@ const laptopExample: Laptop = {
   price: 999,
   reviews: 113,
   specs: {
-    color: 'Space Grey',
+    colors: { 'Space Grey': ['test'] },
     display: 'True Tone',
     inch: 13,
     memory: 'SSD 256GB',
     processor: 'Apple M1'
   },
   stars: 4.9,
-  type: 'laptops',
+  type: 'laptops'
 };
 
 const routes = [{ path: 'item', component: HomeItemComponent }];
@@ -72,8 +74,8 @@ describe('HomeItemComponent', () => {
   it('should call getTitle', () => {
     const spyOnGetTitle = spyOn(component, 'getTitle');
     fixture.detectChanges();
-    expect(spyOnGetTitle).toHaveBeenCalled()
-  })
+    expect(spyOnGetTitle).toHaveBeenCalled();
+  });
 
   it('should call createPhoneTitle if component.item is a MobilePhone (getTitle fn)', () => {
     component.item = phoneExample as MobilePhone;
@@ -111,7 +113,7 @@ describe('HomeItemComponent', () => {
   it('should navigate when an items was clicked', () => {
     const spyOnRouterNavigate = spyOn(component['router'], 'navigate');
     const item = fixture.debugElement.nativeElement.querySelector('a');
-    item.dispatchEvent(new Event('click'))
+    item.dispatchEvent(new Event('click'));
     expect(spyOnRouterNavigate).toHaveBeenCalledWith(['item/'], {
       relativeTo: component['route'],
       queryParams: { id: component.item.id }

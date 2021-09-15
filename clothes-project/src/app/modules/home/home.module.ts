@@ -30,7 +30,7 @@ import { StarsRaitingComponent } from 'src/app/shared/components/stars-raiting/s
     ItemPresentationComponent,
     ImageSrcAnimationDirective,
     SetBorderOnClickDirective,
-    StarsRaitingComponent
+    StarsRaitingComponent,
   ]
 })
 export class HomeModule {}

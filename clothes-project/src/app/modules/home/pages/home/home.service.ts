@@ -4,9 +4,9 @@ import { MobilePhone } from './models/phone.model';
 
 @Injectable({ providedIn: 'root' })
 export class HomeService {
-
-  createPhoneTitle(phone: MobilePhone) {
-    const color = phone.specs.color
+  createPhoneTitle(phone: MobilePhone, colorIndex: number = 0) {
+    const colorKeys = Object.keys(phone.specs.colors);
+    const color = colorKeys[colorIndex];
     const manufacturer = phone.manufacturer;
     const model = phone.model;
     const sim = phone.specs.sim ? ', ' + phone.specs.sim : '';

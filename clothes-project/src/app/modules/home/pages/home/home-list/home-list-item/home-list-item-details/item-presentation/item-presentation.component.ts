@@ -1,14 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+
+interface ColorSelected {
+  colorName: string;
+  imgURL: string;
+  index: number;
+}
 
 @Component({
   selector: 'app-item-presentation',
   templateUrl: './item-presentation.component.html',
-  styleUrls: ['./item-presentation.component.scss'],
+  styleUrls: ['./item-presentation.component.scss']
 })
-export class ItemPresentationComponent implements OnInit {
-  @Input() images: {[key: string]: string[]};
+export class ItemPresentationComponent implements OnInit, OnChanges {
+  @Input() images: { [key: string]: string[] };
   @Input() color: string;
-  colorSelected: { colorName: string; imgURL: string, index: number } = {
+  colorSelected: ColorSelected = {
     colorName: null,
     imgURL: null,
     index: null
@@ -24,4 +30,7 @@ export class ItemPresentationComponent implements OnInit {
     this.changeImage();
   }
 
+  ngOnChanges() {
+    this.changeImage();
+  }
 }

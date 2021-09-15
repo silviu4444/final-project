@@ -1,8 +1,33 @@
+@import '../../../../../../../shared//styles/global-colors.scss';
 .home-item-details-container {
   min-height: 90vh;
   mat-progress-spinner {
     position: absolute;
     top: 40%;
     left: 45%;
+  }
+  .item-colors {
+    display: flex;
+    .item-color {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px 10px;
+      border-radius: 3px;
+      border: 1px solid black;
+      padding: 5px;
+      flex-direction: column;
+      img {
+        width: 40px;
+        height: 40px;
+        display: inline-block;
+      }
+    }
+    .item-color:hover {
+      cursor: pointer;
+    }
+    .custom-border {
+      border: 1px solid $custom-border;
+    }
   }
 }

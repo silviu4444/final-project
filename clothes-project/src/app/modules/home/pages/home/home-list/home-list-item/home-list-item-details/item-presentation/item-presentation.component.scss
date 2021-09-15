@@ -1,3 +1,4 @@
+@import '../../../../../../../../shared//styles/global-colors.scss';
 .item-presentation-container {
   .item-presentation {
     display: flex;
@@ -26,6 +27,6 @@
   }
 }
 .custom-border {
-  border: 2px solid #007bff !important;
+  border: 2px solid $custom-border !important;
   border-radius: 3px;
 }

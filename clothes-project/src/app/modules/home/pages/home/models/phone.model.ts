@@ -37,16 +37,15 @@ interface Specs {
   mobileNetwork: string;
   memory: string[];
   memoryRam: string[];
-  color: string;
+  colors: Colors;
 }
 
-interface Images {
-  [key: string]: string[]
- }
+interface Colors {
+  [key: string]: string[];
+}
 
 export interface PhoneDetails {
   id: number;
-  images: Images;
   specs: SpecsDetails;
 }
 

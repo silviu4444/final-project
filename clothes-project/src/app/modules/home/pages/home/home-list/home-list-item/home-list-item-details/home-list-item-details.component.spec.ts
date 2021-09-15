@@ -1,16 +1,18 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick
+} from '@angular/core/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
-import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { selectHomeError, selectItemDetails } from '../../../home.selectors';
 import { HomeService } from '../../../home.service';
-import { Laptop } from '../../../models/laptop.model';
-import { MobilePhone } from '../../../models/phone.model';
 
 import { HomeListItemDetailsComponent } from './home-list-item-details.component';
 
@@ -33,16 +35,13 @@ const laptopExample = {
   price: 999,
   reviews: 113,
   specs: {
-    color: 'Space Grey',
+    colors: {
+      Black: ['test']
+    },
     display: 'True Tone',
     inch: 13,
     memory: 'SSD 256GB',
     processor: 'Apple M1'
-  },
-  inDepthDetails: {
-    images: {
-      Black: ['test']
-    }
   },
   stars: 4.9,
   type: 'laptops'
@@ -57,18 +56,15 @@ const mobilePhoneExample = {
   price: 1099,
   reviews: 204,
   specs: {
-    color: 'Blue',
+    colors: {
+      Blue: ['test2']
+    },
     memory: ['256', '512'],
     memoryRam: ['5'],
     mobileNetwork: '5G'
   },
   stars: 4.8,
-  type: 'mobilePhones',
-  inDepthDetails: {
-    images: {
-      Blue: ['test']
-    }
-  }
+  type: 'mobilePhones'
 };
 
 const initialState: any = {
@@ -158,5 +154,17 @@ describe('HomeListItemDetailsComponent', () => {
       expect(error).toBeDefined();
       expect(spyOnSnackBar).toHaveBeenCalled();
     });
+  });
+
+  it('should call changeColor when an image was clicked', () => {
+    // const spyOnChangeColor = spyOn(component, 'onChangeColor');
+    const spyOnGetTitle = spyOn(component, 'getTitle');
+    fixture.detectChanges();
+    const imageButton =
+      fixture.debugElement.nativeElement.querySelector('.item-color');
+    imageButton.click();
+
+    // expect(spyOnChangeColor).toHaveBeenCalledWith('Black', 0);
+    expect(spyOnGetTitle).toHaveBeenCalled();
   });
 });

@@ -5,11 +5,24 @@
     *ngIf="!item; else content"
   ></mat-progress-spinner>
   <ng-template #content>
-    <h1>{{ getTitle() }}</h1>
+    <h1>{{ title }}</h1>
     <mat-divider></mat-divider>
     <app-item-presentation
-    [color]="item.specs.color"
-    [images]="item.inDepthDetails.images"
+      [color]="itemColor"
+      [images]="item.specs.colors"
     ></app-item-presentation>
+    <div class="item-colors" [appSetBorderOnClick]="colorsAvailableIndex">
+      <div
+        class="item-color"
+        (click)="onChangeColor(color.key, i)"
+        *ngFor="
+          let color of item.specs.colors| keyvalue;
+          let i = index
+        "
+      >
+        <img src="{{ color.value }}" alt="" />
+        <span>{{ color.key }}</span>
+      </div>
+    </div>
   </ng-template>
 </div>

@@ -72,4 +72,10 @@ describe('ItemPresentationComponent', () => {
       imageIcons.children[component.colorSelected.index];
     expect(indexedSliderImage.classList.contains('custom-border')).toBeTruthy();
   });
+
+  it('ngOnChanges should call changeImage', () => {
+    const spyOnChangeImage = spyOn(component, 'changeImage');
+    component.ngOnChanges();
+    expect(spyOnChangeImage).toHaveBeenCalled();
+  });
 });
