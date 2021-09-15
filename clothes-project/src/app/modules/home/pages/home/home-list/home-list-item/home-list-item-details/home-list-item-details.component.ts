@@ -7,7 +7,7 @@ import { AppState } from 'src/app/store/app.reducer';
 import { selectHomeError, selectItemDetails } from '../../../home.selectors';
 import { HomeService } from '../../../home.service';
 import { Laptop } from '../../../models/laptop.model';
-import { MobilePhone } from '../../../models/phone.model';
+import { MobilePhone, PhoneSpecs } from '../../../models/phone.model';
 import * as HomeActions from '../../../store/home.actions';
 
 @Component({
@@ -28,31 +28,12 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
   itemColor: string;
   colorsAvailableIndex: number;
   title: string;
+  phoneSpecs: PhoneSpecs;
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((queryParams) => {
-      const id = queryParams.id;
-      this.store$.dispatch(new HomeActions.GetItemDetails({ id }));
-    });
-
-    this.store$
-      .select(selectItemDetails)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe((item: MobilePhone | Laptop) => {
-        if (item) {
-          this.item = item;
-          const colorsKeys = Object.keys(item.specs.colors);
-          this.itemColor = colorsKeys[0];
-          this.title = this.getTitle();
-        }
-      });
-
-    this.store$
-      .select(selectHomeError)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe(
-        (error: string) => error && this.customSnackBar.open(error, 'Close')
-      );
+    this.fetchItem();
+    this.selectItem();
+    this.selectHomeError();
   }
 
   getTitle(index: number = 0): string {
@@ -69,6 +50,38 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     this.itemColor = color;
     this.title = this.getTitle(index);
   };
+
+  fetchItem() {
+    this.route.queryParams.subscribe((queryParams) => {
+      const id = queryParams.id;
+      this.store$.dispatch(new HomeActions.FetchItemDetailsStart({ id }));
+    });
+  }
+
+  selectItem() {
+    this.store$
+      .select(selectItemDetails)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe((item: MobilePhone | Laptop) => {
+        if (item) {
+          this.item = item;
+          this.item.type === 'mobilePhones' &&
+            (this.phoneSpecs = this.item.specs as PhoneSpecs);
+          const colorsKeys = Object.keys(item.specs.colors);
+          this.itemColor = colorsKeys[0];
+          this.title = this.getTitle();
+        }
+      });
+  }
+
+  selectHomeError() {
+    this.store$
+      .select(selectHomeError)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(
+        (error: string) => error && this.customSnackBar.open(error, 'Close')
+      );
+  }
 
   ngOnDestroy() {
     this.isAlive = false;

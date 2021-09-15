@@ -7,21 +7,34 @@
   <ng-template #content>
     <h1>{{ title }}</h1>
     <mat-divider></mat-divider>
-    <app-item-presentation
-      [color]="itemColor"
-      [images]="item.specs.colors"
-    ></app-item-presentation>
-    <div class="item-colors" [appSetBorderOnClick]="colorsAvailableIndex">
-      <div
-        class="item-color"
-        (click)="onChangeColor(color.key, i)"
-        *ngFor="
-          let color of item.specs.colors| keyvalue;
-          let i = index
-        "
-      >
-        <img src="{{ color.value }}" alt="" />
-        <span>{{ color.key }}</span>
+    <div class="general-presentation">
+      <div class="general-presentation__item-images">
+        <app-item-presentation
+          [color]="itemColor"
+          [images]="item.specs.colors"
+        ></app-item-presentation>
+        <p>Choose a color:</p>
+        <div class="item-colors" [appSetBorderOnClick]="colorsAvailableIndex">
+          <div
+            class="item-color"
+            (click)="onChangeColor(color.key, i)"
+            *ngFor="let color of item.specs.colors | keyvalue; let i = index"
+          >
+            <img src="{{ color.value }}" alt="" />
+            <span>{{ color.key }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="general-presentation__item-details">
+        <div class="stars">
+          <app-stars-raiting [raiting]="item.stars"></app-stars-raiting>
+          <p>{{ item.stars }}</p>
+          <span> {{ item.reviews }} reviews </span>
+        </div>
+        <app-select-item-memory
+          *ngIf="item.type === 'mobilePhones'"
+          [phoneItemSpecs]="phoneSpecs"
+        ></app-select-item-memory>
       </div>
     </div>
   </ng-template>

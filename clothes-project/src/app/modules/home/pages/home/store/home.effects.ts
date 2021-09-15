@@ -21,12 +21,12 @@ export class HomeEffects {
 
   @Effect()
   fetchHomeData$ = this.actions$.pipe(
-    ofType(HomeActions.FETCH_HOME_DATA),
+    ofType(HomeActions.FETCH_HOME_DATA_START),
     switchMap(() => {
       return this.http.get<HomeProducts>(environment.fetchHomeData);
     }),
     map((homeData) => {
-      return new HomeActions.SetHomeData(homeData);
+      return new HomeActions.SetHomeDataSuccess(homeData);
     }),
     catchError((errorResponse) => {
       return handleErrors(errorResponse);
@@ -35,12 +35,12 @@ export class HomeEffects {
 
   @Effect({ dispatch: true })
   getItemDetails$ = this.actions$.pipe(
-    ofType(HomeActions.GET_ITEM_DETAILS),
-    switchMap((fetchItemAction: HomeActions.GetItemDetails) => {
+    ofType(HomeActions.FETCH_ITEM_DETAILS_START),
+    switchMap((fetchItemAction: HomeActions.FetchItemDetailsStart) => {
       const itemID = fetchItemAction.payload.id;
       return this.http.get(`${environment.fetchByID}/${itemID}.json`).pipe(
         map((itemDetails: LaptopDetails | PhoneDetails) => {
-          return new HomeActions.SetItemDetails({ itemDetails });
+          return new HomeActions.SetItemDetailsSuccess({ itemDetails });
         }),
         catchError((errorResponse) => {
           return handleErrors(errorResponse);

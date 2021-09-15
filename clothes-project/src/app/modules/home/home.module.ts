@@ -13,6 +13,7 @@ import { ItemPresentationComponent } from './pages/home/home-list/home-list-item
 import { ImageSrcAnimationDirective } from './pages/home/directives/image-src-animation.directive';
 import { SetBorderOnClickDirective } from './pages/home/directives/set-border-on-click.directive';
 import { StarsRaitingComponent } from 'src/app/shared/components/stars-raiting/stars-raiting.component';
+import { SelectItemMemoryComponent } from './pages/home/home-list/home-list-item/home-list-item-details/select-item-memory/select-item-memory.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { StarsRaitingComponent } from 'src/app/shared/components/stars-raiting/s
     ImageSrcAnimationDirective,
     SetBorderOnClickDirective,
     StarsRaitingComponent,
+    SelectItemMemoryComponent,
   ]
 })
 export class HomeModule {}

@@ -1,0 +1,20 @@
+<p class="memory-text" *ngIf="phoneMemory.ram.ramOptions">Choose Memory RAM</p>
+<div class="memory" [appSetBorderOnClick]="phoneMemory.ram.itemIdx">
+  <div
+    class="memory-option"
+    *ngFor="let ram of phoneMemory.ram.ramOptions; let i = index"
+    (click)="onChangeRAM(i)"
+  >
+    <span>{{ ram }} GB</span>
+  </div>
+</div>
+<p class="memory-text">Choose internal storage</p>
+<div class="memory" [appSetBorderOnClick]="phoneMemory.storage.itemIdx">
+  <div
+    class="memory-option"
+    *ngFor="let gb of phoneMemory.storage.storageOptions; let i = index"
+    (click)="onChangeStorage(i)"
+  >
+    <span>{{ gb }} GB</span>
+  </div>
+</div>

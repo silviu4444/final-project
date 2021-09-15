@@ -32,7 +32,7 @@ interface Battery {
   capacity: number;
 }
 
-interface Specs {
+export interface PhoneSpecs {
   sim: string;
   mobileNetwork: string;
   memory: string[];
@@ -57,7 +57,7 @@ export interface MobilePhone {
   price: number;
   oldPrice: number;
   reviews: number;
-  specs: Specs;
+  specs: PhoneSpecs;
   stars: number;
   type: string;
   inDepthDetails?: PhoneDetails;

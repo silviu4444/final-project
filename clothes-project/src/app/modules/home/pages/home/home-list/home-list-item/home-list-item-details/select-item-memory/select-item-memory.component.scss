@@ -1,0 +1,32 @@
+@import '../../../../../../../../shared/styles/global-colors.scss';
+.memory-text {
+  font-weight: 500;
+  margin: 10px 0;
+}
+.memory {
+  display: flex;
+  width: 200px;
+  flex-wrap: wrap;
+
+  .memory-option {
+    border: 2px solid black;
+    border-radius: 2px;
+    width: 50px;
+    text-align: center;
+    padding: 5px;
+    margin: 10px 10px 10px 0px;
+    span {
+      color: blak;
+    }
+  }
+
+  .memory-option:hover {
+    cursor: pointer;
+  }
+
+  .custom-border {
+    border: 2px solid $custom-border;
+    color: $custom-border;
+    font-weight: 500;
+  }
+}

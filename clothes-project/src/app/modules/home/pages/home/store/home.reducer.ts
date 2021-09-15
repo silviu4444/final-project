@@ -27,7 +27,7 @@ export function homeReducer(
   action: HomeActions.HomeActions
 ) {
   switch (action.type) {
-    case HomeActions.SET_HOME_DATA:
+    case HomeActions.SET_HOME_DATA_SUCCESS:
       return {
         ...state,
         homeProducts: {
@@ -35,7 +35,7 @@ export function homeReducer(
           laptops: action.payload.laptops
         }
       };
-    case HomeActions.SET_ITEM_DETAILS:
+    case HomeActions.SET_ITEM_DETAILS_SUCCESS:
       let itemDetails = action.payload.itemDetails;
       return {
         ...state,
