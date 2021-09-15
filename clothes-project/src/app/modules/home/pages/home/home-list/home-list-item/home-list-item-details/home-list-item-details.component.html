@@ -1,0 +1,7 @@
+<div class="home-item-details-container">
+  <mat-progress-spinner
+  [color]="'primary'" [mode]="'indeterminate'" *ngIf="!item; else content"></mat-progress-spinner>
+  <ng-template #content>
+    <img [src]="item.imgURL">
+  </ng-template>
+</div>

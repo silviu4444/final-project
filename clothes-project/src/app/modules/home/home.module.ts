@@ -4,10 +4,14 @@ import { HomeItemComponent } from './pages/home/home-list/home-list-item/home-li
 import { HomeListComponent } from './pages/home/home-list/home-list.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MatCardModule } from '@angular/material/card';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { HomeListItemDetailsComponent } from './pages/home/home-list/home-list-item/home-list-item-details/home-list-item-details.component';
+import { HomeRoutingModule } from './pages/home/home-routing.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  imports: [CommonModule, MatCardModule],
-  declarations: [HomeComponent, HomeItemComponent, HomeListComponent],
-  exports: [HomeComponent]
+  imports: [CommonModule, MatCardModule, SharedModule, HomeRoutingModule, MatProgressSpinnerModule],
+  declarations: [HomeComponent, HomeItemComponent, HomeListComponent, HomeListItemDetailsComponent],
+  exports: [HomeComponent, HomeItemComponent, HomeListComponent]
 })
 export class HomeModule {}

@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
           'Close',
           3000
         );
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       (errorMessage) => {
         this.isLoading = false;

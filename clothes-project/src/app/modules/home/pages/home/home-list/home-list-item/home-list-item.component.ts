@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HomeService } from '../../home.service';
 import { Laptop } from '../../models/laptop.model';
 import { MobilePhone } from '../../models/phone.model';
@@ -9,13 +10,17 @@ import { MobilePhone } from '../../models/phone.model';
   styleUrls: ['./home-list-item.component.scss']
 })
 export class HomeItemComponent {
-  constructor(private homeService: HomeService) {}
+  constructor(
+    private homeService: HomeService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   @Input() item: MobilePhone | Laptop;
   @Input() index: number;
 
-  getTitle() {
-    const isMobilePhone = this.item && this.item.type === 'PHONE';
+  getTitle(): string {
+    const isMobilePhone = this.item && this.item.type === 'mobilePhones';
     if (isMobilePhone) {
       return this.homeService.createPhoneTitle(this.item as MobilePhone);
     } else {
@@ -23,21 +28,11 @@ export class HomeItemComponent {
     }
   }
 
-  createPhoneTitle(phone: MobilePhone) {
-    const manufacturer = phone.manufacturer;
-    const model = phone.model;
-    const sim = phone.specs.sim ? ', ' + phone.specs.sim : '';
-    const memoryRAM = phone.specs.memoryRam[0];
-    const network = phone.specs.mobileNetwork;
-    return `${manufacturer} ${model}${sim}, ${memoryRAM}GB RAM, ${network}`;
-  }
-
-  createLaptopTitle(laptop: Laptop) {
-    const manufacturer = laptop.manufacturer;
-    const model = laptop.model;
-    const processor = laptop.specs.processor;
-    const inch = laptop.specs.inch;
-    const memory = laptop.specs.memory;
-    return `${manufacturer} ${model}, ${processor}, ${inch}, ${memory}`;
+  showDetails() {
+    console.error('clicked')
+    this.router.navigate(['item/'], {
+      relativeTo: this.route,
+      queryParams: { id: this.item.id }
+    });
   }
 }

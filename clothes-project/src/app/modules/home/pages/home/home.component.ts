@@ -9,7 +9,9 @@ import * as HomeActions from './store/home.actions';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  constructor(private store$: Store<AppState>) {}
+  constructor(
+    private store$: Store<AppState>
+  ) {}
 
   ngOnInit() {
     this.store$.dispatch(new HomeActions.FetchHomeData());

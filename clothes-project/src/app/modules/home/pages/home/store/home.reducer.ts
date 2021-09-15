@@ -1,9 +1,11 @@
-import { Laptop } from '../models/laptop.model';
-import { MobilePhone } from '../models/phone.model';
+import { Laptop, LaptopDetails } from '../models/laptop.model';
+import { MobilePhone, PhoneDetails } from '../models/phone.model';
 import * as HomeActions from './home.actions';
 
 export interface HomeState {
   homeProducts: HomeProducts;
+  homeError: string;
+  selectedItem: LaptopDetails | PhoneDetails;
 }
 
 export interface HomeProducts {
@@ -15,7 +17,9 @@ const initialState: HomeState = {
   homeProducts: {
     mobilePhones: [],
     laptops: []
-  }
+  },
+  homeError: null,
+  selectedItem: null
 };
 
 export function homeReducer(
@@ -30,6 +34,22 @@ export function homeReducer(
           mobilePhones: action.payload.mobilePhones,
           laptops: action.payload.laptops
         }
+      };
+    case HomeActions.SET_ITEM_DETAILS:
+      let itemDetails = action.payload.itemDetails;
+      return {
+        ...state,
+        selectedItem: itemDetails
+      };
+    case HomeActions.FETCH_FAIL:
+      return {
+        ...state,
+        homeError: action.payload.errorMessage
+      }
+    case HomeActions.DELETE_ITEM_DETAILS:
+      return {
+        ...state,
+        selectedItem: null
       };
     default:
       return state;
