@@ -1,7 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
-import { of } from 'rxjs';
+import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
+import { selectHomeProducts } from '../home.selectors';
 
 import { HomeListComponent } from './home-list.component';
 
@@ -21,9 +22,17 @@ const phoneExample = {
   stars: 4.8
 };
 
-const fakeState = {
-  select: (fakeParam: string) => of({ homeProducts: { mobilePhones: [phoneExample] } })
+let initialState = {
+  homeStore: {
+    homeProducts: {
+      mobilePhones: [phoneExample],
+      laptops: []
+    },
+    homeError: 'error',
+    selectedItem: { id: 1 }
+  }
 };
+
 
 describe('HomeListComponent', () => {
   let component: HomeListComponent;
@@ -32,7 +41,9 @@ describe('HomeListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [StoreModule.forRoot({})],
-      providers: [{ provide: Store, useValue: fakeState }],
+      providers: [provideMockStore({
+        initialState
+      })],
       declarations: [HomeListComponent],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
@@ -49,7 +60,7 @@ describe('HomeListComponent', () => {
   });
 
   it('store subscription should add items on mobilePones array', () => {
-    component['store$'].select('homeStore').subscribe(() => {
+    component['store$'].select(selectHomeProducts).subscribe((products) => {
       expect(component.homeList.mobilePhones.length).toBeGreaterThan(0);
     });
   })

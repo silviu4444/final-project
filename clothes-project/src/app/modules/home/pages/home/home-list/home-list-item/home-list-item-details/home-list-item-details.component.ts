@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AppState } from 'src/app/store/app.reducer';

@@ -84,7 +84,7 @@ describe('RegisterComponent', () => {
         'Close',
         3000
       );
-      expect(spyOnRouter).toHaveBeenCalledWith(['/']);
+      expect(spyOnRouter).toHaveBeenCalledWith(['/home']);
     });
   });
 

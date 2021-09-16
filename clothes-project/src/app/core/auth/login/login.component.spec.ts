@@ -79,7 +79,7 @@ describe('LoginComponent', () => {
     component['authService'].login$('test', 'test1234').subscribe(() => {
       expect(component.isLoading).toBeFalsy();
       expect(spyOnOpenSnackBar).toHaveBeenCalledWith('Logged in succesfully!', 'Close', 3000);
-      expect(spyOnRouter).toHaveBeenCalledWith(['/']);
+      expect(spyOnRouter).toHaveBeenCalledWith(['/home']);
     });
   });
 
