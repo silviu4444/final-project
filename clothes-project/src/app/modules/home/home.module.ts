@@ -8,10 +8,29 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeListItemDetailsComponent } from './pages/home/home-list/home-list-item/home-list-item-details/home-list-item-details.component';
 import { HomeRoutingModule } from './pages/home/home-routing.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDividerModule } from '@angular/material/divider';
+import { ItemPresentationComponent } from './pages/home/home-list/home-list-item/home-list-item-details/item-presentation/item-presentation.component';
+import { ImageSrcAnimationDirective } from './pages/home/directives/image-src-animation.directive';
+import { SetBorderOnClickDirective } from './pages/home/directives/set-border-on-hover.directive';
 
 @NgModule({
-  imports: [CommonModule, MatCardModule, SharedModule, HomeRoutingModule, MatProgressSpinnerModule],
-  declarations: [HomeComponent, HomeItemComponent, HomeListComponent, HomeListItemDetailsComponent],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    SharedModule,
+    HomeRoutingModule,
+    MatProgressSpinnerModule,
+    MatDividerModule,
+  ],
+  declarations: [
+    HomeComponent,
+    HomeItemComponent,
+    HomeListComponent,
+    HomeListItemDetailsComponent,
+    ItemPresentationComponent,
+    ImageSrcAnimationDirective,
+    SetBorderOnClickDirective
+  ],
   exports: [HomeComponent, HomeItemComponent, HomeListComponent]
 })
 export class HomeModule {}

@@ -5,6 +5,7 @@ import { takeWhile } from 'rxjs/operators';
 import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AppState } from 'src/app/store/app.reducer';
 import { selectHomeError, selectItemDetails } from '../../../home.selectors';
+import { HomeService } from '../../../home.service';
 import { Laptop } from '../../../models/laptop.model';
 import { MobilePhone } from '../../../models/phone.model';
 import * as HomeActions from '../../../store/home.actions';
@@ -18,7 +19,8 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private store$: Store<AppState>,
-    private customSnackBar: CustomSnackbarService
+    private customSnackBar: CustomSnackbarService,
+    private homeService: HomeService
   ) {}
 
   isAlive = true;
@@ -33,7 +35,10 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     this.store$
       .select(selectItemDetails)
       .pipe(takeWhile(() => this.isAlive))
-      .subscribe((item: MobilePhone | Laptop) => item && (this.item = item));
+      .subscribe((item: MobilePhone | Laptop) => {
+        item && (this.item = item);
+        console.log(this.item);
+      });
 
     this.store$
       .select(selectHomeError)
@@ -41,6 +46,15 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
       .subscribe(
         (error: string) => error && this.customSnackBar.open(error, 'Close')
       );
+  }
+
+  getTitle(): string {
+    const isMobilePhone = this.item && this.item.type === 'mobilePhones';
+    if (isMobilePhone) {
+      return this.homeService.createPhoneTitle(this.item as MobilePhone);
+    } else {
+      return this.homeService.createLaptopTitle(this.item as Laptop);
+    }
   }
 
   ngOnDestroy() {

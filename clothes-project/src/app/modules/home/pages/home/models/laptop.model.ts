@@ -13,7 +13,6 @@ interface SpecsDetails {
 
 interface General {
   weight: number;
-  color: string[];
   model: string;
 }
 
@@ -33,6 +32,7 @@ interface LaptopSpecs {
   memory: string;
   processor: string;
   display: string;
+  color: string;
 }
 
 export interface LaptopDetails {

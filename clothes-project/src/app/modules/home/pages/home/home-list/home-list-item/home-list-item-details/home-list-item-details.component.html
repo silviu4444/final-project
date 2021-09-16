@@ -1,7 +1,15 @@
 <div class="home-item-details-container">
   <mat-progress-spinner
-  [color]="'primary'" [mode]="'indeterminate'" *ngIf="!item; else content"></mat-progress-spinner>
+    [color]="'primary'"
+    [mode]="'indeterminate'"
+    *ngIf="!item; else content"
+  ></mat-progress-spinner>
   <ng-template #content>
-    <img [src]="item.imgURL">
+    <h1>{{ getTitle() }}</h1>
+    <mat-divider></mat-divider>
+    <app-item-presentation
+    [color]="item.specs.color"
+    [images]="item.inDepthDetails.images"
+    ></app-item-presentation>
   </ng-template>
 </div>
