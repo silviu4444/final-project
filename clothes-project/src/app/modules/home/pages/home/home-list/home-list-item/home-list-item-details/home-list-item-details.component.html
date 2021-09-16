@@ -7,7 +7,7 @@
   <ng-template #content>
     <h1>{{ title }}</h1>
     <mat-divider></mat-divider>
-    <div class="general-presentation">
+    <section class="general-presentation">
       <div class="general-presentation__item-images">
         <app-item-presentation
           [color]="itemColor"
@@ -35,7 +35,24 @@
           *ngIf="item.type === 'mobilePhones'"
           [phoneItemSpecs]="phoneSpecs"
         ></app-select-item-memory>
+        <div class="benefits">
+          <h4>Benefits:</h4>
+          <p>
+            <mat-icon
+              ><span class="material-icons-outlined">
+                settings_backup_restore
+              </span>
+            </mat-icon>
+            Right of return: 30 days
+          </p>
+          <p>
+            <mat-icon>
+              <span class="material-icons-outlined"> credit_card </span>
+            </mat-icon>
+            Money back in 30'
+          </p>
+        </div>
       </div>
-    </div>
+    </section>
   </ng-template>
 </div>

@@ -4,7 +4,6 @@ import { HomeItemComponent } from './pages/home/home-list/home-list-item/home-li
 import { HomeListComponent } from './pages/home/home-list/home-list.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MatCardModule } from '@angular/material/card';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeListItemDetailsComponent } from './pages/home/home-list/home-list-item/home-list-item-details/home-list-item-details.component';
 import { HomeRoutingModule } from './pages/home/home-routing.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -14,6 +13,7 @@ import { ImageSrcAnimationDirective } from './pages/home/directives/image-src-an
 import { SetBorderOnClickDirective } from './pages/home/directives/set-border-on-click.directive';
 import { StarsRaitingComponent } from 'src/app/shared/components/stars-raiting/stars-raiting.component';
 import { SelectItemMemoryComponent } from './pages/home/home-list/home-list-item/home-list-item-details/select-item-memory/select-item-memory.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -21,7 +21,8 @@ import { SelectItemMemoryComponent } from './pages/home/home-list/home-list-item
     MatCardModule,
     HomeRoutingModule,
     MatProgressSpinnerModule,
-    MatDividerModule
+    MatDividerModule,
+    MatIconModule
   ],
   declarations: [
     HomeComponent,

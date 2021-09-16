@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
@@ -23,33 +23,19 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     private homeService: HomeService
   ) {}
 
+  title: string;
   isAlive = true;
   item: Laptop | MobilePhone;
   itemColor: string;
-  colorsAvailableIndex: number;
-  title: string;
+  colorsAvailableIndex: number = 0;
   phoneSpecs: PhoneSpecs;
 
   ngOnInit(): void {
     this.fetchItem();
     this.selectItem();
     this.selectHomeError();
+    this.setComponentTitle();
   }
-
-  getTitle(index: number = 0): string {
-    const isMobilePhone = this.item && this.item.type === 'mobilePhones';
-    if (isMobilePhone) {
-      return this.homeService.createPhoneTitle(this.item as MobilePhone, index);
-    } else {
-      return this.homeService.createLaptopTitle(this.item as Laptop);
-    }
-  }
-
-  onChangeColor = (color: string, index: number) => {
-    this.colorsAvailableIndex = index;
-    this.itemColor = color;
-    this.title = this.getTitle(index);
-  };
 
   fetchItem() {
     this.route.queryParams.subscribe((queryParams) => {
@@ -69,7 +55,7 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
             (this.phoneSpecs = this.item.specs as PhoneSpecs);
           const colorsKeys = Object.keys(item.specs.colors);
           this.itemColor = colorsKeys[0];
-          this.title = this.getTitle();
+          this.homeService.getTitle(this.item);
         }
       });
   }
@@ -82,6 +68,19 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
         (error: string) => error && this.customSnackBar.open(error, 'Close')
       );
   }
+
+  setComponentTitle() {
+    this.homeService.itemTitle
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe((title: string) => (this.title = title));
+  }
+
+  onChangeColor = (color: string, index: number) => {
+    this.colorsAvailableIndex = index;
+    this.itemColor = color;
+    this.item.type === 'mobilePhones' &&
+      this.homeService.updateColorOnTitle(color, this.title);
+  };
 
   ngOnDestroy() {
     this.isAlive = false;

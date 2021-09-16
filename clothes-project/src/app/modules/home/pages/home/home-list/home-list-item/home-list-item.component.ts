@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { HomeService } from '../../home.service';
 import { Laptop } from '../../models/laptop.model';
 import { MobilePhone } from '../../models/phone.model';
@@ -9,7 +11,7 @@ import { MobilePhone } from '../../models/phone.model';
   templateUrl: './home-list-item.component.html',
   styleUrls: ['./home-list-item.component.scss']
 })
-export class HomeItemComponent {
+export class HomeItemComponent implements OnInit {
   constructor(
     private homeService: HomeService,
     private router: Router,
@@ -17,14 +19,10 @@ export class HomeItemComponent {
   ) {}
 
   @Input() item: MobilePhone | Laptop;
+  title: Observable<string> = this.homeService.itemTitle.pipe(take(1));
 
-  getTitle(): string {
-    const isMobilePhone = this.item && this.item.type === 'mobilePhones';
-    if (isMobilePhone) {
-      return this.homeService.createPhoneTitle(this.item as MobilePhone);
-    } else {
-      return this.homeService.createLaptopTitle(this.item as Laptop);
-    }
+  ngOnInit() {
+    this.homeService.getTitle(this.item);
   }
 
   showDetails() {

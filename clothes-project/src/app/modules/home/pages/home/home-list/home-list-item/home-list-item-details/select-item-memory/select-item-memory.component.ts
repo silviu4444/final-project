@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PhoneMemory } from 'src/app/shared/home-interfaces/interfaces';
+import { HomeService } from '../../../../home.service';
 import { PhoneSpecs } from '../../../../models/phone.model';
 @Component({
   selector: 'app-select-item-memory',
@@ -9,7 +10,7 @@ import { PhoneSpecs } from '../../../../models/phone.model';
 export class SelectItemMemoryComponent implements OnInit {
   @Input() phoneItemSpecs: PhoneSpecs;
 
-  constructor() {}
+  constructor(private homeService: HomeService) {}
   phoneMemory: PhoneMemory;
 
   ngOnInit(): void {
@@ -31,6 +32,8 @@ export class SelectItemMemoryComponent implements OnInit {
 
   onChangeRAM = (index: number) => {
     this.phoneMemory.ram.itemIdx = index;
+    const GBSelected = this.phoneMemory.ram.ramOptions[index];
+    this.homeService.updateGBsOnTitle(GBSelected);
   };
 
   onChangeStorage(index: number) {
