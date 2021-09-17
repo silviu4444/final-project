@@ -2,7 +2,6 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import { selectHomeProducts } from '../home.selectors';
 
 import { HomeListComponent } from './home-list.component';
 
@@ -58,5 +57,4 @@ describe('HomeListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

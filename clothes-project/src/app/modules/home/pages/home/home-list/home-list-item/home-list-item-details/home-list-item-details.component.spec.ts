@@ -1,10 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +17,9 @@ const mockRoute = {
 
 const mockHomeService = {
   createPhoneTitle: () => 'PHONE TITLE',
-  createLaptopTitle: () => 'LAPTOP TITLE'
+  createLaptopTitle: () => 'LAPTOP TITLE',
+  updateColorOnTitle: () => 'NEW COLOR',
+  itemTitle: of('Apple 12 mini, 5GB RAM, 5G, Black')
 };
 
 const laptopExample = {
@@ -74,7 +71,7 @@ const initialState: any = {
       laptops: []
     },
     homeError: 'error test',
-    selectedItem: laptopExample
+    selectedItem: mobilePhoneExample
   }
 };
 
@@ -125,21 +122,6 @@ describe('HomeListItemDetailsComponent', () => {
     });
   });
 
-  it('should return the title for a laptop', () => {
-    const spyOnGetTitle = spyOn(component, 'getTitle');
-    fixture.detectChanges();
-    expect(spyOnGetTitle).toHaveBeenCalled();
-  });
-
-  it('should return the title for a mobile phone', () => {
-    const spyOnGetTitle = spyOn(component, 'getTitle');
-    spyOn(component['store$'], 'select').and.returnValue(
-      of(mobilePhoneExample)
-    );
-    fixture.detectChanges();
-    expect(spyOnGetTitle).toHaveBeenCalled();
-  });
-
   it('should set item on component if selectedItem from state is defined', () => {
     store.select(selectItemDetails).subscribe((item) => {
       fixture.detectChanges();
@@ -156,15 +138,16 @@ describe('HomeListItemDetailsComponent', () => {
     });
   });
 
-  it('should call changeColor when an image was clicked', () => {
-    // const spyOnChangeColor = spyOn(component, 'onChangeColor');
-    const spyOnGetTitle = spyOn(component, 'getTitle');
+  it('changeColor should call updateColorOnTitle when an image was clicked', () => {
+    const spyUpdateColorOnTitle = spyOn(
+      component['homeService'],
+      'updateColorOnTitle'
+    );
     fixture.detectChanges();
     const imageButton =
       fixture.debugElement.nativeElement.querySelector('.item-color');
     imageButton.click();
 
-    // expect(spyOnChangeColor).toHaveBeenCalledWith('Black', 0);
-    expect(spyOnGetTitle).toHaveBeenCalled();
+    expect(spyUpdateColorOnTitle).toHaveBeenCalledWith('Blue', component.title);
   });
 });

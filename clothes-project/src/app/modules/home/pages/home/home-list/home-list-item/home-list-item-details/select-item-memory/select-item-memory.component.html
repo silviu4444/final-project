@@ -11,7 +11,7 @@
 <p class="memory-text">Choose internal storage</p>
 <div class="memory" [appSetBorderOnClick]="phoneMemory.storage.itemIdx">
   <div
-    class="memory-option"
+    class="storage-option"
     *ngFor="let gb of phoneMemory.storage.storageOptions; let i = index"
     (click)="onChangeStorage(i)"
   >

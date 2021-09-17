@@ -71,45 +71,6 @@ describe('HomeItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call getTitle', () => {
-    const spyOnGetTitle = spyOn(component, 'getTitle');
-    fixture.detectChanges();
-    expect(spyOnGetTitle).toHaveBeenCalled();
-  });
-
-  it('should call createPhoneTitle if component.item is a MobilePhone (getTitle fn)', () => {
-    component.item = phoneExample as MobilePhone;
-    const spyOnCreatePhTitle = spyOn(
-      component['homeService'],
-      'createPhoneTitle'
-    );
-    component.getTitle();
-    expect(spyOnCreatePhTitle).toHaveBeenCalled();
-  });
-
-  it('should call createLaptopTitle if isMobilePhone(getTitle fn) is false', () => {
-    component.item = laptopExample as Laptop;
-    fixture.detectChanges();
-    const spyOnCreateLaptopTitle = spyOn(
-      component['homeService'],
-      'createLaptopTitle'
-    );
-    component.getTitle();
-    expect(spyOnCreateLaptopTitle).toHaveBeenCalled();
-  });
-
-  it('should have sim in item title', () => {
-    component.item = phoneExample;
-    component.item.specs.sim = 'Dual SIM';
-    expect(component.getTitle()).toContain('Dual SIM');
-  });
-
-  it('should replace sim in title with an empty string if a sim property is undefined(getTitle fn)', () => {
-    component.item = phoneExample;
-    delete component.item.specs.sim;
-    expect(component.getTitle()).not.toContain('Dual SIM');
-  });
-
   it('should navigate when an items was clicked', () => {
     const spyOnRouterNavigate = spyOn(component['router'], 'navigate');
     const item = fixture.debugElement.nativeElement.querySelector('a');
