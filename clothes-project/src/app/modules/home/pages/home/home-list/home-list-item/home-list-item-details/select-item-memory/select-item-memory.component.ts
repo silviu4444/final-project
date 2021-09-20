@@ -21,11 +21,11 @@ export class SelectItemMemoryComponent implements OnInit {
     this.phoneMemory = {
       ram: {
         ramOptions: this.phoneItemSpecs.memoryRam,
-        itemIdx: null
+        itemIdx: 0
       },
       storage: {
         storageOptions: this.phoneItemSpecs.memory,
-        itemIdx: null
+        itemIdx: 0
       }
     };
   }

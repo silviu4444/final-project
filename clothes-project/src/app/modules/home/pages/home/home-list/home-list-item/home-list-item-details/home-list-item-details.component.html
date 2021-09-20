@@ -19,6 +19,7 @@
             class="item-color"
             (click)="onChangeColor(color.key, i)"
             *ngFor="let color of item.specs.colors | keyvalue; let i = index"
+            [ngClass]="{ 'custom-border': i === 0 }"
           >
             <img src="{{ color.value }}" alt="" />
             <span>{{ color.key }}</span>
