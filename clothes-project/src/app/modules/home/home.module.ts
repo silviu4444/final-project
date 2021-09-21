@@ -14,6 +14,7 @@ import { SetBorderOnClickDirective } from './pages/home/directives/set-border-on
 import { StarsRaitingComponent } from 'src/app/shared/components/stars-raiting/stars-raiting.component';
 import { SelectItemMemoryComponent } from './pages/home/home-list/home-list-item/home-list-item-details/select-item-memory/select-item-memory.component';
 import { MatIconModule } from '@angular/material/icon';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
     HomeRoutingModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    SharedModule
   ],
   declarations: [
     HomeComponent,

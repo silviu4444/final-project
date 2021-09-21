@@ -1,14 +1,15 @@
-import { Component, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { takeWhile } from 'rxjs/operators';
+import { take, takeWhile } from 'rxjs/operators';
 import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AppState } from 'src/app/store/app.reducer';
-import { selectHomeError, selectItemDetails } from '../../../home.selectors';
+import { selectedItem, selectHomeError } from '../../../home.selectors';
 import { HomeService } from '../../../home.service';
 import { Laptop } from '../../../models/laptop.model';
 import { MobilePhone, PhoneSpecs } from '../../../models/phone.model';
 import * as HomeActions from '../../../store/home.actions';
+import { HomeState } from '../../../store/home.reducer';
 
 @Component({
   selector: 'app-home-list-item-details',
@@ -38,17 +39,26 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   fetchItem() {
+    let id: string;
     this.route.queryParams.subscribe((queryParams) => {
-      const id = queryParams.id;
-      this.store$.dispatch(new HomeActions.FetchItemDetailsStart({ id }));
+      id = queryParams.id;
     });
+    this.store$
+      .select('homeStore')
+      .pipe(take(2))
+      .subscribe((homeState: HomeState) => {
+        const homeStateHasItems = homeState.homeProducts.laptops.length > 0;
+        if (homeStateHasItems) {
+          this.store$.dispatch(new HomeActions.FetchItemDetailsStart({ id }));
+        }
+      });
   }
 
   selectItem() {
     this.store$
-      .select(selectItemDetails)
+      .select(selectedItem)
       .pipe(takeWhile(() => this.isAlive))
-      .subscribe((item: MobilePhone | Laptop) => {
+      .subscribe((item) => {
         if (item) {
           this.item = item;
           this.item.type === 'mobilePhones' &&

@@ -12,3 +12,8 @@ export interface PhoneMemory {
   ram: RAM;
   storage: Storage;
 }
+
+export interface PhoneTableSpecs {
+  property: string;
+  value: string[] | string | number;
+}

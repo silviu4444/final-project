@@ -55,5 +55,10 @@
         </div>
       </div>
     </section>
+    <div class="spect-table">
+      <app-phone-specs-table
+        *ngIf="this.item.type === 'mobilePhones'"
+      ></app-phone-specs-table>
+    </div>
   </ng-template>
 </div>

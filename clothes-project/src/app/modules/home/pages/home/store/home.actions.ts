@@ -28,7 +28,7 @@ export class FetchItemDetailsStart implements Action {
 
 export class SetItemDetailsSuccess implements Action {
   readonly type = SET_ITEM_DETAILS_SUCCESS;
-  constructor(public payload: { itemDetails: LaptopDetails | PhoneDetails }) {}
+  constructor(public payload: { itemDetails: Laptop | MobilePhone }) {}
 }
 
 export class DeleteItemDetails implements Action {

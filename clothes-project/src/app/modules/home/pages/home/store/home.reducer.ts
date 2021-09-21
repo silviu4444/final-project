@@ -5,7 +5,7 @@ import * as HomeActions from './home.actions';
 export interface HomeState {
   homeProducts: HomeProducts;
   homeError: string;
-  selectedItem: LaptopDetails | PhoneDetails;
+  selectedItem: Laptop | MobilePhone;
 }
 
 export interface HomeProducts {
@@ -36,16 +36,15 @@ export function homeReducer(
         }
       };
     case HomeActions.SET_ITEM_DETAILS_SUCCESS:
-      let itemDetails = action.payload.itemDetails;
       return {
         ...state,
-        selectedItem: itemDetails
+        selectedItem: action.payload.itemDetails
       };
     case HomeActions.FETCH_FAIL:
       return {
         ...state,
         homeError: action.payload.errorMessage
-      }
+      };
     case HomeActions.DELETE_ITEM_DETAILS:
       return {
         ...state,

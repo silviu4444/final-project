@@ -10,7 +10,7 @@ interface General {
   sim: string;
   simType: string;
   os: string;
-  osVerios: string;
+  osVersion: string;
   connectivity: string[];
   package: string[];
   year: number;
@@ -38,6 +38,18 @@ export interface PhoneSpecs {
   memory: string[];
   memoryRam: string[];
   colors: Colors;
+}
+
+export interface TablePhoneSpecs {
+    general: General;
+    battery: Battery;
+    display: Display;
+    fotoVideo: FotoVideo;
+    manufacturer: string;
+    memory: string[];
+    memoryRam: string[];
+    mobileNetwork: string;
+    model: string;
 }
 
 interface Colors {

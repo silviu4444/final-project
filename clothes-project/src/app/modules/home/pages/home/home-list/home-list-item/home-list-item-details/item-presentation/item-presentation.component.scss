@@ -22,10 +22,10 @@
       .slider-image:hover {
         cursor: pointer;
       }
+      .custom-border {
+        border: 2px solid $custom-border;
+        border-radius: 3px;
+      }
     }
   }
-}
-.custom-border {
-  border: 2px solid $custom-border !important;
-  border-radius: 3px;
 }

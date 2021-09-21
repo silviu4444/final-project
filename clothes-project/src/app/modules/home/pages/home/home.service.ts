@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { PhoneTableSpecs } from 'src/app/shared/home-interfaces/interfaces';
 import {
   createLaptopTitle,
+  createPhoneTableData,
   createPhoneTitle,
   updatePhoneTitleGBs
 } from 'src/app/shared/utility-functions/home-utility-functions';
@@ -45,5 +47,34 @@ export class HomeService {
     this.itemTitle.pipe(take(1)).subscribe((title) => (actualTitle = title));
     const updatedTitle = updatePhoneTitleGBs(actualTitle, gbToReplace);
     this.itemTitle.next(updatedTitle);
+  }
+
+  getPhoneTableData(phone: MobilePhone) {
+    return createPhoneTableData(phone);
+  }
+
+  setTableCategoryStyle(rowData: PhoneTableSpecs) {
+    const isACategory =
+      rowData.property === 'Display' ||
+      rowData.property === 'Cameras' ||
+      rowData.property === 'Battery' ||
+      rowData.property === 'General Details';
+    if (isACategory) {
+      return true;
+    }
+    return false;
+  }
+
+  brakeColumnDataLines(rowData: PhoneTableSpecs, cell: HTMLElement) {
+    let cellContent = '';
+    const isArray = Array.isArray(rowData.value);
+    if (isArray) {
+     const data = rowData.value as string[];
+     data.forEach((value: string) => {
+        cellContent += value + '<br>';
+      });
+      cell.innerHTML = cellContent;
+    }
+    return rowData.value;
   }
 }
