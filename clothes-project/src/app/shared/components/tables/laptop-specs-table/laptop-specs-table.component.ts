@@ -3,15 +3,15 @@ import { Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
 import { selectedItem } from 'src/app/modules/home/pages/home/home.selectors';
 import { HomeService } from 'src/app/modules/home/pages/home/home.service';
-import { MobilePhone } from 'src/app/modules/home/pages/home/models/phone.model';
+import { Laptop } from 'src/app/modules/home/pages/home/models/laptop.model';
 import { TableSpecs } from 'src/app/shared/home-interfaces/interfaces';
 
 @Component({
-  selector: 'app-phone-specs-table',
-  templateUrl: './phone-specs-table.component.html',
-  styleUrls: ['./phone-specs-table.component.scss']
+  selector: 'app-laptop-specs-table',
+  templateUrl: './laptop-specs-table.component.html',
+  styleUrls: ['./laptop-specs-table.component.scss']
 })
-export class PhoneSpecsTableComponent implements OnInit, OnDestroy {
+export class LaptopSpecsTableComponent implements OnInit, OnDestroy {
   constructor(private store$: Store, private homeService: HomeService) {}
 
   tableData: TableSpecs[];
@@ -28,14 +28,14 @@ export class PhoneSpecsTableComponent implements OnInit, OnDestroy {
       .pipe(takeWhile(() => this.isAlive))
       .subscribe(
         (item) =>
-          (this.tableData = this.homeService.getPhoneTableData(
-            item as MobilePhone
+          (this.tableData = this.homeService.getLaptopTableData(
+            item as Laptop
           ))
       );
   }
 
   setCustomBackgroundColor(rowData: TableSpecs) {
-    return this.homeService.setPhoneTableCategoryStyle(rowData);
+    return this.homeService.setLaptopTableCategoryStyle(rowData);
   }
 
   setRowValue(rowData: TableSpecs, cell: HTMLElement) {
@@ -45,4 +45,5 @@ export class PhoneSpecsTableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.isAlive = false;
   }
+
 }
