@@ -13,7 +13,7 @@ export interface PhoneMemory {
   storage: Storage;
 }
 
-export interface PhoneTableSpecs {
+export interface TableSpecs {
   property: string;
   value: string[] | string | number;
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { PhoneTableSpecs } from 'src/app/shared/home-interfaces/interfaces';
+import { TableSpecs } from 'src/app/shared/home-interfaces/interfaces';
 import {
+  createLaptopTableData,
   createLaptopTitle,
   createPhoneTableData,
   createPhoneTitle,
@@ -53,7 +54,11 @@ export class HomeService {
     return createPhoneTableData(phone);
   }
 
-  setTableCategoryStyle(rowData: PhoneTableSpecs) {
+  getLaptopTableData(laptop: Laptop) {
+    return createLaptopTableData(laptop);
+  }
+
+  setPhoneTableCategoryStyle(rowData: TableSpecs) {
     const isACategory =
       rowData.property === 'Display' ||
       rowData.property === 'Cameras' ||
@@ -65,7 +70,19 @@ export class HomeService {
     return false;
   }
 
-  brakeColumnDataLines(rowData: PhoneTableSpecs, cell: HTMLElement) {
+  setLaptopTableCategoryStyle(rowData: TableSpecs) {
+    const isACategory =
+      rowData.property === 'Display' ||
+      rowData.property === 'Memory' ||
+      rowData.property === 'Video' ||
+      rowData.property === 'General Details';
+    if (isACategory) {
+      return true;
+    }
+    return false;
+  }
+
+  brakeColumnDataLines(rowData: TableSpecs, cell: HTMLElement) {
     let cellContent = '';
     const isArray = Array.isArray(rowData.value);
     if (isArray) {

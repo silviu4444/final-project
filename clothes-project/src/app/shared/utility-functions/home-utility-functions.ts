@@ -1,6 +1,6 @@
 import { Laptop } from 'src/app/modules/home/pages/home/models/laptop.model';
 import { MobilePhone } from 'src/app/modules/home/pages/home/models/phone.model';
-import { PhoneTableSpecs } from '../home-interfaces/interfaces';
+import { TableSpecs } from '../home-interfaces/interfaces';
 
 export const updatePhoneTitleGBs = (title: string, gbToReplace: string) => {
   const splittedTitle = title.split(',');
@@ -26,12 +26,12 @@ export const createPhoneTitle = (phone: MobilePhone) => {
 
 export const createLaptopTitle = (laptop: Laptop) => {
   const manufacturer = laptop.manufacturer;
-    const model = laptop.model;
-    const processor = laptop.specs.processor;
-    const inch = laptop.specs.inch;
-    const memory = laptop.specs.memory;
-    return `${manufacturer} ${model}, ${processor}, ${inch}", ${memory}`;
-}
+  const model = laptop.model;
+  const processor = laptop.specs.processor;
+  const inch = laptop.specs.inch;
+  const memory = laptop.specs.memory;
+  return `${manufacturer} ${model}, ${processor}, ${inch}", ${memory}`;
+};
 
 export const addDetailsToItem = (items, selectedItem): MobilePhone | Laptop => {
   return !!selectedItem
@@ -44,7 +44,7 @@ export const addDetailsToItem = (items, selectedItem): MobilePhone | Laptop => {
     : null;
 };
 
-export const createPhoneTableData = (phone: MobilePhone): PhoneTableSpecs[] => {
+export const createPhoneTableData = (phone: MobilePhone): TableSpecs[] => {
   return [
     {
       property: 'General Details',
@@ -143,4 +143,71 @@ export const createPhoneTableData = (phone: MobilePhone): PhoneTableSpecs[] => {
       value: phone.inDepthDetails.specs.battery.type
     }
   ];
-}
+};
+
+export const createLaptopTableData = (laptop: Laptop): TableSpecs[] => {
+  return [
+    {
+      property: 'General Details',
+      value: ''
+    },
+    {
+      property: 'Manufacturer',
+      value: laptop.manufacturer
+    },
+    {
+      property: 'Model',
+      value: laptop.inDepthDetails.specs.general.model
+    },
+    {
+      property: 'Weight',
+      value: laptop.inDepthDetails.specs.general.weight + ' ' + 'Kg'
+    },
+    {
+      property: 'Processor',
+      value: laptop.specs.processor
+    },
+
+    {
+      property: 'Display',
+      value: ''
+    },
+    {
+      property: 'Display Technology',
+      value: laptop.inDepthDetails.specs.display.display
+    },
+    {
+      property: 'Display Type',
+      value: laptop.specs.display
+    },
+    {
+      property: 'Resolution',
+      value: laptop.inDepthDetails.specs.display.resolution
+    },
+    {
+      property: 'Inch',
+      value: laptop.inDepthDetails.specs.display.inch
+    },
+    {
+      property: 'Memory',
+      value: ''
+    },
+    {
+      property: 'Hard Disk',
+      value: laptop.specs.memory
+    },
+    {
+      property: 'SSD',
+      value:
+        laptop.inDepthDetails.specs.hardDisk.capacity
+    },
+    {
+      property: 'Video',
+      value: ''
+    },
+    {
+      property: 'Video Card',
+      value: laptop.inDepthDetails.specs.video.type
+    }
+  ];
+};
