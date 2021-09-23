@@ -19,6 +19,10 @@ const routes: Routes = [
       import('./core/auth/auth.module').then((module) => module.AuthModule)
   },
   {
+    path: 'cart',
+    loadChildren: () => import('./shared/shared.module').then((module) => module.SharedModule)
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { TableSpecs } from 'src/app/shared/home-interfaces/interfaces';
+import { TableSpecs } from 'src/app/shared/interfaces/interfaces';
 import {
   createLaptopTableData,
   createLaptopTitle,

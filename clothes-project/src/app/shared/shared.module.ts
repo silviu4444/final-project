@@ -4,10 +4,14 @@ import { PhoneSpecsTableComponent } from './components/tables/phone-specs-table/
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { LaptopSpecsTableComponent } from './components/tables/laptop-specs-table/laptop-specs-table.component';
+import { AddToCartComponent } from './components/add-to-cart-button/add-to-cart.component';
+import { MatIconModule } from '@angular/material/icon';
+import { CartComponent } from './components/cart/cart.component';
+import { SharedRoutingModule } from './shared-routing.module';
 
 @NgModule({
-  declarations: [LoadingSpinnerComponent, PhoneSpecsTableComponent, LaptopSpecsTableComponent],
-  imports: [MatTableModule, CommonModule],
-  exports: [LoadingSpinnerComponent, PhoneSpecsTableComponent, LaptopSpecsTableComponent]
+  declarations: [LoadingSpinnerComponent, PhoneSpecsTableComponent, LaptopSpecsTableComponent, AddToCartComponent, CartComponent],
+  imports: [MatTableModule, CommonModule, MatIconModule, SharedRoutingModule],
+  exports: [LoadingSpinnerComponent, PhoneSpecsTableComponent, LaptopSpecsTableComponent, AddToCartComponent, CartComponent]
 })
 export class SharedModule {}

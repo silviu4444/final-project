@@ -1,0 +1,4 @@
+<h1 *ngIf="!carItems; else content">Your cart is empty!</h1>
+<ng-template #content>
+  <h1>Yes</h1>
+</ng-template>

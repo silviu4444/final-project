@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { Laptop, LaptopDetails } from '../models/laptop.model';
-import { MobilePhone, PhoneDetails } from '../models/phone.model';
+import { Laptop } from '../models/laptop.model';
+import { MobilePhone } from '../models/phone.model';
 
 export const FETCH_HOME_DATA_START = '[Home] FETCH_HOME_DATA_START';
 export const SET_HOME_DATA_SUCCESS = '[Home] SET_HOME_DATA_SUCCESS';

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { take, takeWhile } from 'rxjs/operators';
+import { CartService } from 'src/app/shared/services/cart.service';
 import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AppState } from 'src/app/store/app.reducer';
 import { selectedItem, selectHomeError } from '../../../home.selectors';
@@ -21,7 +22,8 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private store$: Store<AppState>,
     private customSnackBar: CustomSnackbarService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private cartService: CartService
   ) {}
 
   title: string;
@@ -66,6 +68,8 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
           const colorsKeys = Object.keys(item.specs.colors);
           this.itemColor = colorsKeys[0];
           this.homeService.getTitle(this.item);
+          this.cartService.setItemColor(colorsKeys[0]);
+          this.cartService.setItemId(item.id);
         }
       });
   }
@@ -90,10 +94,12 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     this.itemColor = color;
     this.item.type === 'mobilePhones' &&
       this.homeService.updateColorOnTitle(color, this.title);
+    this.cartService.setItemColor(color);
   };
 
   ngOnDestroy() {
     this.isAlive = false;
     this.store$.dispatch(new HomeActions.DeleteItemDetails());
+    this.cartService.removeItemCartData();
   }
 }

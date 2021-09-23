@@ -7,6 +7,11 @@
   <ng-template #content>
     <h1>{{ title }}</h1>
     <mat-divider></mat-divider>
+    <div class="stars">
+      <app-stars-raiting [raiting]="item.stars"></app-stars-raiting>
+      <p>{{ item.stars }}</p>
+      <span> {{ item.reviews }} reviews </span>
+    </div>
     <section class="general-presentation">
       <div class="general-presentation__item-images">
         <app-item-presentation
@@ -27,15 +32,16 @@
         </div>
       </div>
       <div class="general-presentation__item-details">
-        <div class="stars">
-          <app-stars-raiting [raiting]="item.stars"></app-stars-raiting>
-          <p>{{ item.stars }}</p>
-          <span> {{ item.reviews }} reviews </span>
+        <div class="add-to-cart-component">
+          <app-add-to-cart></app-add-to-cart>
         </div>
-        <app-select-item-memory
-          *ngIf="item.type === 'mobilePhones'"
-          [phoneItemSpecs]="phoneSpecs"
-        ></app-select-item-memory>
+        <div class="item-memory-container">
+          <div class="memory">
+            <app-select-item-memory
+              *ngIf="item.type === 'mobilePhones'"
+              [phoneItemSpecs]="phoneSpecs"
+            ></app-select-item-memory>
+          </div>
         <div class="benefits">
           <h4>Benefits:</h4>
           <p>
@@ -52,6 +58,7 @@
             </mat-icon>
             Money back in 30'
           </p>
+        </div>
         </div>
       </div>
     </section>

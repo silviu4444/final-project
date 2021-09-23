@@ -1,5 +1,5 @@
-import { Laptop, LaptopDetails } from '../models/laptop.model';
-import { MobilePhone, PhoneDetails } from '../models/phone.model';
+import { Laptop } from '../models/laptop.model';
+import { MobilePhone } from '../models/phone.model';
 import * as HomeActions from './home.actions';
 
 export interface HomeState {

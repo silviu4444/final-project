@@ -1,7 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { takeWhile } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { AppState } from 'src/app/store/app.reducer';
+import { SelectTotalNumberOfItemsInCart } from '../../selectors/cart.selectors';
 
 @Component({
   selector: 'app-header',
@@ -9,16 +12,34 @@ import { AuthService } from 'src/app/core/auth/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private store$: Store<AppState>
+  ) {}
 
   @Input() matDrawerRef: MatDrawer;
   isAuthenticated = false;
-  private userSub: Subscription;
+  numberOfItemsInCart: number = null;
+  isAlive = true;
 
   ngOnInit() {
-    this.userSub = this.authService.user$.subscribe((user) => {
-      this.isAuthenticated = !!user;
-    });
+    this.getUser();
+    this.getNumberOfItems();
+  }
+
+  getUser() {
+    this.authService.user$
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe((user) => {
+        this.isAuthenticated = !!user;
+      });
+  }
+
+  getNumberOfItems() {
+    this.store$
+      .select(SelectTotalNumberOfItemsInCart)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe((totalItems) => (this.numberOfItemsInCart = totalItems));
   }
 
   onToggleSidebar() {
@@ -26,6 +47,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.userSub.unsubscribe();
+    this.isAlive = false;
   }
 }

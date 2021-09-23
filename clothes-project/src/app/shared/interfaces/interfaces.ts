@@ -17,3 +17,10 @@ export interface TableSpecs {
   property: string;
   value: string[] | string | number;
 }
+
+export interface CartItem {
+  id: number;
+  memorySelected?: string;
+  storageSelected?: string;
+  colorSelected: string;
+}

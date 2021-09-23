@@ -4,7 +4,7 @@ import { takeWhile } from 'rxjs/operators';
 import { selectedItem } from 'src/app/modules/home/pages/home/home.selectors';
 import { HomeService } from 'src/app/modules/home/pages/home/home.service';
 import { MobilePhone } from 'src/app/modules/home/pages/home/models/phone.model';
-import { TableSpecs } from 'src/app/shared/home-interfaces/interfaces';
+import { TableSpecs } from 'src/app/shared/interfaces/interfaces';
 
 @Component({
   selector: 'app-phone-specs-table',

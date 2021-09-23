@@ -25,8 +25,17 @@
     box-shadow: -1px 5px 0px -2px $primary-color;
   }
 
+  &__cart-button {
+    background: transparent;
+    color: white;
+    border: none;
+  }
+
+  &__cart-button:hover {
+    cursor: pointer;
+  }
+
   &__account-button {
-    color: red;
     background: transparent;
     color: white;
     border: none;

@@ -1,6 +1,6 @@
 import { Laptop } from 'src/app/modules/home/pages/home/models/laptop.model';
 import { MobilePhone } from 'src/app/modules/home/pages/home/models/phone.model';
-import { TableSpecs } from '../home-interfaces/interfaces';
+import { TableSpecs } from '../interfaces/interfaces';
 
 export const updatePhoneTitleGBs = (title: string, gbToReplace: string) => {
   const splittedTitle = title.split(',');
