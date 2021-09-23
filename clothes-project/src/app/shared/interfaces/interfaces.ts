@@ -1,3 +1,6 @@
+import { Laptop } from 'src/app/modules/home/pages/home/models/laptop.model';
+import { MobilePhone } from 'src/app/modules/home/pages/home/models/phone.model';
+
 interface RAM {
   ramOptions: string[];
   itemIdx: number;
@@ -19,8 +22,16 @@ export interface TableSpecs {
 }
 
 export interface CartItem {
-  id: number;
   memorySelected?: string;
   storageSelected?: string;
   colorSelected: string;
+  item: MobilePhone | Laptop;
+}
+
+export interface TableCartItem {
+  image: string;
+  title: string;
+  price: number;
+  numberOfItems: number;
+  findInCartIndex: number;
 }

@@ -69,7 +69,7 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
           this.itemColor = colorsKeys[0];
           this.homeService.getTitle(this.item);
           this.cartService.setItemColor(colorsKeys[0]);
-          this.cartService.setItemId(item.id);
+          this.cartService.setItem(item);
         }
       });
   }

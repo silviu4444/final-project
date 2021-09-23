@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { take, takeWhile } from 'rxjs/operators';
-import { homeProducts } from 'src/app/modules/home/pages/home/home.selectors';
+import { take } from 'rxjs/operators';
+import { TableCartItem } from '../../interfaces/interfaces';
 import { SelectCartItems } from '../../selectors/cart.selectors';
+import { SharedService } from '../../shared.service';
 import { CartItemWithQuantity } from '../../store/cart.reducer';
 
 @Component({
@@ -11,12 +12,12 @@ import { CartItemWithQuantity } from '../../store/cart.reducer';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit, OnDestroy {
-  constructor(private store$: Store) {}
+  constructor(private store$: Store, private sharedService: SharedService) {}
 
-  carItems: CartItemWithQuantity[] = null;
+  cartItems: CartItemWithQuantity[] = null;
   homeProducts = null;
-
   isAlive = true;
+  tableData: TableCartItem[];
 
   ngOnInit(): void {
     this.getCartItems();
@@ -28,17 +29,14 @@ export class CartComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((items) => {
         if (items.length > 0) {
-          this.carItems = items;
-          this.selectHomePorducts();
+          this.cartItems = items;
+          this.getCartTableData();
         }
       });
   }
 
-  selectHomePorducts() {
-    this.store$
-      .select(homeProducts)
-      .pipe(take(1))
-      .subscribe((homeProducts) => (this.homeProducts = homeProducts));
+  getCartTableData() {
+    this.tableData = this.sharedService.generateCartTableData(this.cartItems);
   }
 
   ngOnDestroy() {

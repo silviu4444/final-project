@@ -8,9 +8,10 @@ import { AddToCartComponent } from './components/add-to-cart-button/add-to-cart.
 import { MatIconModule } from '@angular/material/icon';
 import { CartComponent } from './components/cart/cart.component';
 import { SharedRoutingModule } from './shared-routing.module';
+import { CartTableComponent } from './components/tables/cart-table/cart-table.component';
 
 @NgModule({
-  declarations: [LoadingSpinnerComponent, PhoneSpecsTableComponent, LaptopSpecsTableComponent, AddToCartComponent, CartComponent],
+  declarations: [LoadingSpinnerComponent, PhoneSpecsTableComponent, LaptopSpecsTableComponent, AddToCartComponent, CartComponent, CartTableComponent],
   imports: [MatTableModule, CommonModule, MatIconModule, SharedRoutingModule],
   exports: [LoadingSpinnerComponent, PhoneSpecsTableComponent, LaptopSpecsTableComponent, AddToCartComponent, CartComponent]
 })
