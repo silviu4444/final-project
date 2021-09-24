@@ -1,23 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
+import { take, takeWhile } from 'rxjs/operators';
 import { AppState } from 'src/app/store/app.reducer';
 import { CartItem } from '../../interfaces/interfaces';
+import { SelectButtonShouldChange } from '../../selectors/UI.selectors';
 import { CartService } from '../../services/cart.service';
-import * as storeActions from '../../store/cart.actions';
+import * as storeActions from '../../store/cart/cart.actions';
 
 @Component({
   selector: 'app-add-to-cart',
   templateUrl: './add-to-cart.component.html',
   styleUrls: ['./add-to-cart.component.scss']
 })
-export class AddToCartComponent {
+export class AddToCartComponent implements OnInit, OnDestroy {
   constructor(
     private store$: Store<AppState>,
     private cartService: CartService
   ) {}
 
   itemSelectedData: CartItem;
+  addToCartButtonShouldChange: boolean;
+  isAlive = true;
+
+  ngOnInit() {
+    this.cartService.itemData.subscribe(
+      (itemChanges) => (this.itemSelectedData = itemChanges)
+    );
+    this.store$
+      .select(SelectButtonShouldChange)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(
+        (shouldChange: boolean) =>
+          (this.addToCartButtonShouldChange = shouldChange)
+      );
+  }
 
   onClick() {
     this.cartService.getItem();
@@ -27,8 +43,9 @@ export class AddToCartComponent {
     this.store$.dispatch(
       new storeActions.AddItemToCart({ item: { ...this.itemSelectedData } })
     );
-    this.store$.select('cartStore').pipe(take(1)).subscribe((items) => {
-      console.error(items)
-    })
+  }
+
+  ngOnDestroy() {
+    this.isAlive = false;
   }
 }

@@ -4,7 +4,7 @@ import { take } from 'rxjs/operators';
 import { TableCartItem } from '../../interfaces/interfaces';
 import { SelectCartItems } from '../../selectors/cart.selectors';
 import { SharedService } from '../../shared.service';
-import { CartItemWithQuantity } from '../../store/cart.reducer';
+import { CartItemWithQuantity } from '../../store/cart/cart.reducer';
 
 @Component({
   selector: 'app-cart',

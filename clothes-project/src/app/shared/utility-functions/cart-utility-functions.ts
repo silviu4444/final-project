@@ -1,7 +1,7 @@
 import { Laptop } from 'src/app/modules/home/pages/home/models/laptop.model';
 import { MobilePhone } from 'src/app/modules/home/pages/home/models/phone.model';
 import { CartItem, TableCartItem } from '../interfaces/interfaces';
-import { CartItemWithQuantity, CartState } from '../store/cart.reducer';
+import { CartItemWithQuantity, CartState } from '../store/cart/cart.reducer';
 
 export const isAlreadyInCart = (item: CartItem, cartItems: CartState) => {
   const isInCart = cartItems.items.findIndex((element: CartItem) => {

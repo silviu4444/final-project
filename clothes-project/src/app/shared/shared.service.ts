@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { CartItemWithQuantity } from "./store/cart.reducer";
+import { CartItemWithQuantity } from "./store/cart/cart.reducer";
 import { createCartTableData } from "./utility-functions/cart-utility-functions";
 
 @Injectable({providedIn: 'root'})

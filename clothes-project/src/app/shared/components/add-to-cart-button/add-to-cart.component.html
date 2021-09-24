@@ -1,6 +1,8 @@
-<button class="add-to-cart-button" (click)="onClick()">
+<button class="add-to-cart-button" (click)="onClick()" [appCartButtonEffect]="addToCartButtonShouldChange">
   Add to Cart
   <mat-icon>
-    <span class="material-icons-outlined"> add_shopping_cart </span>
+    <span> add_shopping_cart </span>
+  </mat-icon>
+  <mat-icon>
   </mat-icon>
 </button>

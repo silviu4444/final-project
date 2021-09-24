@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { CartItem } from '../interfaces/interfaces';
+import { CartItem } from '../../interfaces/interfaces';
 
 export const ADD_ITEM_TO_CART = '[SHARED] AddItemToCart';
 

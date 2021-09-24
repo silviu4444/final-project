@@ -1,5 +1,5 @@
-import { CartItem } from '../interfaces/interfaces';
-import { isAlreadyInCart, updateState } from '../utility-functions/cart-utility-functions';
+import { CartItem } from '../../interfaces/interfaces';
+import { isAlreadyInCart, updateState } from '../../utility-functions/cart-utility-functions';
 import * as CartActions from './cart.actions';
 
 export interface CartItemWithQuantity extends CartItem {
