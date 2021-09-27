@@ -1,26 +1,30 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { createLaptopTitle, createPhoneTitle } from 'src/app/shared/utility-functions/home-utility-functions';
 import { Laptop } from './models/laptop.model';
 import { MobilePhone } from './models/phone.model';
 
 @Injectable({ providedIn: 'root' })
 export class HomeService {
 
-  createPhoneTitle(phone: MobilePhone) {
-    const color = phone.specs.color
-    const manufacturer = phone.manufacturer;
-    const model = phone.model;
-    const sim = phone.specs.sim ? ', ' + phone.specs.sim : '';
-    const memoryRAM = phone.specs.memoryRam[0];
-    const network = phone.specs.mobileNetwork;
-    return `${manufacturer} ${model}${sim}, ${memoryRAM}GB RAM, ${network}, ${color}`;
+  itemTitle = new BehaviorSubject<string>(null);
+
+  getTitle(item: Laptop | MobilePhone) {
+    const isMobilePhone = item && item.type === 'mobilePhones';
+    if (isMobilePhone) {
+      this.getPhoneTitle(item as MobilePhone);
+    } else {
+      this.getLaptopTitle(item as Laptop);
+    }
   }
 
-  createLaptopTitle(laptop: Laptop) {
-    const manufacturer = laptop.manufacturer;
-    const model = laptop.model;
-    const processor = laptop.specs.processor;
-    const inch = laptop.specs.inch;
-    const memory = laptop.specs.memory;
-    return `${manufacturer} ${model}, ${processor}, ${inch}", ${memory}`;
+  getPhoneTitle(phone: MobilePhone) {
+    const title = createPhoneTitle(phone);
+    this.itemTitle.next(title);
+  }
+
+  getLaptopTitle(laptop: Laptop) {
+    const title = createLaptopTitle(laptop);
+    this.itemTitle.next(title);
   }
 }

@@ -1,11 +1,11 @@
-import { Laptop, LaptopDetails } from '../models/laptop.model';
-import { MobilePhone, PhoneDetails } from '../models/phone.model';
+import { Laptop } from '../models/laptop.model';
+import { MobilePhone } from '../models/phone.model';
 import * as HomeActions from './home.actions';
 
 export interface HomeState {
   homeProducts: HomeProducts;
   homeError: string;
-  selectedItem: LaptopDetails | PhoneDetails;
+  selectedItem: Laptop | MobilePhone;
 }
 
 export interface HomeProducts {
@@ -27,7 +27,7 @@ export function homeReducer(
   action: HomeActions.HomeActions
 ) {
   switch (action.type) {
-    case HomeActions.SET_HOME_DATA:
+    case HomeActions.SET_HOME_DATA_SUCCESS:
       return {
         ...state,
         homeProducts: {
@@ -35,7 +35,7 @@ export function homeReducer(
           laptops: action.payload.laptops
         }
       };
-    case HomeActions.SET_ITEM_DETAILS:
+    case HomeActions.SET_ITEM_DETAILS_SUCCESS:
       let itemDetails = action.payload.itemDetails;
       return {
         ...state,

@@ -1,14 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { takeWhile } from 'rxjs/operators';
+import { take, takeWhile } from 'rxjs/operators';
 import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AppState } from 'src/app/store/app.reducer';
-import { selectHomeError, selectItemDetails } from '../../../home.selectors';
+import {
+  selectedItem,
+  selectHomeError
+} from '../../../home.selectors';
 import { HomeService } from '../../../home.service';
 import { Laptop } from '../../../models/laptop.model';
 import { MobilePhone } from '../../../models/phone.model';
 import * as HomeActions from '../../../store/home.actions';
+import { HomeState } from '../../../store/home.reducer';
 
 @Component({
   selector: 'app-home-list-item-details',
@@ -23,22 +27,48 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     private homeService: HomeService
   ) {}
 
+  title: string;
   isAlive = true;
   item: Laptop | MobilePhone;
+  itemColor: string;
 
   ngOnInit(): void {
+    this.fetchItem();
+    this.selectItem();
+    this.selectHomeError();
+  }
+
+  fetchItem() {
+    let id: string;
     this.route.queryParams.subscribe((queryParams) => {
-      const id = queryParams.id;
-      this.store$.dispatch(new HomeActions.GetItemDetails({ id }));
+      id = queryParams.id;
     });
-
     this.store$
-      .select(selectItemDetails)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe((item: MobilePhone | Laptop) => {
-        item && (this.item = item);
+      .select('homeStore')
+      .pipe(take(2))
+      .subscribe((homeState: HomeState) => {
+        const homeStateHasItems = homeState.homeProducts.laptops.length > 0;
+        if (homeStateHasItems) {
+          this.store$.dispatch(new HomeActions.FetchItemDetailsStart({ id }));
+        }
       });
+  }
 
+  selectItem() {
+    this.store$
+      .select(selectedItem)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe((item) => {
+        if (item) {
+          this.item = item;
+          const colorsKeys = Object.keys(item.specs.colors);
+          this.itemColor = colorsKeys[0];
+          this.homeService.getTitle(this.item);
+        }
+      });
+  }
+
+  selectHomeError() {
     this.store$
       .select(selectHomeError)
       .pipe(takeWhile(() => this.isAlive))
@@ -47,13 +77,10 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
       );
   }
 
-  getTitle(): string {
-    const isMobilePhone = this.item && this.item.type === 'mobilePhones';
-    if (isMobilePhone) {
-      return this.homeService.createPhoneTitle(this.item as MobilePhone);
-    } else {
-      return this.homeService.createLaptopTitle(this.item as Laptop);
-    }
+  setComponentTitle() {
+    this.homeService.itemTitle
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe((title: string) => (this.title = title));
   }
 
   ngOnDestroy() {

@@ -10,7 +10,7 @@ interface General {
   sim: string;
   simType: string;
   os: string;
-  osVerios: string;
+  osVersion: string;
   connectivity: string[];
   package: string[];
   year: number;
@@ -32,21 +32,32 @@ interface Battery {
   capacity: number;
 }
 
-interface Specs {
+export interface PhoneSpecs {
   sim: string;
   mobileNetwork: string;
   memory: string[];
   memoryRam: string[];
-  color: string;
+  colors: Colors;
 }
 
-interface Images {
-  [key: string]: string[]
- }
+export interface TablePhoneSpecs {
+    general: General;
+    battery: Battery;
+    display: Display;
+    fotoVideo: FotoVideo;
+    manufacturer: string;
+    memory: string[];
+    memoryRam: string[];
+    mobileNetwork: string;
+    model: string;
+}
+
+interface Colors {
+  [key: string]: string[];
+}
 
 export interface PhoneDetails {
   id: number;
-  images: Images;
   specs: SpecsDetails;
 }
 
@@ -58,7 +69,7 @@ export interface MobilePhone {
   price: number;
   oldPrice: number;
   reviews: number;
-  specs: Specs;
+  specs: PhoneSpecs;
   stars: number;
   type: string;
   inDepthDetails?: PhoneDetails;

@@ -5,11 +5,11 @@
     *ngIf="!item; else content"
   ></mat-progress-spinner>
   <ng-template #content>
-    <h1>{{ getTitle() }}</h1>
+    <h1>{{ title }}</h1>
     <mat-divider></mat-divider>
     <app-item-presentation
-    [color]="item.specs.color"
-    [images]="item.inDepthDetails.images"
+    [color]="itemColor"
+    [images]="item.specs.colors"
     ></app-item-presentation>
   </ng-template>
 </div>

@@ -32,16 +32,15 @@ interface LaptopSpecs {
   memory: string;
   processor: string;
   display: string;
-  color: string;
+  colors: Colors;
 }
 
-interface Images {
+interface Colors {
   [key: string]: string[];
 }
 
 export interface LaptopDetails {
   id: number;
-  images: Images;
   specs: SpecsDetails;
 }
 
