@@ -19,17 +19,7 @@
           [images]="item.specs.colors"
         ></app-item-presentation>
         <p>Choose a color:</p>
-        <div class="item-colors" [appSetBorderOnClick]="colorsAvailableIndex">
-          <div
-            class="item-color"
-            (click)="onChangeColor(color.key, i)"
-            *ngFor="let color of item.specs.colors | keyvalue; let i = index"
-            [ngClass]="{ 'custom-border': i === 0 }"
-          >
-            <img src="{{ color.value }}" alt="{{ color.key }}" />
-            <span>{{ color.key }}</span>
-          </div>
-        </div>
+        <app-select-item-properties [item]="item" [title]="title"></app-select-item-properties>
       </div>
       <div class="general-presentation__item-details">
         <div class="add-to-cart-component">
@@ -37,10 +27,19 @@
         </div>
         <div class="item-memory-container">
           <div class="memory">
-            <app-select-item-memory
-              *ngIf="item.type === 'mobilePhones'"
-              [phoneItemSpecs]="phoneSpecs"
-            ></app-select-item-memory>
+
+
+
+
+
+
+
+
+
+
+
+
+
           </div>
         <div class="benefits">
           <h4>Benefits:</h4>

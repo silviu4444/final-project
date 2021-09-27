@@ -1,5 +1,35 @@
 @import '../../../../../../../../shared/styles/global-colors.scss';
 @import '../../../../../../../../shared/styles/shared-styles.scss';
+.item-colors {
+  display: flex;
+  justify-content: center;
+
+  .item-color {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid #6c757d;
+    padding: 5px;
+    flex-direction: column;
+
+    img {
+      width: 40px;
+      height: 40px;
+      display: inline-block;
+    }
+  }
+
+  .item-color:hover {
+    cursor: pointer;
+  }
+
+  .custom-border {
+    border: 1px solid $custom-border;
+  }
+}
+
 .memory-text {
   font-weight: 500;
   margin: 10px 0;

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { take, takeWhile } from 'rxjs/operators';
 import { AppState } from 'src/app/store/app.reducer';
 import { CartItem } from '../../interfaces/interfaces';
-import { SelectButtonShouldChange } from '../../selectors/UI.selectors';
+import { SelectUIButtonShouldChange } from '../../selectors/UI.selectors';
 import { CartService } from '../../services/cart.service';
 import * as storeActions from '../../store/cart/cart.actions';
 
@@ -27,7 +27,7 @@ export class AddToCartComponent implements OnInit, OnDestroy {
       (itemChanges) => (this.itemSelectedData = itemChanges)
     );
     this.store$
-      .select(SelectButtonShouldChange)
+      .select(SelectUIButtonShouldChange)
       .pipe(takeWhile(() => this.isAlive))
       .subscribe(
         (shouldChange: boolean) =>

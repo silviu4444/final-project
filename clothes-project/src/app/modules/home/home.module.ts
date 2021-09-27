@@ -12,9 +12,9 @@ import { ItemPresentationComponent } from './pages/home/home-list/home-list-item
 import { ImageSrcAnimationDirective } from './pages/home/directives/image-src-animation.directive';
 import { SetBorderOnClickDirective } from './pages/home/directives/set-border-on-click.directive';
 import { StarsRaitingComponent } from 'src/app/shared/components/stars-raiting/stars-raiting.component';
-import { SelectItemMemoryComponent } from './pages/home/home-list/home-list-item/home-list-item-details/select-item-memory/select-item-memory.component';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SelectItemPropertiesComponent } from './pages/home/home-list/home-list-item/home-list-item-details/select-item-properties/select-item-properties.component';
 
 @NgModule({
   imports: [
@@ -35,7 +35,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ImageSrcAnimationDirective,
     SetBorderOnClickDirective,
     StarsRaitingComponent,
-    SelectItemMemoryComponent,
+    SelectItemPropertiesComponent,
   ]
 })
 export class HomeModule {}

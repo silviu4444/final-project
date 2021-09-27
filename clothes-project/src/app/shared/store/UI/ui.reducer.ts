@@ -4,13 +4,23 @@ interface AddToCartState {
   addToCartButtonShouldChange: boolean;
 }
 
+interface ImageSliderState {
+  colorIndex: number;
+  color: string;
+}
+
 export interface UIState {
   addToCart: AddToCartState;
+  itemImageSlider: ImageSliderState;
 }
 
 const initialState: UIState = {
   addToCart: {
     addToCartButtonShouldChange: null
+  },
+  itemImageSlider: {
+    colorIndex: null,
+    color: null
   }
 };
 
@@ -24,6 +34,15 @@ export function UIReducer(
       return {
         ...state,
         addToCart: { addToCartButtonShouldChange: buttonShouldChange }
+      };
+    case UIActions.SET_SLIDER_IMAGE_COLOR_AND_INDEX:
+      return {
+        ...state,
+        itemImageSlider: {
+          ...state.itemImageSlider,
+          color: action.payload.color,
+          index: action.payload.colorIndex
+        }
       };
     default:
       return state;

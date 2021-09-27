@@ -2,13 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { take, takeWhile } from 'rxjs/operators';
+import { SelectUIImageSlider } from 'src/app/shared/selectors/UI.selectors';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AppState } from 'src/app/store/app.reducer';
 import { selectedItem, selectHomeError } from '../../../home.selectors';
 import { HomeService } from '../../../home.service';
 import { Laptop } from '../../../models/laptop.model';
-import { MobilePhone, PhoneSpecs } from '../../../models/phone.model';
+import { MobilePhone } from '../../../models/phone.model';
 import * as HomeActions from '../../../store/home.actions';
 import { HomeState } from '../../../store/home.reducer';
 
@@ -30,14 +31,16 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
   isAlive = true;
   item: Laptop | MobilePhone;
   itemColor: string;
-  colorsAvailableIndex: number = 0;
-  phoneSpecs: PhoneSpecs;
 
   ngOnInit(): void {
     this.fetchItem();
     this.selectItem();
     this.selectHomeError();
     this.setComponentTitle();
+    this.onUpdateSlider();
+    this.store$.select('UIStore').subscribe((store) => {
+      console.log(store.itemImageSlider);
+    });
   }
 
   fetchItem() {
@@ -63,8 +66,6 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
       .subscribe((item) => {
         if (item) {
           this.item = item;
-          this.item.type === 'mobilePhones' &&
-            (this.phoneSpecs = this.item.specs as PhoneSpecs);
           const colorsKeys = Object.keys(item.specs.colors);
           this.itemColor = colorsKeys[0];
           this.homeService.getTitle(this.item);
@@ -89,12 +90,14 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
       .subscribe((title: string) => (this.title = title));
   }
 
-  onChangeColor = (color: string, index: number) => {
-    this.colorsAvailableIndex = index;
-    this.itemColor = color;
-    this.item.type === 'mobilePhones' &&
-      this.homeService.updateColorOnTitle(color, this.title);
-    this.cartService.setItemColor(color);
+  onUpdateSlider = () => {
+    this.store$
+      .select(SelectUIImageSlider)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe((sliderState) => {
+        this.cartService.setItemColor(sliderState.color);
+        this.itemColor = sliderState.color;
+      });
   };
 
   ngOnDestroy() {
