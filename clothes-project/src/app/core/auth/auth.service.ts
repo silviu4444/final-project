@@ -19,7 +19,13 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private customSnackBarService: CustomSnackbarService
-  ) {}
+  ) {
+    // console.log('constructor initialized')
+  }
+
+  ngOnDestroy() {
+    // console.log('Destroy the auth service')
+  }
   signup$(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(

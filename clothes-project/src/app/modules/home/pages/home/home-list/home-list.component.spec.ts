@@ -59,9 +59,9 @@ describe('HomeListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('store subscription should add items on mobilePones array', () => {
-    component['store$'].select(selectHomeProducts).subscribe((products) => {
-      expect(component.homeList.mobilePhones.length).toBeGreaterThan(0);
-    });
-  })
+  // it('store subscription should add items on mobilePones array', () => {
+  //   component['store$'].select(selectHomeProducts).subscribe((products) => {
+  //     expect(component.homeList.mobilePhones.length).toBeGreaterThan(0);
+  //   });
+  // })
 });
