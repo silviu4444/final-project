@@ -6,7 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
-import { selectHomeError } from '../../../home.selectors';
+import {
+  homeProductsHasItems,
+  selectedItem,
+  selectHomeError
+} from '../../../home.selectors';
 import { HomeService } from '../../../home.service';
 
 import { HomeListItemDetailsComponent } from './home-list-item-details.component';
@@ -16,11 +20,11 @@ const mockRoute = {
 };
 
 const mockHomeService = {
-  createPhoneTitle: () => 'PHONE TITLE',
-  createLaptopTitle: () => 'LAPTOP TITLE'
+  getTitle: () => 'LAPTOP TITLE',
+  itemTitle: of('LAPTOP TITLE')
 };
 
-const laptopExample = {
+const fakeLaptop = {
   id: 101,
   imgURL:
     'https://s13emagst.akamaized.net/products/33874/33873196/images/res_2ce18bde5ec79adc307a8d4fc03e40a3.jpg?width=150&height=150&hash=A649F6B481D5B3EB10B7C31C7851B679',
@@ -30,52 +34,53 @@ const laptopExample = {
   price: 999,
   reviews: 113,
   specs: {
-    color: 'Space Grey',
+    colors: {
+      'Space Grey': [
+        'https://s13emagst.akamaized.net/products/33874/33873196/images/res_2ce18bde5ec79adc307a8d4fc03e40a3.jpg?width=450&height=450&hash=36E0AD827269108B1960B2D568C73060'
+      ]
+    },
     display: 'True Tone',
     inch: 13,
     memory: 'SSD 256GB',
     processor: 'Apple M1'
   },
-  inDepthDetails: {
-    images: {
-      Black: ['test']
-    }
-  },
   stars: 4.9,
-  type: 'laptops'
-};
-
-const mobilePhoneExample = {
-  id: 6,
-  imgURL: 'test',
-  manufacturer: 'Apple',
-  model: '12 PRO',
-  oldPrice: 1149,
-  price: 1099,
-  reviews: 204,
-  specs: {
-    color: 'Blue',
-    memory: ['256', '512'],
-    memoryRam: ['5'],
-    mobileNetwork: '5G'
-  },
-  stars: 4.8,
-  type: 'mobilePhones',
+  type: 'laptops',
   inDepthDetails: {
-    images: {
-      Blue: ['test']
+    id: 101,
+    specs: {
+      display: {
+        display: ['IPS', 'RETINA'],
+        inch: 13.3,
+        resolution: '2560 x 1600'
+      },
+      general: {
+        model: 'MacBook Air Retina',
+        weight: 1.29
+      },
+      hardDisk: {
+        capacity: '256 GB',
+        type: 'SSD'
+      },
+      memory: {
+        capacity: '8 GB'
+      },
+      software: 'Mac OS',
+      video: {
+        type: 'Integrated'
+      }
     }
   }
 };
 
-const initialState: any = {
+const initialState = {
   homeStore: {
     homeProducts: {
       mobilePhones: [],
-      laptops: []
+      laptops: [{}]
     },
     homeError: 'error test',
-    selectedItem: laptopExample
+    selectedItem: fakeLaptop
   }
 };
 
@@ -96,6 +101,20 @@ describe('HomeListItemDetailsComponent', () => {
       providers: [
         provideMockStore({
           initialState,
+          selectors: [
+            {
+              selector: homeProductsHasItems,
+              value: initialState.homeStore.homeProducts.laptops.length > 0
+            },
+            {
+              selector: selectedItem,
+              value: initialState.homeStore.selectedItem
+            },
+            {
+              selector: selectHomeError,
+              value: initialState.homeStore.homeError
+            }
+          ]
         }),
         { provide: ActivatedRoute, useValue: mockRoute },
         { provide: HomeService, useValue: mockHomeService }
@@ -108,46 +127,52 @@ describe('HomeListItemDetailsComponent', () => {
     fixture = TestBed.createComponent(HomeListItemDetailsComponent);
     component = fixture.componentInstance;
     store = TestBed.inject(MockStore);
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it("queryParams should return an id that's equal to 100", () => {
+  it('fetchItem should call store.dispatch if queryParams has an id', () => {
+    const spyOnStoreDispatch = spyOn(store, 'dispatch');
+    component.fetchItem();
     component['route'].queryParams.subscribe((queryParams) => {
       expect(queryParams.id).toEqual(100);
     });
+    expect(spyOnStoreDispatch).toHaveBeenCalled();
   });
-
-  // it('should return the title for a laptop', () => {
-  //   const spyOnGetTitle = spyOn(component, 'getTitle');
-  //   fixture.detectChanges();
-  //   expect(spyOnGetTitle).toHaveBeenCalled();
-  // });
-
-  // it('should return the title for a mobile phone', () => {
-  //   const spyOnGetTitle = spyOn(component, 'getTitle');
-  //   spyOn(component['store$'], 'select').and.returnValue(
-  //     of(mobilePhoneExample)
-  //   );
-  //   fixture.detectChanges();
-  //   expect(spyOnGetTitle).toHaveBeenCalled();
-  // });
-
-  // it('should set item on component if selectedItem from state is defined', () => {
-  //   store.select(selectItemDetails).subscribe((item) => {
-  //     fixture.detectChanges();
-  //     expect(component.item).toEqual(item);
-  //   });
-  // });
 
   it('should open snackbar if homeState has an error', () => {
     const spyOnSnackBar = spyOn(component['customSnackBar'], 'open');
-    fixture.detectChanges();
+    component.selectHomeError();
     store.select(selectHomeError).subscribe((error) => {
       expect(error).toBeDefined();
       expect(spyOnSnackBar).toHaveBeenCalled();
     });
+  });
+
+  it('should call configureItemAfterSelecting if a selectedItem exists on store', () => {
+    const spyOnConfigureItemAfterSelecting = spyOn(
+      component,
+      'configureItemAfterSelecting'
+    );
+    component.selectItem();
+    expect(spyOnConfigureItemAfterSelecting).toHaveBeenCalledWith(
+      initialState.homeStore.selectedItem
+    );
+  });
+
+  it('configureItemAfterSelecting should set item, itemColor and will call homeService.getTitle', () => {
+    const spyOnGetTitle = spyOn(component['homeService'], 'getTitle');
+    component.configureItemAfterSelecting(fakeLaptop);
+    expect(component.item).toEqual(fakeLaptop);
+    expect(component.itemColor).toEqual('Space Grey');
+    expect(spyOnGetTitle).toHaveBeenCalledWith(component.item);
+  });
+
+  it('setComponentTitle should set title', () => {
+    component.setComponentTitle();
+    expect(component.title).toEqual('LAPTOP TITLE');
   });
 });

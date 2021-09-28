@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { take, takeWhile } from 'rxjs/operators';
+import { takeWhile } from 'rxjs/operators';
 import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AppState } from 'src/app/store/app.reducer';
 import {
+  homeProductsHasItems,
   selectedItem,
   selectHomeError
 } from '../../../home.selectors';
@@ -12,7 +13,6 @@ import { HomeService } from '../../../home.service';
 import { Laptop } from '../../../models/laptop.model';
 import { MobilePhone } from '../../../models/phone.model';
 import * as HomeActions from '../../../store/home.actions';
-import { HomeState } from '../../../store/home.reducer';
 
 @Component({
   selector: 'app-home-list-item-details',
@@ -34,8 +34,9 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchItem();
-    this.selectItem();
     this.selectHomeError();
+    this.selectItem();
+    this.setComponentTitle();
   }
 
   fetchItem() {
@@ -44,28 +45,20 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
       id = queryParams.id;
     });
     this.store$
-      .select('homeStore')
-      .pipe(take(2))
-      .subscribe((homeState: HomeState) => {
-        const homeStateHasItems = homeState.homeProducts.laptops.length > 0;
-        if (homeStateHasItems) {
-          this.store$.dispatch(new HomeActions.FetchItemDetailsStart({ id }));
-        }
-      });
+      .select(homeProductsHasItems)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(
+        (hasItems: boolean) =>
+          hasItems &&
+          this.store$.dispatch(new HomeActions.FetchItemDetailsStart({ id }))
+      );
   }
 
   selectItem() {
     this.store$
       .select(selectedItem)
       .pipe(takeWhile(() => this.isAlive))
-      .subscribe((item) => {
-        if (item) {
-          this.item = item;
-          const colorsKeys = Object.keys(item.specs.colors);
-          this.itemColor = colorsKeys[0];
-          this.homeService.getTitle(this.item);
-        }
-      });
+      .subscribe((item) => item && this.configureItemAfterSelecting(item));
   }
 
   selectHomeError() {
@@ -75,6 +68,13 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
       .subscribe(
         (error: string) => error && this.customSnackBar.open(error, 'Close')
       );
+  }
+
+  configureItemAfterSelecting(item: Laptop | MobilePhone) {
+    this.item = item;
+    const colorsKeys = Object.keys(item.specs.colors);
+    this.itemColor = colorsKeys[0];
+    this.homeService.getTitle(this.item);
   }
 
   setComponentTitle() {

@@ -33,7 +33,7 @@ interface Battery {
 }
 
 export interface PhoneSpecs {
-  sim: string;
+  sim?: string;
   mobileNetwork: string;
   memory: string[];
   memoryRam: string[];

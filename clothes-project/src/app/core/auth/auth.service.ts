@@ -1,6 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -17,15 +16,9 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     private customSnackBarService: CustomSnackbarService
-  ) {
-    // console.log('constructor initialized')
-  }
+  ) {}
 
-  ngOnDestroy() {
-    // console.log('Destroy the auth service')
-  }
   signup$(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(

@@ -4,7 +4,6 @@ import {
   HttpTestingController
 } from '@angular/common/http/testing';
 import { fakeAsync, flush, TestBed } from '@angular/core/testing';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
@@ -12,6 +11,7 @@ import { AuthResponseData } from './interfaces/interfaces';
 import * as errorResponses from './authResponseErrors';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 
 const email = 'test@test.com';
 const password = 'test1234';
@@ -49,7 +49,11 @@ const fakeBEResponse = (errorText: string) => {
   };
 };
 
-fdescribe('AuthService', () => {
+const mockCustomSnacBar = {
+  open: (message, action) => null
+};
+
+describe('AuthService', () => {
   let authService: AuthService;
   let controller: HttpTestingController;
 
@@ -58,14 +62,16 @@ fdescribe('AuthService', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        MatSnackBarModule,
         BrowserAnimationsModule
+      ],
+      providers: [
+        { provide: CustomSnackbarService, useValue: mockCustomSnacBar }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     });
+    let store = {};
     authService = TestBed.inject(AuthService);
     controller = TestBed.inject(HttpTestingController);
-    let store = {};
     const mockLocalStorage = {
       getItem: (key: string): string => {
         return key in store ? store[key] : null;
@@ -188,10 +194,10 @@ fdescribe('AuthService', () => {
 
   it('autoLogin should login if an user is defined in local storage and the next user should have a mocked token property', () => {
     localStorage.setItem('userData', JSON.stringify(fakeUser));
+    spyOn(authService, 'autoLogout')
     authService.autoLogin();
     authService.user$.subscribe((user) => {
-      console.log(user)
-      // expect(user.token).toEqual('test token');
+      expect(user.token).toEqual('test token');
     });
   });
 
