@@ -1,0 +1,11 @@
+<div class="item-colors" [appSetBorderOnClick]="colorsAvailableIndex">
+  <div
+    class="item-color"
+    (click)="onChangeColor(color.key, i)"
+    *ngFor="let color of item.specs.colors | keyvalue; let i = index"
+    [ngClass]="{ 'custom-border': i === 0 }"
+  >
+    <img src="{{ color.value }}" alt="{{ color.key }}" />
+    <span>{{ color.key }}</span>
+  </div>
+</div>

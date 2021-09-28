@@ -12,9 +12,18 @@
       <p>{{ item.stars }}</p>
       <span> {{ item.reviews }} reviews </span>
     </div>
-    <app-item-presentation
-    [color]="itemColor"
-    [images]="item.specs.colors"
-    ></app-item-presentation>
+    <section class="general-presentation">
+      <div class="general-presentation__item-properties">
+        <app-item-presentation
+          [color]="itemColor"
+          [images]="item.specs.colors"
+        ></app-item-presentation>
+        <p>Choose a color:</p>
+        <app-select-item-properties
+          [item]="item"
+          [title]="title"
+        ></app-select-item-properties>
+      </div>
+    </section>
   </ng-template>
 </div>

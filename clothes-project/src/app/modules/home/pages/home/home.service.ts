@@ -27,4 +27,12 @@ export class HomeService {
     const title = createLaptopTitle(laptop);
     this.itemTitle.next(title);
   }
+
+  updateColorOnTitle(color: string, title: string) {
+    const spliItem = title.split(',');
+    const updatingItem = spliItem.slice(0, spliItem.length - 1);
+    updatingItem.push(' ' + color);
+    const updatedTitle = updatingItem.join(',');
+    this.itemTitle.next(updatedTitle);
+  }
 }

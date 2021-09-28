@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
+import { selectUIImagesSlider } from 'src/app/shared/selectors/UI.selectors';
 import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AppState } from 'src/app/store/app.reducer';
 import {
@@ -37,6 +38,7 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     this.selectHomeError();
     this.selectItem();
     this.setComponentTitle();
+    this.onUpdateSlider();
   }
 
   fetchItem() {
@@ -82,6 +84,13 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeWhile(() => this.isAlive))
       .subscribe((title: string) => (this.title = title));
   }
+
+  onUpdateSlider = () => {
+    this.store$
+      .select(selectUIImagesSlider)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe((sliderState) => (this.itemColor = sliderState.color));
+  };
 
   ngOnDestroy() {
     this.isAlive = false;

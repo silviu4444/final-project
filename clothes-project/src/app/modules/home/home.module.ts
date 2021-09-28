@@ -12,6 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ItemPresentationComponent } from './pages/home/home-list/home-list-item/home-list-item-details/item-presentation/item-presentation.component';
 import { ImageSrcAnimationDirective } from './pages/home/directives/image-src-animation.directive';
 import { SetBorderOnClickDirective } from './pages/home/directives/set-border-on-click.directive';
+import { SelectItemPropertiesComponent } from './pages/home/home-list/home-list-item/home-list-item-details/select-item-properties/select-item-properties.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { SetBorderOnClickDirective } from './pages/home/directives/set-border-on
     HomeListItemDetailsComponent,
     ItemPresentationComponent,
     ImageSrcAnimationDirective,
-    SetBorderOnClickDirective
+    SetBorderOnClickDirective,
+    SelectItemPropertiesComponent
   ],
   exports: [HomeComponent, HomeItemComponent, HomeListComponent]
 })
