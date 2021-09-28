@@ -5,4 +5,17 @@
     top: 40%;
     left: 45%;
   }
+
+  .stars {
+    align-self: flex-start;
+    p {
+      display: inline;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    span {
+      text-decoration: underline;
+    }
+  }
 }

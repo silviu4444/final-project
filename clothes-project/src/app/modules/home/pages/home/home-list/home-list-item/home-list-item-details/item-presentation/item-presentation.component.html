@@ -8,6 +8,7 @@
           let image of images[colorSelected.colorName];
           let i = index
         "
+        [ngClass]="{ 'custom-border': i === 0 }"
       >
         <img src="{{ image }}" (click)="changeImage(i)" />
       </div>

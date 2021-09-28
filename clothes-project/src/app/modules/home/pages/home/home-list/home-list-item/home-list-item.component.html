@@ -13,6 +13,10 @@
       >
     </mat-card-header>
     <mat-card-content>
+      <div class="home-item__stars">
+        <app-stars-raiting [raiting]="item.stars"></app-stars-raiting>
+        {{ item.stars }}({{ item.reviews }})
+      </div>
       <div class="home-item__price-container">
         <p class="phone-price">
           {{ item.price }}

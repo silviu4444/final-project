@@ -7,6 +7,11 @@
   <ng-template #content>
     <h1>{{ title }}</h1>
     <mat-divider></mat-divider>
+    <div class="stars">
+      <app-stars-raiting [raiting]="item.stars"></app-stars-raiting>
+      <p>{{ item.stars }}</p>
+      <span> {{ item.reviews }} reviews </span>
+    </div>
     <app-item-presentation
     [color]="itemColor"
     [images]="item.specs.colors"
