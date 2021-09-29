@@ -12,17 +12,35 @@
       <p>{{ item.stars }}</p>
       <span> {{ item.reviews }} reviews </span>
     </div>
-    <section class="general-presentation">
-      <div class="general-presentation__item-properties">
+    <section class="item-presentation">
+      <div class="item-presentation__preview">
         <app-item-presentation
           [color]="itemColor"
           [images]="item.specs.colors"
         ></app-item-presentation>
-        <p>Choose a color:</p>
+      </div>
+      <div class="item-presentation__properties">
         <app-select-item-properties
           [item]="item"
           [title]="title"
         ></app-select-item-properties>
+        <div class="benefits">
+          <h4>Benefits:</h4>
+          <p>
+            <mat-icon
+              ><span class="material-icons-outlined">
+                settings_backup_restore
+              </span>
+            </mat-icon>
+            Right of return: 30 days
+          </p>
+          <p>
+            <mat-icon>
+              <span class="material-icons-outlined"> credit_card </span>
+            </mat-icon>
+            Money back in 30'
+          </p>
+        </div>
       </div>
     </section>
   </ng-template>

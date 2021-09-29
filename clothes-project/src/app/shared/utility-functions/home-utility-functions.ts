@@ -1,6 +1,18 @@
 import { Laptop } from "src/app/modules/home/pages/home/models/laptop.model";
 import { MobilePhone } from "src/app/modules/home/pages/home/models/phone.model";
 
+export const updatePhoneTitleGBs = (title: string, gbToReplace: string) => {
+  const splittedTitle = title.split(',');
+  const filterRAM = splittedTitle.filter(
+    (element) => element.indexOf('RAM') > -1
+  );
+  const indexOfRAM = splittedTitle.indexOf(filterRAM[0]);
+  splittedTitle.splice(indexOfRAM, 1, ' ' + gbToReplace + 'GB RAM');
+  const updatedTitle = splittedTitle.join(',');
+  return updatedTitle;
+};
+
+
 export const createPhoneTitle = (phone: MobilePhone) => {
   const colorKeys = Object.keys(phone.specs.colors);
   const color = colorKeys[0];

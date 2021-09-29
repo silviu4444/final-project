@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { createLaptopTitle, createPhoneTitle } from 'src/app/shared/utility-functions/home-utility-functions';
+import { take } from 'rxjs/operators';
+import { createLaptopTitle, createPhoneTitle, updatePhoneTitleGBs } from 'src/app/shared/utility-functions/home-utility-functions';
 import { Laptop } from './models/laptop.model';
 import { MobilePhone } from './models/phone.model';
 
@@ -33,6 +34,13 @@ export class HomeService {
     const updatingItem = spliItem.slice(0, spliItem.length - 1);
     updatingItem.push(' ' + color);
     const updatedTitle = updatingItem.join(',');
+    this.itemTitle.next(updatedTitle);
+  }
+
+  updateGBsOnTitle(gbToReplace: string) {
+    let actualTitle: string;
+    this.itemTitle.pipe(take(1)).subscribe((title) => (actualTitle = title));
+    const updatedTitle = updatePhoneTitleGBs(actualTitle, gbToReplace);
     this.itemTitle.next(updatedTitle);
   }
 }

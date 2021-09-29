@@ -1,3 +1,28 @@
+<p class="property-text" *ngIf="phoneMemory.ram.ramOptions">Memory RAM</p>
+<div class="memory" [appSetBorderOnClick]="phoneMemory.ram.itemIdx">
+  <div
+    class="memory-option"
+    *ngFor="let ram of phoneMemory.ram.ramOptions; let i = index"
+    (click)="onChangeRAM(i)"
+    [ngClass]="{ 'custom-border': i === 0 }"
+  >
+    <span>{{ ram }} GB</span>
+  </div>
+</div>
+
+<p class="property-text">Internal storage</p>
+<div class="memory" [appSetBorderOnClick]="phoneMemory.storage.itemIdx">
+  <div
+    class="storage-option"
+    *ngFor="let gb of phoneMemory.storage.storageOptions; let i = index"
+    (click)="onChangeStorage(i)"
+    [ngClass]="{ 'custom-border': i === 0 }"
+  >
+    <span>{{ gb }} GB</span>
+  </div>
+</div>
+
+<p class="property-text">Colors available:</p>
 <div class="item-colors" [appSetBorderOnClick]="colorsAvailableIndex">
   <div
     class="item-color"
