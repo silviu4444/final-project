@@ -37,27 +37,39 @@
 
     &__properties {
       display: flex;
-      .benefits {
-        background-color: #6c757d;
-        color: white;
-        padding: 10px;
-        height: 200px;
-        width: 250px;
-        border-radius: 5px;
-        box-shadow: 2px 2px 10px -1px #1f1f1f;
-        margin: 10px 0;
+      app-select-item-properties {
+        margin-right: 20px;
+      }
+      .add-to-cart-container {
+        .benefits {
+          background-color: #6c757d;
+          color: white;
+          padding: 10px;
+          height: 200px;
+          width: 250px;
+          border-radius: 5px;
+          box-shadow: 2px 2px 10px -1px #1f1f1f;
+          margin: 10px 0;
 
-        h4 {
-          font-weight: 300;
-          text-transform: uppercase;
-          margin: 5px 0;
+          h4 {
+            font-weight: 300;
+            text-transform: uppercase;
+            margin: 5px 0;
+          }
+
+          p {
+            position: relative;
+            span {
+              position: absolute;
+              top: 7px;
+            }
+          }
         }
-
-        p {
-          position: relative;
-          span {
-            position: absolute;
-            top: 7px;
+        .cart-button {
+          display: flex;
+          justify-content: center;
+          app-add-to-cart-button {
+            margin-top: 10px;
           }
         }
       }

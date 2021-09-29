@@ -13,15 +13,18 @@ import * as UIActions from '../../../../../../../../shared/store/UI/ui.actions';
   styleUrls: ['./select-item-properties.component.scss']
 })
 export class SelectItemPropertiesComponent implements OnInit {
-  constructor(private homeService: HomeService, private store$: Store<AppState>) { }
+  constructor(
+    private homeService: HomeService,
+    private store$: Store<AppState>
+  ) {}
 
   @Input() item: Laptop | MobilePhone;
   @Input() title: string;
   colorsAvailableIndex = 0;
-  phoneMemory: PhoneMemory
+  phoneMemory: PhoneMemory;
 
   ngOnInit() {
-    this.setPhoneMemory();
+    this.item.type === 'mobilePhones' && this.setPhoneMemory();
   }
 
   setPhoneMemory() {
@@ -48,10 +51,11 @@ export class SelectItemPropertiesComponent implements OnInit {
     this.phoneMemory.storage.itemIdx = index;
   }
 
-
   onChangeColor = (color: string, colorIndex: number) => {
     this.colorsAvailableIndex = colorIndex;
     this.homeService.updateColorOnTitle(color, this.title);
-    this.store$.dispatch(new UIActions.SetSliderImageColorAndIndex({color, colorIndex}))
+    this.store$.dispatch(
+      new UIActions.SetSliderImageColorAndIndex({ color, colorIndex })
+    );
   };
 }

@@ -24,22 +24,27 @@
           [item]="item"
           [title]="title"
         ></app-select-item-properties>
-        <div class="benefits">
-          <h4>Benefits:</h4>
-          <p>
-            <mat-icon
-              ><span class="material-icons-outlined">
-                settings_backup_restore
-              </span>
-            </mat-icon>
-            Right of return: 30 days
-          </p>
-          <p>
-            <mat-icon>
-              <span class="material-icons-outlined"> credit_card </span>
-            </mat-icon>
-            Money back in 30'
-          </p>
+        <div class="add-to-cart-container">
+          <div class="benefits">
+            <h4>Benefits:</h4>
+            <p>
+              <mat-icon
+                ><span class="material-icons-outlined">
+                  settings_backup_restore
+                </span>
+              </mat-icon>
+              Right of return: 30 days
+            </p>
+            <p>
+              <mat-icon>
+                <span class="material-icons-outlined"> credit_card </span>
+              </mat-icon>
+              Money back in 30'
+            </p>
+          </div>
+          <div class="cart-button">
+            <app-add-to-cart-button></app-add-to-cart-button>
+          </div>
         </div>
       </div>
     </section>
