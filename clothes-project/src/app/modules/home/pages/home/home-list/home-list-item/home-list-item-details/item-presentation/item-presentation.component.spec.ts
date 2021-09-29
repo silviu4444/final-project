@@ -19,7 +19,7 @@ const mockAnimationBuilder = {
   }
 };
 
-describe('ItemPresentationComponent', () => {
+fdescribe('ItemPresentationComponent', () => {
   let component: ItemPresentationComponent;
   let fixture: ComponentFixture<ItemPresentationComponent>;
 
@@ -71,5 +71,13 @@ describe('ItemPresentationComponent', () => {
     const indexedSliderImage =
       imageIcons.children[component.colorSelected.index];
     expect(indexedSliderImage.classList.contains('custom-border')).toBeTruthy();
+  });
+
+  it("it should call ngOnChanges if a component's property has changed", () => {
+    const spyOnNgOnChanges = spyOn(component, 'ngOnChanges');
+    fixture.detectChanges();
+    component.colorSelected.colorName = 'Red';
+    fixture.detectChanges();
+    expect(spyOnNgOnChanges).toHaveBeenCalled();
   });
 });

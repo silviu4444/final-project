@@ -27,5 +27,4 @@ export class ItemPresentationComponent implements OnInit {
   ngOnChanges() {
     this.changeImage();
   }
-
 }

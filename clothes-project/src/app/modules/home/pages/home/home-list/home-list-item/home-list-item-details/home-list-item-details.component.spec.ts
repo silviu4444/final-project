@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
+import { selectUIImagesSlider } from 'src/app/shared/selectors/UI.selectors';
 import {
   homeProductsHasItems,
   selectedItem,
@@ -81,7 +82,13 @@ const initialState = {
     },
     homeError: 'error test',
     selectedItem: fakeLaptop
-  }
+  },
+  UIStore: {
+    itemImageSlider: {
+      colorIndex: 0,
+      color: 'Black'
+    }
+}
 };
 
 describe('HomeListItemDetailsComponent', () => {
@@ -113,6 +120,10 @@ describe('HomeListItemDetailsComponent', () => {
             {
               selector: selectHomeError,
               value: initialState.homeStore.homeError
+            },
+            {
+              selector: selectUIImagesSlider,
+              value: initialState.UIStore.itemImageSlider
             }
           ]
         }),
@@ -175,4 +186,9 @@ describe('HomeListItemDetailsComponent', () => {
     component.setComponentTitle();
     expect(component.title).toEqual('LAPTOP TITLE');
   });
+
+  it('onUpdateSlider should update itemColor when store emits a value', () => {
+    component.onUpdateSlider();
+    expect(component.itemColor).toEqual(initialState.UIStore.itemImageSlider.color);
+  })
 });
