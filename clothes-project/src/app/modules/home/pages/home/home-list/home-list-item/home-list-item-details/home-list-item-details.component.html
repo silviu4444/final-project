@@ -48,5 +48,13 @@
         </div>
       </div>
     </section>
+    <div class="specs-table">
+      <app-phone-specs-table
+        *ngIf="item.type === 'mobilePhones'"
+      ></app-phone-specs-table>
+      <app-laptop-specs-table
+        *ngIf="item.type === 'laptops'"
+      ></app-laptop-specs-table>
+    </div>
   </ng-template>
 </div>

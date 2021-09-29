@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { createLaptopTitle, createPhoneTitle, updatePhoneTitleGBs } from 'src/app/shared/utility-functions/home-utility-functions';
+import { TableSpecs } from 'src/app/shared/interfaces/interfaces';
+import { createLaptopTableData, createLaptopTitle, createPhoneTableData, createPhoneTitle, updatePhoneTitleGBs } from 'src/app/shared/utility-functions/home-utility-functions';
 import { Laptop } from './models/laptop.model';
 import { MobilePhone } from './models/phone.model';
 
@@ -42,5 +43,50 @@ export class HomeService {
     this.itemTitle.pipe(take(1)).subscribe((title) => (actualTitle = title));
     const updatedTitle = updatePhoneTitleGBs(actualTitle, gbToReplace);
     this.itemTitle.next(updatedTitle);
+  }
+
+  getPhoneTableData(phone: MobilePhone) {
+    return createPhoneTableData(phone);
+  }
+
+  getLaptopTableData(laptop: Laptop) {
+    return createLaptopTableData(laptop);
+  }
+
+  setPhoneTableCategoryStyle(rowData: TableSpecs) {
+    const isACategory =
+      rowData.property === 'Display' ||
+      rowData.property === 'Cameras' ||
+      rowData.property === 'Battery' ||
+      rowData.property === 'General Details';
+    if (isACategory) {
+      return true;
+    }
+    return false;
+  }
+
+  setLaptopTableCategoryStyle(rowData: TableSpecs) {
+    const isACategory =
+      rowData.property === 'Display' ||
+      rowData.property === 'Memory' ||
+      rowData.property === 'Video' ||
+      rowData.property === 'General Details';
+    if (isACategory) {
+      return true;
+    }
+    return false;
+  }
+
+  brakeColumnDataInLines(rowData: TableSpecs, cell: HTMLElement) {
+    let cellContent = '';
+    const isArray = Array.isArray(rowData.value);
+    if (isArray) {
+     const data = rowData.value as string[];
+     data.forEach((value: string) => {
+        cellContent += value + '<br>';
+      });
+      cell.innerHTML = cellContent;
+    }
+    return rowData.value;
   }
 }

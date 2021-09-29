@@ -22,3 +22,8 @@ export interface CartItem {
   colorSelected: string;
   item: MobilePhone | Laptop;
 }
+
+export interface TableSpecs {
+  property: string;
+  value: string[] | string | number;
+}
