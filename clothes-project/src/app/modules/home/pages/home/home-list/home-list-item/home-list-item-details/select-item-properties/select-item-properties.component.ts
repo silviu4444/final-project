@@ -26,9 +26,15 @@ export class SelectItemPropertiesComponent implements OnInit {
   phoneMemory: PhoneMemory;
 
   ngOnInit() {
-    this.item.type === 'mobilePhones' && this.setPhoneMemory();
-    this.setCartItemGBs();
-    this.setCartItemStorage();
+    this.configurePhone();
+  }
+
+  configurePhone() {
+    if (this.item.type === 'mobilePhones') {
+      this.setPhoneMemory();
+      this.setCartItemGBs();
+      this.setCartItemStorage();
+    }
   }
 
   setPhoneMemory() {
@@ -55,12 +61,12 @@ export class SelectItemPropertiesComponent implements OnInit {
     this.cartService.setPhoneStorage(defaultStorage);
   }
 
-  onChangeRAM = (index: number) => {
+  onChangeRAM(index: number) {
     this.phoneMemory.ram.itemIdx = index;
     const GBSelected = this.phoneMemory.ram.ramOptions[index];
     this.homeService.updateGBsOnTitle(GBSelected);
     this.cartService.setPhoneMemory(GBSelected);
-  };
+  }
 
   onChangeStorage(index: number) {
     this.phoneMemory.storage.itemIdx = index;
@@ -68,11 +74,11 @@ export class SelectItemPropertiesComponent implements OnInit {
     this.cartService.setPhoneStorage(selectedMemoryRAM);
   }
 
-  onChangeColor = (color: string, colorIndex: number) => {
+  onChangeColor(color: string, colorIndex: number) {
     this.colorsAvailableIndex = colorIndex;
     this.homeService.updateColorOnTitle(color, this.title);
     this.store$.dispatch(
       new UIActions.SetSliderImageColorAndIndex({ color, colorIndex })
     );
-  };
+  }
 }
