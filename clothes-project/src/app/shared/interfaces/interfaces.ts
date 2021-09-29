@@ -27,3 +27,11 @@ export interface TableSpecs {
   property: string;
   value: string[] | string | number;
 }
+
+export interface TableCartItem {
+  image: string;
+  title: string;
+  price: number;
+  numberOfItems: number;
+  findInCartIndex: number;
+}

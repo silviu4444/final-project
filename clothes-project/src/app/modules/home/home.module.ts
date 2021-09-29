@@ -18,8 +18,8 @@ import { SelectItemPropertiesComponent } from './pages/home/home-list/home-list-
   imports: [
     CommonModule,
     MatCardModule,
-    SharedModule,
     HomeRoutingModule,
+    SharedModule,
     MatProgressSpinnerModule,
     MatDividerModule,
   ],

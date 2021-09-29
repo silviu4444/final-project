@@ -4,6 +4,10 @@
       ><b>4</b>IT</span
     >
     <span class="header-spacer"></span>
+    <button class="main-header__cart-button" routerLink="cart">
+      <mat-icon>shopping_cart </mat-icon>
+      <span class="itemsInCart">{{ numberOfItemsInCart }}</span>
+    </button>
     <button
       *ngIf="!isAuthenticated"
       class="main-header__account-button"
