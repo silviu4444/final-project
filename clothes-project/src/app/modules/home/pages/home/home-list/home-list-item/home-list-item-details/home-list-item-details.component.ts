@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
 import { selectUIImagesSlider } from 'src/app/shared/selectors/UI.selectors';
+import { CartService } from 'src/app/shared/services/cart.service';
 import { CustomSnackbarService } from 'src/app/shared/services/CustomSnackbar.service';
 import { AppState } from 'src/app/store/app.reducer';
 import {
@@ -25,7 +26,8 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private store$: Store<AppState>,
     private customSnackBar: CustomSnackbarService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private cartService: CartService
   ) {}
 
   title: string;
@@ -77,6 +79,8 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     const colorsKeys = Object.keys(item.specs.colors);
     this.itemColor = colorsKeys[0];
     this.homeService.getTitle(this.item);
+    this.cartService.setItemColor(colorsKeys[0]);
+    this.cartService.setItem(item);
   }
 
   setComponentTitle() {
@@ -89,11 +93,15 @@ export class HomeListItemDetailsComponent implements OnInit, OnDestroy {
     this.store$
       .select(selectUIImagesSlider)
       .pipe(takeWhile(() => this.isAlive))
-      .subscribe((sliderState) => (this.itemColor = sliderState.color));
+      .subscribe((sliderState) => {
+        this.cartService.setItemColor(sliderState.color);
+        this.itemColor = sliderState.color;
+      });
   };
 
   ngOnDestroy() {
     this.isAlive = false;
     this.store$.dispatch(new HomeActions.DeleteItemDetails());
+    this.cartService.removeItemCartData();
   }
 }

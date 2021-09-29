@@ -6,6 +6,7 @@ import { HomeService } from '../../../../home.service';
 import { Laptop } from '../../../../models/laptop.model';
 import { MobilePhone } from '../../../../models/phone.model';
 import * as UIActions from '../../../../../../../../shared/store/UI/ui.actions';
+import { CartService } from 'src/app/shared/services/cart.service';
 
 @Component({
   selector: 'app-select-item-properties',
@@ -15,7 +16,8 @@ import * as UIActions from '../../../../../../../../shared/store/UI/ui.actions';
 export class SelectItemPropertiesComponent implements OnInit {
   constructor(
     private homeService: HomeService,
-    private store$: Store<AppState>
+    private store$: Store<AppState>,
+    private cartService: CartService
   ) {}
 
   @Input() item: Laptop | MobilePhone;
@@ -25,6 +27,8 @@ export class SelectItemPropertiesComponent implements OnInit {
 
   ngOnInit() {
     this.item.type === 'mobilePhones' && this.setPhoneMemory();
+    this.setCartItemGBs();
+    this.setCartItemStorage();
   }
 
   setPhoneMemory() {
@@ -41,14 +45,27 @@ export class SelectItemPropertiesComponent implements OnInit {
     };
   }
 
+  setCartItemGBs() {
+    const defaultMemory = this.phoneMemory.ram.ramOptions[0];
+    this.cartService.setPhoneMemory(defaultMemory);
+  }
+
+  setCartItemStorage() {
+    const defaultStorage = this.phoneMemory.storage.storageOptions[0];
+    this.cartService.setPhoneStorage(defaultStorage);
+  }
+
   onChangeRAM = (index: number) => {
     this.phoneMemory.ram.itemIdx = index;
     const GBSelected = this.phoneMemory.ram.ramOptions[index];
     this.homeService.updateGBsOnTitle(GBSelected);
+    this.cartService.setPhoneMemory(GBSelected);
   };
 
   onChangeStorage(index: number) {
     this.phoneMemory.storage.itemIdx = index;
+    const selectedMemoryRAM = this.phoneMemory.storage.storageOptions[index];
+    this.cartService.setPhoneStorage(selectedMemoryRAM);
   }
 
   onChangeColor = (color: string, colorIndex: number) => {
